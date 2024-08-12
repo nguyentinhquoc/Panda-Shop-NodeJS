@@ -1,0 +1,270 @@
+<%- include('header') -%>
+<div class="page-header-wrap bg-img" data-bg="/assets/img/bg/page-header-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-header-content">
+                    <div class="page-header-content-inner">
+                        <h1>Đang ký</h1>
+                        <ul class="breadcrumb">
+                            <li><a href="/">Trang chủ</a></li>
+                            <li class="current"><a href="#">Đang ký</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-content-wrapper sp-y">
+    <div class="login-page-content-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12 ml-auto mr-auto">
+                    <div class="register-form-style">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-md-12">
+                                    <div class="card shadow-lg mt-5">
+                                        <div class="card-body p-5">
+                                            <h2 class="text-center mb-4">Register</h2>
+                                            <form id="registrationForm" onsubmit="return validateForm()" method="post"
+                                                enctype="multipart/form-data">
+                                                <div class="form-group mb-3">
+                                                    <div style="width: 100%;">
+                                                    </div>
+                                                    <div class="avatar-input">
+                                                        <input onchange="previewAvatar(this);" type="file"
+                                                            name="avatar_account" id="avatar_account" accept="image/*"
+                                                            style="display: none;">
+                                                        <label id="avatarLabel" for="avatar_account"
+                                                            class="avatar-label">+</label>
+                                                        <img id="avatarPreview" src="#" alt="Avatar preview"
+                                                            style="display:none; margin: 0 auto; border-radius: 50%;"
+                                                            width="150px" height="150px">
+                                                    </div>
+                                                    <div id="avatarError" class="text-danger small mt-1"></div>
+
+                                                </div>
+
+                                                <style>
+                                                    .avatar-input {
+                                                        width: 100%;
+                                                        height: 150px;
+                                                        overflow: hidden;
+                                                        position: relative;
+                                                        cursor: pointer;
+                                                        text-align: center;
+                                                    }
+
+                                                    .avatar-label {
+                                                        border: 1px solid;
+                                                        border-radius: 50%;
+                                                        width: 150px !important;
+                                                        margin: 0 auto;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        font-size: 50px;
+                                                        color: #ccc;
+                                                        cursor: pointer;
+                                                    }
+                                                </style>
+
+                                                <div class="form-group mb-3">
+                                                    <input type="text" class="form-control" name="full_name_account"
+                                                        id="full_name_account" placeholder="Full Name">
+                                                    <div id="fullNameError" class="text-danger small mt-1"></div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <input type="email" class="form-control" name="email_account"
+                                                        id="email_account" placeholder="Email">
+                                                    <div id="emailError" class="text-danger small mt-1"></div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <input type="tel" class="form-control" name="tel_account"
+                                                        id="tel_account" placeholder="Phone">
+                                                    <div id="phoneError" class="text-danger small mt-1"></div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <input type="text" class="form-control" name="address_account"
+                                                        id="address_account" placeholder="Address">
+                                                    <div id="addressError" class="text-danger small mt-1"></div>
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <input type="password" class="form-control" name="pass_account"
+                                                        id="pass_account" placeholder="Password">
+                                                    <div id="passwordError" class="text-danger small mt-1"></div>
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <input type="password" class="form-control" name="repass_account"
+                                                        id="repass_account" placeholder="Confirm Password">
+                                                    <div id="confirmPasswordError" class="text-danger small mt-1"></div>
+                                                </div>
+                                                <div class="d-grid">
+                                                    <button class="btn btn-primary btn-lg"
+                                                        type="submit">Register</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% if( flash.checkregister !== undefined && flash.checkregister == 'error'){ %>
+<div id="alertEr" style="opacity: 0; transition: opacity 1s ease;">
+    <div style="max-width: 500px; position: absolute; top: 30px; position: fixed; right: 30px;"
+        class="alert alert-danger d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+            <use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div>
+            Email hoặc mật khẩu đã được sử dụng, vui lòng thử lại.
+        </div>
+    </div>
+</div>
+<% }  %>
+<% if( flash.checkregister !== undefined && flash.checkregister == 'error' ){ %>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var fadeInOutDiv = document.getElementById('alertEr');
+        fadeInOutDiv.style.opacity = 1;
+        setTimeout(function () {
+            fadeInOutDiv.style.opacity = 0;
+        }, 3000);
+    });
+</script>
+<% }  %>
+<script>
+    function previewAvatar(input) {
+        var preview = document.getElementById('avatarPreview');
+        var label = document.getElementById('avatarLabel');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                label.style.display = 'none';
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    function validateForm() {
+        document.getElementById('fullNameError').innerText = '';
+        document.getElementById('emailError').innerText = '';
+        document.getElementById('phoneError').innerText = '';
+        document.getElementById('passwordError').innerText = '';
+        document.getElementById('confirmPasswordError').innerText = '';
+
+        var fullName = document.getElementById('full_name_account').value.trim();
+        var email = document.getElementById('email_account').value.trim();
+        var phone = document.getElementById('tel_account').value.trim();
+        var password = document.getElementById('pass_account').value.trim();
+        var confirmPassword = document.getElementById('repass_account').value.trim();
+
+        function isValidEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        function isValidPhone(phone) {
+            const regex = /^(0(91|90|93|94|98|86|88|89))\d{7}$/;
+            return regex.test(phone);
+        }
+        var isValid = true;
+
+        if (fullName === '') {
+            document.getElementById('fullNameError').innerText = 'Please enter your full name.';
+            isValid = false;
+        }
+
+        if (email === '') {
+            document.getElementById('emailError').innerText = 'Please enter your email address.';
+            isValid = false;
+        } else if (!isValidEmail(email)) {
+            document.getElementById('emailError').innerText = 'Please enter a valid email address.';
+            isValid = false;
+        }
+
+        if (phone === '' || !isValidPhone(phone)) {
+            document.getElementById('phoneError').innerText = 'Please enter a valid phone number.';
+            isValid = false;
+        }
+
+        if (password === '') {
+            document.getElementById('passwordError').innerText = 'Please enter a password.';
+            isValid = false;
+        } else if (password.length < 8) {
+            document.getElementById('passwordError').innerText = 'Password must be at least 8 characters.';
+            isValid = false;
+        }
+
+        if (confirmPassword === '') {
+            document.getElementById('confirmPasswordError').innerText = 'Please confirm your password.';
+            isValid = false;
+        } else if (confirmPassword !== password) {
+            document.getElementById('confirmPasswordError').innerText = 'Passwords do not match.';
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return false;
+        }
+
+        return true;
+    }
+    document.getElementById('full_name_account').addEventListener('blur', function () {
+        if (this.value.trim() === '') {
+            document.getElementById('fullNameError').innerText = 'Please enter your full name.';
+        } else {
+            document.getElementById('fullNameError').innerText = '';
+        }
+    });
+    document.getElementById('email_account').addEventListener('blur', function () {
+        if (this.value.trim() !== '') {
+            document.getElementById('emailError').innerText = '';
+        }
+    });
+
+    document.getElementById('tel_account').addEventListener('blur', function () {
+        var phone = this.value.trim();
+        if (phone === '' && !isValidPhone(phone)) {
+            document.getElementById('phoneError').innerText = 'Please enter a valid phone number.';
+        } else {
+            document.getElementById('phoneError').innerText = '';
+        }
+    });
+
+    document.getElementById('pass_account').addEventListener('blur', function () {
+        if (this.value.trim() === '') {
+            document.getElementById('passwordError').innerText = 'Please enter a password.';
+        } else if (this.value.trim().length < 8) {
+            document.getElementById('passwordError').innerText = 'Password must be at least 8 characters.';
+        } else {
+            document.getElementById('passwordError').innerText = '';
+        }
+    });
+
+    document.getElementById('repass_account').addEventListener('blur', function () {
+        var confirmPassword = this.value.trim();
+        var password = document.getElementById('pass_account').value.trim();
+        if (confirmPassword === '') {
+            document.getElementById('confirmPasswordError').innerText = 'Please confirm your password.';
+        } else if (confirmPassword !== password) {
+            document.getElementById('confirmPasswordError').innerText = 'Passwords do not match.';
+        } else {
+            document.getElementById('confirmPasswordError').innerText = '';
+        }
+    });
+</script>
+<%- include('footer') -%>

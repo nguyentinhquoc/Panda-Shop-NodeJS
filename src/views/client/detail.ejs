@@ -1,0 +1,439 @@
+<%- include('header') -%>
+
+<%  
+function formatDate(date) {
+    const d = new Date(date);
+    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} `;
+}
+function formatCurrency(amount) {
+    return amount.toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    });
+} %>
+<% 
+function hienthiStart(number) {
+if(number >= 5){
+for (let i = 0; i < 5; i++) {  %>
+<i style="color: orange;" class="fa-solid fa-star"></i>
+<% }}
+else if(number == 1 || number == 2 || number ==3 || number ==4){ 
+    for (let i = 0; i < number; i++) {  %>
+<i style="color: orange;" class="fa-solid fa-star"></i>
+<% }
+for (let i = 0; i < 5-number; i++) {  %>
+<i style="color: orange;" class="fa-regular fa-star"></i>
+<% }
+}else{
+    for (let i = 0; i < number-1; i++) {  %>
+<i style="color: orange;" class="fa-solid fa-star"></i>
+<% } %>
+<i style="color: orange;" class="fa-regular fa-star-half-stroke"></i>
+<% for (let i = 0; i < 5-number-1; i++) { %>
+<i style="color: orange;" class="fa-regular fa-star"></i>
+<% }
+}
+} %>
+<div class="page-header-wrap bg-img" data-bg="/assets/img/bg/page-header-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-header-content">
+                    <div class="page-header-content-inner">
+                        <h1>Chi tiết sản phẩm</h1>
+
+                        <ul class="breadcrumb">
+                            <li><a href="/">Trang chủ</a></li>
+                            <li><a href="/shop">Cửa hàng</a></li>
+                            <li class="current"><a href="#">Chi tiết sản phẩm</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Kết thúc Khu vực Tiêu đề Trang ==-->
+
+<!--== Bắt đầu Wrapper Nội dung Trang ==-->
+<div class="page-content-wrapper sp-y">
+    <div class="product-details-page-content">
+        <div class="container container-wide">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <!-- Bắt đầu Khu vực Hình ảnh Sản phẩm -->
+                        <div class="col-md-5">
+                            <div class="product-thumb-area">
+                                <div class="product-details-thumbnail">
+                                    <div class="product-thumbnail-slider" id="thumb-gallery">
+                                        <figure class="pro-thumb-item"
+                                            data-mfp-src="/assets/img/product/<%= detailProduct.image_product %>">
+                                            <img src="/assets/img/product/<%= detailProduct.image_product %>"
+                                                alt="Chi tiết sản phẩm" />
+                                        </figure>
+                                        <% VariantsWIdProduct.forEach(function(items) { %>
+                                        <% if(items.image_variant){ %>
+                                        <figure class="pro-thumb-item"
+                                            data-mfp-src="/assets/img/product/<%= items.image_variant %>">
+                                            <img src="/assets/img/product/<%= items.image_variant %>"
+                                                alt="Chi tiết sản phẩm" />
+                                        </figure>
+                                        <% } %>
+                                        <% }); %>
+                                    </div>
+                                    <a href="#thumb-gallery" class="btn-large-view btn-gallery-popup">Xem lớn hơn <i
+                                            class="fa fa-search-plus"></i></a>
+                                </div>
+                                <div class="product-details-thumbnail-nav">
+                                    <figure class="pro-thumb-item">
+                                        <img src="/assets/img/product/<%= detailProduct.image_product %>"
+                                            alt="Chi tiết sản phẩm" />
+                                    </figure>
+                                    <% quantityAll = 0%>
+                                    <% VariantsWIdProduct.forEach(function(items) { %>
+                                    <% quantityAll += items.quantity_variant %>
+                                    <% if(items.image_variant){ %>
+                                    <figure class="pro-thumb-item">
+                                        <img src="/assets/img/product/<%= items.image_variant %>"
+                                            alt="Chi tiết sản phẩm" />
+                                    </figure>
+                                    <% } %>
+                                    <% }); %>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Kết thúc Khu vực Hình ảnh Sản phẩm -->
+
+                        <!-- Bắt đầu Khu vực Thông tin Sản phẩm -->
+                        <div class="col-md-7">
+                            <div class="product-details-info-content-wrap">
+                                <div class="prod-details-info-content">
+                                    <h2 style="text-transform: uppercase;"><%= detailProduct.name_product %></h2>
+
+                                    <% TotalStar = 0
+                                    let reviewCount = review.length;
+                                    review.forEach(function(items) { %>
+                                    <% TotalStar += items.star %>
+                                    <% }) 
+                                    TotalStar = TotalStar / reviewCount
+                                    %>
+                                    <% if(TotalStar){
+                                      hienthiStart(TotalStar)
+                                    }else{ %>
+                                    <span class="no-review"
+                                        style="color: #888; font-style: italic; font-size: 14px;">(Chưa có đánh giá
+                                        nào)</span>
+                                    <% }%>
+
+                                    <div class="d-flex" style="font-size: 50px;">
+                                        <i style="color: red;  font-weight: bolder;margin-left: 5px;">
+                                            <%= formatCurrency(detailProduct.price_product-(detailProduct.price_product * (detailProduct.price_sale / 100))
+                                        ) %>
+                                        </i>
+                                        <del style="opacity: 0.5; font-size: 30px; margin-left: 15px;">
+                                            <%= formatCurrency(detailProduct.price_product) %></del>
+                                    </div>
+                                    <% if(quantityAll>0){ %>
+                                    <p><b> Số lượng: </b><%= quantityAll %> <span
+                                            style="padding: 5px; background-color: rgb(71, 205, 71); border-radius: 10px; color: white;">Còn
+                                            hàng</span>
+                                    </p>
+                                    <% }%>
+                                    <% if(quantityAll<=0){ %>
+                                    <p><b> Số lượng: </b><%= quantityAll %> <span
+                                            style="padding: 5px; background-color: red; border-radius: 10px; color: white;">Hết
+                                            hàng</span>
+                                    </p>
+                                    <% }%>
+                                    <p><b> Danh mục: </b><%= detailProduct.Category.name_category %></p>
+                                    <div class="gift-info-box"
+                                        style="border: 4px solid #ff0000; border-radius: 15px; padding: 20px; margin-bottom: 25px; background-color: #fff1f1; box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2);">
+                                        <div
+                                            style="display: flex; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #ff6b6b; padding-bottom: 10px;">
+                                            <i class="fa fa-gift"
+                                                style="font-size: 30px; margin-right: 15px; color: #ff0000;"></i>
+                                            <h4
+                                                style="margin: 0; color: #ff0000; font-size: 22px; text-transform: uppercase; letter-spacing: 1px;">
+                                                Ưu đãi đặc biệt</h4>
+                                        </div>
+                                        <ul style="list-style-type: none; padding-left: 0; margin-left: 30px;">
+                                            <li style="margin-bottom: 10px; font-size: 16px;"><i class="fa fa-check"
+                                                    style="color: #ff0000; margin-right: 10px; font-size: 18px;"></i>
+                                                Tặng kèm một đôi tất</li>
+                                            <li style="margin-bottom: 10px; font-size: 16px;"><i class="fa fa-truck"
+                                                    style="color: #ff0000; margin-right: 10px; font-size: 18px;"></i>
+                                                Miễn phí vận chuyển</li>
+                                            <li style="margin-bottom: 10px; font-size: 16px;"><i class="fa fa-shield"
+                                                    style="color: #ff0000; margin-right: 10px; font-size: 18px;"></i>
+                                                Cam kết chính hãng</li>
+                                            <li style="font-size: 16px;"><i class="fa fa-calendar-check-o"
+                                                    style="color: #ff0000; margin-right: 10px; font-size: 18px;"></i>
+                                                Bảo hành 6 tháng</li>
+                                        </ul>
+                                    </div>
+                                    <div class="Thontinuudai"></div>
+                                    <form action="" method="post">
+                                        <div class="product-config">
+                                            <div class="table-responsive">
+
+
+
+                                                <table class="table">
+                                                    <tr>
+                                                        <th class="config-label">Màu sắc</th>
+                                                        <td class="config-option">
+                                                            <div class="config-color">
+                                                                <% listColors.forEach(function(itemsCl) { %>
+                                                                <script>
+                                                                    document.addEventListener('DOMContentLoaded',
+                                                                        function () {
+                                                                            var colorInputs = document
+                                                                                .querySelectorAll(
+                                                                                    '.color-input');
+                                                                            var elements = document
+                                                                                .querySelectorAll('.lableSize');
+                                                                            colorInputs.forEach(function (input) {
+                                                                                input.addEventListener(
+                                                                                    'click',
+                                                                                    function () {
+
+                                                                                        '<% VariantsWIdProduct.forEach(function(itemsV) { %>'
+                                                                                        '<% listSizes.forEach(function(itemsS) { %>'
+                                                                                        if ('<%=itemsV.id_color %>' ==
+                                                                                            this
+                                                                                            .value &&
+                                                                                            '<%= itemsV.id_size%>' ==
+                                                                                            '<%= itemsS.id %>' &&
+                                                                                            '<%=itemsV.quantity_variant %>' ==
+                                                                                            0) {
+                                                                                            document
+                                                                                                .querySelectorAll(
+                                                                                                    '.lableSize<%=itemsS.id%>'
+                                                                                                )
+                                                                                                .forEach(
+                                                                                                    function (
+                                                                                                        element
+                                                                                                    ) {
+                                                                                                        element
+                                                                                                            .setAttribute(
+                                                                                                                'style',
+                                                                                                                'display: none;'
+                                                                                                            );
+                                                                                                    });
+                                                                                        }
+                                                                                        if ('<%=itemsV.id_color %>' ==
+                                                                                            this
+                                                                                            .value &&
+                                                                                            '<%= itemsV.id_size%>' ==
+                                                                                            '<%= itemsS.id %>' &&
+                                                                                            '<%=itemsV.quantity_variant %>' !=
+                                                                                            0) {
+                                                                                            document
+                                                                                                .querySelectorAll(
+                                                                                                    '.lableSize<%=itemsS.id%>'
+                                                                                                )
+                                                                                                .forEach(
+                                                                                                    function (
+                                                                                                        element
+                                                                                                    ) {
+                                                                                                        element
+                                                                                                            .removeAttribute(
+                                                                                                                'style',
+                                                                                                            );
+                                                                                                    });
+                                                                                        }
+                                                                                        ' <% }); %>'
+                                                                                        ' <% }); %>'
+                                                                                    });
+                                                                            });
+                                                                        });
+                                                                </script>
+                                                                <input type="radio" class="btn-check color-input"
+                                                                    name="color" id="color<%= itemsCl.id %>"
+                                                                    value="<%= itemsCl.id %>" autocomplete="off">
+                                                                <label class="btn btn-outline-dark"
+                                                                    for="color<%= itemsCl.id %>"><%= itemsCl.name_color %></label>
+                                                                <% }); %>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr id="selectedColor">
+                                                        <th class="config-label">Kích thước</th>
+                                                        <td class="config-option">
+                                                            <% listSizes.forEach(function(items) { %>
+                                                            <input type="radio" class="btn-check" name="size"
+                                                                id="size<%= items.id %>" value="<%= items.id %>"
+                                                                autocomplete="off">
+                                                            <label class="btn btn-outline-dark lableSize<%= items.id %>"
+                                                                for="size<%= items.id %>"><%= items.name_size %></label>
+                                                            <% }); %>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="product-action">
+                                            <div class="action-top d-sm-flex">
+                                                <div class="pro-qty mr-3 mb-4 mb-sm-0">
+                                                    <label for="quantity" class="sr-only">Số lượng</label>
+                                                    <input type="text" id="quantity" title="Số lượng" value="1"
+                                                        name="quantity" />
+                                                </div>
+                                                <button class="btn btn-bordered">Thêm vào giỏ hàng</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Kết thúc Khu vực Thông tin Sản phẩm -->
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="product-description-review">
+                                <!-- Menu Tab Mô tả Sản phẩm -->
+                                <ul class="nav nav-tabs desc-review-tab-menu" id="desc-review-tab" role="tablist">
+                                    <li>
+                                        <button class="active" id="desc-tab" type="button" data-bs-toggle="tab"
+                                            data-bs-target="#descriptionContent" role="tab"
+                                            aria-controls="descriptionContent" aria-selected="true">Mô tả</button>
+                                    </li>
+                                    <li>
+                                        <button id="profile-tab" type="button" data-bs-toggle="tab"
+                                            data-bs-target="#reviewContent" role="tab" aria-controls="reviewContent"
+                                            aria-selected="false">Đánh giá (<%=reviewCount%>)</button>
+                                    </li>
+                                </ul>
+
+                                <!-- Nội dung Tab Mô tả Sản phẩm -->
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="descriptionContent" role="tabpanel"
+                                        aria-labelledby="desc-tab">
+                                        <div class="description-content">
+                                            <p><%- detailProduct.description_product.replace(/\n/g, '<br>') %></p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="reviewContent" role="tabpanel"
+                                        aria-labelledby="profile-tab">
+                                        <div class="product-rating-wrap">
+                                            <div class="average-rating">
+                                                <h4> <% if(TotalStar){
+                                                    hienthiStart(TotalStar)
+                                                  }else{
+                                                    hienthiStart(5)
+                                                     }%><span>(Tổng thể)</span></h4>
+                                                <span>Dựa trên <%=reviewCount%> Bình luận</span>
+                                            </div>
+
+                                            <div class="display-ratings">
+                                                <%  review.forEach(function(items) { %>
+                                                <div class="rating-item">
+                                                    <div class="rating-author-pic">
+                                                        <% if(typeof items.Account.avatar_account === 'undefined' || items.Account.avatar_account === null || items.Account.avatar_account === ''){ %>
+                                                        <i class="fa-solid fa-user fa-xl" style="color: #b3883d;"></i>
+                                                        <% }else{ %>
+                                                        <img src="/assets/img/user/<%= items.Account.avatar_account %>"
+                                                            alt="" width="50px" height="50px">
+                                                        <% } %> </div>
+
+
+                                                    <div class="rating-author-txt">
+
+                                                        <div class="d-flex">
+                                                            <h6 style="margin: 0;">
+                                                                <%= items.Account.full_name_account %></h6>
+                                                            <span style="opacity: 0.5;" class="time">(
+                                                                <%= formatDate(items.createdAt)%>)</span>
+                                                        </div>
+                                                        <% hienthiStart(items.star) %>
+                                                        <p style="padding: 10px; border-bottom:1px solid #e2e1e1;">
+                                                            <%= items.content_review %></p>
+                                                    </div>
+                                                </div>
+                                                <% }) %>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const colorSelected = document.querySelector('input[name="color"]:checked');
+        const sizeSelected = document.querySelector('input[name="size"]:checked');
+        const quantityInput = document.querySelector('input[name="quantity"]');
+        const colorOptions = document.querySelectorAll('input[name="color"]');
+        const sizeOptions = document.querySelectorAll('input[name="size"]');
+
+        let isValid = true;
+
+        if (!colorSelected) {
+            isValid = false;
+            colorOptions.forEach(option => {
+                option.nextElementSibling.style.border = '2px solid red';
+            });
+        }
+
+        if (!sizeSelected) {
+            isValid = false;
+            sizeOptions.forEach(option => {
+                option.nextElementSibling.style.border = '2px solid red';
+            });
+        }
+
+        if (parseInt(quantityInput.value) <= 0) {
+            isValid = false;
+            quantityInput.style.border = '2px solid red';
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+</script>
+
+<%- include('footer') -%>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+    </symbol>
+    <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+    </symbol>
+    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </symbol>
+</svg>
+<% if( flash.checkAddCart !== undefined && flash.checkAddCart == 'success'){ %>
+<div id="alertEr" style="opacity: 0; transition: opacity 1s ease;">
+    <div style="max-width: 500px; position: absolute; top: 30px; position: fixed; right: 30px;"
+        class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Thành công:">
+            <use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div>
+            Thêm vào giỏ hàng thành công ! </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var fadeInOutDiv = document.getElementById('alertEr');
+        fadeInOutDiv.style.opacity = 1;
+        setTimeout(function () {
+            fadeInOutDiv.style.opacity = 0;
+        }, 3000);
+    });
+</script>
+<% }  %>

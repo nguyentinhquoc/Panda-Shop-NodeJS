@@ -1,0 +1,198 @@
+<%- include('header') -%>
+<!--== Bắt đầu Khu vực Tiêu đề Trang ==-->
+<% function truncateString(str, maxLength) {
+    if (str.length > maxLength) {
+    return str.substring(0, maxLength - 3) + '...';
+    }
+    return str;
+   }%>
+<%  function formatCurrency(amount) {
+    return amount.toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    });
+} %>
+<div class="page-header-wrap bg-img" data-bg="/assets/img/bg/page-header-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-header-content">
+                    <div class="page-header-content-inner">
+                        <h1>Cửa hàng</h1>
+                        <ul class="breadcrumb">
+                            <li><a href="/">Trang chủ</a></li>
+                            <li class="current"><a href="#">Cửa hàng</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Kết thúc Khu vực Tiêu đề Trang ==-->
+
+<!--== Bắt đầu Wrapper Nội dung Trang ==-->
+<div class="page-content-wrapper sp-y">
+    <div class="container container-wide">
+        <div class="row">
+            <div class="col-lg-3 order-1 order-lg-0">
+                <div class="sidebar-area">
+                    <div class="sidebar-item">
+                        <h4 class="sidebar-title">Danh mục sản phẩm</h4>
+                        <div class="sidebar-body">
+                            <ul class="sidebar-list">
+                                <% categories.forEach(function(category) { %>
+                                <li><a
+                                        href="/shop/<%= category.name_category %>/1/%20/"><%= category.name_category %></a>
+                                </li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sidebar-item">
+                        <h4 class="sidebar-title">Sản phẩm gần đây</h4>
+                        <div class="sidebar-body">
+                            <% top10New.forEach(function(items) { %>
+                            <div class="sidebar-product">
+                                <a href="/detail-product/<%= items.Product.id %>" class="image"><img
+                                        src="/assets/img/product/<%= items.Product.image_product %>"
+                                        alt="sản phẩm" /></a>
+                                <div class="content">
+                                    <a href="/detail-product/<%= items.Product.id %>" class="title"></a>
+                                    <%= truncateString(items.Product.name_product,16) %></a>
+                                    <span class="price">
+                                        <%= formatCurrency(items.Product.price_product-(items.Product.price_product * (items.Product.price_sale / 100))
+                                        ) %>
+                                        <span
+                                            class="old"><%= formatCurrency(items.Product.price_product) %></span></span>
+                                    <div class="ratting">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 order-0 order-lg-1">
+                <div class="action-bar-inner mb-30">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                            <div class="shop-layout-switcher mb-15 mb-sm-0">
+                                <ul class="layout-switcher nav">
+                                    <li data-layout="grid" class="active"><i class="fa fa-th"></i></li>
+                                    <li data-layout="list"><i class="fa fa-th-list"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <form action="" method="post">
+                                <div class="input-group">
+                                    <input type="search" class="form-control rounded" placeholder="Tìm kiếm"
+                                        aria-label="Tìm kiếm" aria-describedby="search-addon" name="searchProduct" />
+                                    <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Tìm
+                                        kiếm</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-wrapper product-layout layout-grid">
+                    <% if (searchProduct && searchProduct !="") { %>
+                    <h5
+                        style="padding:1rem; background: linear-gradient(to right, #f0f0f0, #e0e0e0); border-left: 4px solid #007bff; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        TÌM KIẾM: <%= searchProduct %></h5>
+                    <% } %>
+                    <div class="row mtn-30">
+                        <% listProducts.forEach(function(items) { %>
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="product-item">
+                                <div class="product-item__thumb">
+                                    <a href="/detail-product/<%= items.Product.id %>">
+                                        <img class="thumb-primary"
+                                            src="/assets/img/product/<%= items.Product.image_product %>" alt="Sản phẩm"
+                                            height="250px" />
+                                        <img class="thumb-secondary" src="/assets/img/logo-light.png" alt="Sản phẩm"
+                                            height="250px" />
+                                    </a>
+                                    <div class="ratting">
+                                    </div>
+                                </div>
+                                <div class="product-item__content">
+                                    <div class="product-item__info">
+                                        <h4 class="title"><a
+                                                href="/detail-product/<%= items.Product.id %>"><%= truncateString(items.Product.name_product,22) %></a></a>
+                                        </h4>
+                                        <div class="d-flex" style="font-size: 20px;">
+                                            <i style="color: red;  font-weight: bolder;margin-left: 5px;">
+                                                <%= formatCurrency(items.Product.price_product-(items.Product.price_product * (items.Product.price_sale / 100))
+                                            ) %>
+                                            </i>
+                                            <del style="opacity: 0.5; font-size: 15px; margin-left: 15px;">
+                                                <%= formatCurrency(items.Product.price_product) %></del>
+                                        </div>
+                                        <span class="price">
+                                            <p
+                                                style="margin-left: 60px;opacity: 0.5;color: blueviolet; font-size: small;">
+                                                Đã bán:
+                                                <%=  items.sales %>
+                                        </span>
+                                    </div>
+
+                                    <div class="product-item__desc">
+                                        <p>Theo đuổi niềm vui một cách hợp lý gặp phải những hậu quả cực kỳ đau đớn.
+                                            Cũng không có ai yêu thích hoặc theo đuổi hoặc mong muốn có được nỗi đau của
+                                            chính nó, bởi vì nó là nỗi đau, nhưng đôi khi gặp phải những hoàn cảnh</p>
+                                    </div>
+                                </div>
+                                <div class="product-item__sale" style="padding: 5px 20px; border-radius: 40% 0px;">
+                                    <span class="sale-txt"
+                                        style="font-size: 15px; font-weight: bolder;"><%= items.Product.price_sale %>%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+                <div class="action-bar-inner mt-30">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                            <% var count = 0;   %>
+                            <% countProduct.forEach(function(items) { 
+                                count ++;
+                             }); %>
+                            <% pageMin = (page*9)-8 %>
+                            <% pageMax = (page*9)
+                            if(pageMax > count) {
+                                pageMax = count
+                            }
+                            %>
+                            <div class="pagination">
+                                <% if(page > 1 ) { %>
+                                <a href="<%= linkNoPage + '/' + (page-1) + '/' + searchProduct + '/' %>">&laquo;</a>
+                                <%  }; %>
+                                <%  numberPage = Math.ceil(count/9)  %>
+                                <% for(var i = 1; i <= numberPage; i++) { %>
+                                <a <% if( page == i) { %> class="active" <% } %>
+                                    href="<%= linkNoPage + '/' + i + '/' + searchProduct + '/' %>"><%= i %></a>
+                                <% }; %>
+                                <% if(page < numberPage ) { %>
+                                <a href="<%= linkNoPage + '/' + (page+1) + '/' + searchProduct + '/' %>">&raquo;</a>
+                                <%  }; %>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 text-center text-sm-end">
+                            <p>Hiển thị <%= pageMin %> - <%= pageMax %> của <%= count %> kết quả</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('footer') -%>

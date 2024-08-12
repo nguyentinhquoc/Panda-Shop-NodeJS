@@ -1,0 +1,97 @@
+<%- include('header') -%>
+
+<!--== Bắt đầu Khu vực Tiêu đề Trang ==-->
+<div class="page-header-wrap bg-img" data-bg="/assets/img/bg/page-header-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-header-content">
+                    <div class="page-header-content-inner">
+                        <h1>Đăng nhập</h1>
+                        <ul class="breadcrumb">
+                            <li><a href="/">Trang chủ</a></li>
+                            <li class="current"><a href="#">Đăng nhập</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Kết thúc Khu vực Tiêu đề Trang ==-->
+
+<!--== Bắt đầu Wrapper Nội dung Trang ==-->
+<div class="page-content-wrapper sp-y">
+    <div class="login-page-content-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12 ml-auto mr-auto">
+                    <div class="login-form-style">
+                        <form action="#" method="post">
+                            <input type="text" name="email_account" placeholder="Email">
+                            <input type="password" name="pass_account" placeholder="Mật khẩu">
+                            <div class="login-toggle-btn">
+                                <a href="#">Quên mật khẩu ?</a>
+                            </div>
+                            <div class="login-btn">
+                                <button type="submit">Đăng nhập</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="alertSc" style="opacity: 0; transition: opacity 1s ease;">
+    <div style="max-width: 500px; position: absolute; top: 30px; position: fixed; right: 30px;"
+        class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Thành công:">
+            <use xlink:href="#check-circle-fill" /></svg>
+        <div>
+            <% if( flash.checkregister !== undefined && flash.checkregister == 'success' ){ %>
+            Đăng ký thành công, vui lòng đăng nhập !
+            <% }  %>
+        </div>
+    </div>
+</div>
+<% if( flash.checkregister !== undefined && flash.checkregister == 'success' ){ %>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var fadeInOutDiv = document.getElementById('alertSc');
+        fadeInOutDiv.style.opacity = 1;
+        setTimeout(function () {
+            fadeInOutDiv.style.opacity = 0;
+        }, 3000);
+    });
+</script>
+<% }  %>
+
+<div id="alertEr" style="opacity: 0; transition: opacity 1s ease;">
+    <div style="max-width: 500px; position: absolute; top: 30px; position: fixed; right: 30px;"
+        class="alert alert-danger d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Nguy hiểm:">
+            <use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div>
+            <% if(flash.checklogin !== undefined && flash.checklogin == 'error' ){ %>
+            Email hoặc mật khẩu không chính xác !
+            <% }  %>
+            <% if( flash.checkAddCart !== undefined && flash.checkAddCart == 'error' ){ %>
+            Vui lòng đăng nhập để thực hiện chức năng này !
+            <% }  %>
+        </div>
+    </div>
+</div>
+<% if((flash.checklogin !== undefined && flash.checklogin == 'error') || (flash.checkAddCart !== undefined && flash.checkAddCart == 'error') ){ %>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var fadeInOutDiv = document.getElementById('alertEr');
+        fadeInOutDiv.style.opacity = 1;
+        setTimeout(function () {
+            fadeInOutDiv.style.opacity = 0;
+        }, 3000);
+    });
+</script>
+<% }  %>
+<%- include('footer') -%>

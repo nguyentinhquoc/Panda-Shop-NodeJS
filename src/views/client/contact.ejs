@@ -1,0 +1,219 @@
+<%- include('header') -%>
+
+<style>
+    .contact-page-wrap {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 50px 0;
+    }
+
+    .contact-info-wrapper {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .contact-info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .con-info-icon {
+        font-size: 24px;
+        color: #4CAF50;
+        margin-right: 15px;
+    }
+
+    .con-info-txt h4 {
+        margin: 0;
+        color: #333;
+    }
+
+    .con-info-txt p {
+        margin: 5px 0 0;
+        color: #666;
+    }
+
+    .contact-form-wrapper {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+
+    .contact-form-content h2 {
+        color: #4CAF50;
+        margin-bottom: 30px;
+    }
+
+    .input-item {
+        margin-bottom: 20px;
+    }
+
+    .input-item input,
+    .input-item textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .btn-brand {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn-brand:hover {
+        background: #45a049;
+    }
+
+    .contact-map-wrapper {
+        height: 400px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-item {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .input-item label {
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        background-color: white;
+        padding: 0 5px;
+        font-size: 12px;
+        color: #4CAF50;
+        transition: all 0.3s ease;
+    }
+
+    .input-item input:focus+label,
+    .input-item textarea:focus+label {
+        top: -15px;
+        font-size: 14px;
+        color: #45a049;
+    }
+</style>
+<!--== End Header Area ==-->
+
+<!--== Start Page Header Area ==-->
+<div class="page-header-wrap bg-img" data-bg="assets/img/bg/page-header-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-header-content">
+                    <div class="page-header-content-inner">
+                        <h1>Liên hệ</h1>
+                        <ul class="breadcrumb">
+                            <li><a href="/">Trang chủ</a></li>
+                            <li class="current"><a href="/contact">Liên hệ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="contact-page-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="contact-form-wrapper">
+                    <div class="contact-form-content">
+                        <h2>Gửi tin nhắn cho chúng tôi</h2>
+                        <form method="post" id="contact-form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-item">
+                                        <label for="name">Họ và tên:</label>
+                                        <input type="text" name="full_name_contact" id="name" placeholder="Nguyễn Văn A"
+                                            required />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-item">
+                                        <label for="subject">Số điện thoại:</label>
+                                        <input type="tel" name="tel_contact" id="subject" placeholder="09xxxxxxxxxx"
+                                            required />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-item">
+                                        <label for="email">Email:</label>
+                                        <input type="email" name="email_contact" id="email"
+                                            placeholder="nguyenxxxx@gmail.com" required />
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="input-item">
+                                        <label for="message">Nội dung tin nhắn:</label>
+                                        <textarea name="content_contact" id="message" cols="30" rows="8"
+                                            placeholder="Nội dung tin nhắn" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-brand">Gửi tin nhắn</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="contact-info-wrapper">
+                    <div class="contact-info-item" style="max-height: 150px;">
+                        <div class="con-info-icon ">
+                            <i class="ion-ios-location-outline"></i>
+                        </div>
+                        <div class="con-info-txt col-10">
+                            <h4>Địa chỉ của chúng tôi</h4>
+                            <p>Tầng 12, Tòa VP 1, 21 Lê Đức Thọ, Mỹ Đình 2, Nam Từ Liêm, Hà Nội</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item" style="max-height: 150px;">
+                        <div class="con-info-icon ">
+                            <i class="ion-iphone"></i>
+                        </div>
+                        <div class="con-info-txt col-10">
+                            <h4>Liên hệ với chúng tôi</h4>
+                            <p>Điện thoại: (+84)862 201 004 <br>Fax: (+84)24 777 00888</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item" style="max-height: 150px;">
+                        <div class="con-info-icon ">
+                            <i class="ion-ios-email-outline"></i>
+                        </div>
+                        <div class="con-info-txt col-10">
+                            <h4>Email</h4>
+                            <p>info@bytesoft.net<br>nguyentinht140321@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="contact-map-wrapper">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.9734781770167!2d105.7676039748218!3d21.03374718061679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134550fe0328507%3A0x68af5d16b216cd6d!2zVMOyYSBuaMOgIFN1biBTcXVhcmU!5e0!3m2!1svi!2s!4v1723013580811!5m2!1svi!2s"
+                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('footer') -%>

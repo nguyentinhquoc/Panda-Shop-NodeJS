@@ -1,0 +1,115 @@
+<%- include('header') -%>
+
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar-container">
+                <img src="/assets/img/user/<%= user.avatar_account %>" alt="Ảnh Đại Diện" class="profile-avatar">
+                <div class="profile-status <%= user.status_account ? 'active' : 'inactive' %>"></div>
+            </div>
+            <h1 class="profile-name"><%= user.full_name_account %></h1>
+            <span class="profile-role <%= user.role_account === 1 ? 'user-role' : 'admin-role' %>">
+                <i class="<%= user.role_account === 1 ? 'fas fa-user' : 'fas fa-user-shield' %>"></i>
+                <%= user.role_account === 1 ? 'Người dùng' : 'Quản trị viên' %>
+            </span>
+        </div>
+        <div class="profile-details">
+            <div class="detail-item email-item">
+                <i class="fas fa-envelope"></i>
+                <p><strong>Email:</strong> <%= user.email_account %></p>
+            </div>
+            <div class="detail-item phone-item">
+                <i class="fas fa-phone"></i>
+                <p><strong>Số Điện Thoại:</strong> <%= user.tel_account %></p>
+            </div>
+            <div class="detail-item address-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <p><strong>Địa chỉ:</strong> <%= user.address_account %></p>
+            </div>
+            <div class="detail-item date-item">
+                <i class="fas fa-calendar-alt"></i>
+                <p><strong>Ngày tham gia:</strong> <%= new Date(user.createdAt).toLocaleDateString() %></p>
+            </div>
+            <div class="detail-item status-item">
+                <i class="fas fa-user-check"></i>
+                <p><strong>Trạng thái:</strong> <%= user.status_account ? 'Hoạt động' : 'Không hoạt động' %></p>
+            </div>
+            <div class="detail-item language-item">
+                <i class="fas fa-language"></i>
+                <p><strong>Ngôn ngữ:</strong> Tiếng Việt</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include('footer') -%>
+
+<style>
+    .profile-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-name {
+        margin-top: 15px;
+        color: #333;
+    }
+
+    .profile-role {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        margin-top: 10px;
+    }
+
+    .profile-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .detail-item i {
+        font-size: 1.5em;
+        margin-right: 15px;
+        color: #007bff;
+    }
+
+    .detail-item p {
+        margin: 0;
+        color: #555;
+    }
+
+    .detail-item strong {
+        color: #333;
+    }
+</style>

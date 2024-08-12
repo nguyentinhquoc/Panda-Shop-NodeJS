@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="no-js" lang="vi">
+
+<head>
+    <style>
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        .pagination a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PandaShop - Cửa hàng Giày thể thao</title>
+    <!--== Favicon ==-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/fontIcon/css/all.css">
+
+    <!--== Google Fonts ==-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700%7CPoppins:400,400i,500,600&amp;display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+
+    <!-- build:css /assets/css/app.min.css -->
+    <!--== Leaflet Min CSS ==-->
+    <link href="/assets/css/leaflet.min.css" rel="stylesheet" />
+    <!--== Nice Select Min CSS ==-->
+    <link href="/assets/css/nice-select.min.css" rel="stylesheet" />
+    <!--== Slick Slider Min CSS ==-->
+    <link href="/assets/css/slick.min.css" rel="stylesheet" />
+    <!--== Magnific Popup Min CSS ==-->
+    <link href="/assets/css/magnific-popup.min.css" rel="stylesheet" />
+    <!--== Slicknav Min CSS ==-->
+    <link href="/assets/css/slicknav.min.css" rel="stylesheet" />
+    <!--== Animate Min CSS ==-->
+    <link href="/assets/css/animate.min.css" rel="stylesheet" />
+    <!--== Ionicons Min CSS ==-->
+    <link href="/assets/css/ionicons.min.css" rel="stylesheet" />
+    <!--== Font-Awesome Min CSS ==-->
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!--== Bootstrap Min CSS ==-->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="/assets/css/style.css" rel="stylesheet" />
+    <!--== Helper Min CSS ==-->
+    <link href="/assets/css/helper.min.css" rel="stylesheet" />
+    <!-- endbuild -->
+
+</head>
+
+<body>
+
+    <!--== Bắt đầu Khu vực Header ==-->
+    <header class="header-area">
+        <div class="container container-wide">
+            <div class="row align-items-center">
+                <div class="col-sm-4 col-lg-2">
+                    <div class="site-logo text-center text-sm-start">
+                        <a href="/"><img src="/assets/img/logo.png" width="130px" alt="Logo" /></a>
+                    </div>
+                </div>
+                <div class="col-lg-7 d-none d-lg-block">
+                    <div class="site-navigation">
+                        <ul class="main-menu nav">
+                            <li class="has-submenu"><a style="font-size: larger;" href="/">Trang chủ</a>
+                            </li>
+                            <li><a style="font-size: larger;" href="/about">Giới thiệu</a></li>
+                            <li class="has-submenu"><a style="font-size: larger;" href="/shop/all-product/1/%20/">Cửa
+                                    hàng</a>
+                                <ul class="sub-menu">
+                                    <li> <a style="font-size: larger;" href="/shop/all-product/1/%20/"> Tất cả giày</a>
+                                    </li>
+                                    <% if(typeof categories != 'undefined') { %>
+                                    <%categories.forEach(category => { %>
+                                    <% if( category.status_category != 0) { %>
+                                    <li><a style="font-size: larger;"
+                                            href="/shop/<%=category.name_category %>/1/%20/">Giày
+                                            <%=category.name_category %></a>
+                                    </li>
+                                    <%  }%>
+                                    <%  }) %>
+                                    <%  }%>
+                                </ul>
+                            </li>
+                            <li><a style="font-size: larger;" href="/gallery">Thư viện</a></li>
+                            <li><a style="font-size: larger;" href="/contact">Liên hệ</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-sm-8 col-lg-3">
+                    <div class="site-action d-flex justify-content-center justify-content-sm-end align-items-center">
+                        <% if(typeof user === 'undefined' || user === null || user === ''){ %>
+                        <ul class="login-reg-nav nav">
+                            <li><a style="font-size: larger;" href="/login">Đăng nhập</a></li>
+                            <li><a style="font-size: larger;" href="/register">Đăng ký</a></li>
+                        </ul>
+                        <% }else{ %>
+                        <div class="username"
+                            style="display: flex; align-items: center; font-weight: bold; position: relative;">
+                            <div class="user-icon">
+                                <% if(typeof user.avatar_account === 'undefined' || user.avatar_account === null || user.avatar_account === ''){ %>
+                                <i class="fa-solid fa-user fa-xl" style="color: #b3883d;"></i>
+                                <% }else{ %>
+                                <img src="/assets/img/user/<%= user.avatar_account %>" alt="" width="50px" height="50px"
+                                    style="border-radius: 50%;">
+                                <% } %>
+
+                            </div>
+                            <div class="user-name">
+                                <p
+                                    style="font-size: larger; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                                    <%= user.full_name_account %> </p>
+                            </div>
+                            <div class="submenu">
+                                <ul>
+                                    <li><a href="/profile"><i class="fa-solid fa-user-circle"></i> Hồ sơ</a></li>
+                                    <li><a href="/orders"><i class="fa-solid fa-shopping-bag"></i> Đơn hàng của tôi</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="/logout" class="logout"><i class="fa-solid fa-sign-out-alt"></i>
+                                            Đăng xuất</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <a href="/cart" class="btn-mini-cart">
+                            <div class="mini-cart-wrap">
+                                <i class="ion-bag"></i>
+                                <span class="cart-total"><%= numberInCart %></span>
+                                <div class="mini-cart-content">
+                                    <div class="mini-cart-product">
+                                        <div class="mini-product">
+                                            <div class="mini-product__thumb">
+                                                <a href="single-product"><img src="/assets/img/product/product-1.png"
+                                                        alt="sản phẩm" /></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="responsive-menu d-lg-none">
+                                    <button class="btn-menu">
+                                        <i class="fa fa-bars"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+
+                        <% } %>
+
+
+                    </div>
+                </div>
+            </div>
+    </header>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </symbol>
+    </svg>
+    <!--== Kết thúc Khu vực Header ==-->

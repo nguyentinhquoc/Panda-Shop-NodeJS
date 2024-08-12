@@ -1,0 +1,25 @@
+npx sequelize-cli model:generate --name Account --attributes full_name_account:string,pass_account:string,email_account:string,address_account:string,tel_account:string,role_account:integer,avatar_account:string,status_account:integer,marketing_account:integer
+
+npx sequelize-cli model:generate --name Category --attributes name_category:string,status_category:integer,image_category:string,description_category:string
+
+npx sequelize-cli model:generate --name ClassificationOrder --attributes id_user:integer,code_oders:integer,quantity:integer,code_status:integer,id_variants:integer
+
+npx sequelize-cli model:generate --name Color --attributes name_color:string
+
+npx sequelize-cli model:generate --name Comment --attributes content_comment:string,id_user:integer,id_product:integer,date_comment:date,status_comment:integer
+
+npx sequelize-cli model:generate --name Contact --attributes content_contact:string,full_name_contact:string,email_contact:string,tel_contact:string
+
+npx sequelize-cli model:generate --name DetailOrder --attributes full_name_user:string,tel_user:string,address_user:string,total_money:integer,price_total:integer,date:date,payment_method:string,code_status:integer
+
+npx sequelize-cli model:generate --name Notification --attributes image_notification:string,header_notification:string,content_notification:string
+
+npx sequelize-cli model:generate --name Product --attributes name_product:string,price_product:integer,price_sale:integer,image_product:string,description_product:string,view_product:integer,id_category:integer,status_product:integer,code_product:integer,rating_product.integer
+
+npx sequelize-cli model:generate --name Review --attributes id_user:integer,content_review:string,id_variants:integer,star:float
+
+npx sequelize-cli model:generate --name Size --attributes name_size:string
+
+npx sequelize-cli model:generate --name StatusOrder --attributes status_order:string
+
+npx sequelize-cli model:generate --name Variant --attributes id_product:integer,id_color:integer,id_size:integer,quantity_variant:integer,code_variant:string,image_variant:string,sales:integer

@@ -1,0 +1,283 @@
+<%- include('header') -%>
+
+<main class="main-wrapper">
+    <div class="main-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Components</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Starter Page</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="ms-auto">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary">Settings</button>
+                    <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
+                            href="javascript:;">Action</a>
+                        <a class="dropdown-item" href="javascript:;">Another action</a>
+                        <a class="dropdown-item" href="javascript:;">Something else here</a>
+                        <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+                            link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="row">
+            <div class="col-12 col-lg-11">
+                <div class="card">
+                    <div class="card-header px-4 py-3">
+                        <h5 class="mb-0">Edit Product</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form class="row g-3 needs-validation" novalidate
+                            action="/admin/edit-product/<%= valueProduct.id %>" method="POST" id="formAdd">
+                            <input type="hidden" name="productId" value="<%= valueProduct.id %>">
+
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <label for="NameProduct" class="form-label">
+                                        <h5 class="mb-3">Name Product</h5>
+                                    </label>
+
+                                    <input id="NameProduct" name="NameProduct" type="text" class="form-control"
+                                        value="<%= valueProduct.name_product %>"
+                                        placeholder="Write name product here...." required>
+                                </div>
+
+                                <div class="col-12 mb-3 d-flex justify-content-between">
+                                    <div class="col-5">
+                                        <label for="AddCategory" class="form-label">
+                                            <h5 class="mb-3">Category
+                                            </h5>
+                                        </label>
+                                        <select class="form-select" id="AddCategory" name="CategoryProduct">
+                                            <% categories.forEach(function(items) { %>
+                                            <option value="<%= items.id %>"
+                                                <%= items.id ==  valueProduct.id_category  ? 'selected=true' : '' %>>
+                                                <%= items.name_category.toUpperCase()  %>
+                                            </option>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <label for="PriceProduct" class="form-label">
+                                            <h5 class="mb-3">Price </h5>
+                                        </label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">$</span>
+                                            <input value="<%= valueProduct.price_product %>" id="PriceProduct"
+                                                type="number" class="form-control" min="0" name="PriceProduct" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <label for="PriceSaleProduct" class="form-label">
+                                            <h5 class="mb-3">Price Sale </h5>
+                                        </label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">$</span>
+                                            <input value="<%= valueProduct.price_sale %>" type="number"
+                                                id="PriceSaleProduct" class="form-control" min="0"
+                                                name="PriceSaleProduct" required>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="mb-4">
+                                    <h5 class="mb-3">Product Description</h5>
+                                    <textarea required id="DescriptionProduct" class="form-control"
+                                        name="DescriptionProduct" cols="4" rows="6"
+                                        placeholder="Write a description here...."><%= valueProduct.description_product %></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="ImageProduct" class="form-label">
+                                        <h5>Images Product </h5>
+                                    </label>
+                                    <input class="form-control form-control-lg" id="ImageProduct" type="file"
+                                        name="ImageProduct">
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-5">
+                                        <h4>Ảnh cũ</h4>
+                                        <img height="400px" src="/assets/img/product/<%= valueProduct.image_product  %>"
+                                            alt="">
+                                    </div>
+                                    <div class="col-5 ml-5">
+                                        <h4>Ảnh mới</h4>
+                                        <div id="preview-image">
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="ImageOld" value="<%= valueProduct.image_product %>">
+                                <div>
+                                    <h5>Variant</h5>
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th style="color: aqua;">SIZE / MÀU</th>
+                                            <% listColors.forEach(function(items) { %>
+                                            <th> <%= items.name_color.toUpperCase() %>
+                                            </th>
+                                            <% }); %>
+                                        </tr>
+                                        <% listSizes.forEach(function(items1) { %>
+                                        <tr>
+                                            <th><%= items1.name_size %></th>
+                                            <% listColors.forEach(function(items2) { %>
+                                            <% variants.forEach(function(items3) { %>
+                                            <% if (items2.id == items3.id_color && items1.id == items3.id_size) { %>
+                                            <th>
+                                                <input type="number" class="form-control" min="0"
+                                                    name="<%=items2.id%>_<%=items1.id%>"
+                                                    value="<%=items3.quantity_variant %>" required>
+                                            </th>
+                                            <% } %>
+                                            <% }); %>
+                                            <% }); %>
+                                        </tr>
+                                        <% }); %>
+                                    </table>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-grd-primary px-4">Submit</button>
+                        </form>
+                    </div>
+                    <!-- Bootstrap JS và jQuery -->
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+                    </script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                    <!-- ---------------------------- VALIDATE FORM ---------------------------- -->
+                    <script>
+                        function deleteImg() {
+                            let inputFile = document.getElementById('ImageProduct');
+                            let newInputFile = document.createElement('input');
+                            newInputFile.className = 'form-control form-control-lg';
+                            newInputFile.type = 'file';
+                            newInputFile.id = 'ImageProduct';
+                            newInputFile.name = 'ImageProduct';
+                            inputFile.parentNode.replaceChild(newInputFile, inputFile);
+                            document.getElementById('preview-image').innerHTML = ''
+                        }
+                        var domNameProduct = document.querySelector('#NameProduct');
+                        domNameProduct.addEventListener('blur', function () {
+                            var check = false;
+                            if (domNameProduct.value.trim() === "") {
+                                domNameProduct.style.border = '2px solid red';
+                            } else {
+                                check = true;
+                                domNameProduct.style.border = '';
+                            }
+                        });
+                        var domPriceProduct = document.querySelector('#PriceProduct')
+                        domPriceProduct.addEventListener('blur', function () {
+                            if (domPriceProduct.value.trim() === "" || domPriceProduct.value <= 0) {
+                                domPriceProduct.style.border = '2px solid red';
+                            } else {
+                                check = true;
+                                domPriceProduct.style.border = '';
+                            }
+                        });
+                        var
+                            domPriceSaleProduct = document.querySelector('#PriceSaleProduct')
+                        domPriceSaleProduct.addEventListener('blur', function () {
+                            if (domPriceSaleProduct.value.trim() === "" || domPriceSaleProduct.value <= 0) {
+                                domPriceSaleProduct.style.border = '2px solid red';
+                            } else {
+                                check = true;
+                                domPriceSaleProduct.style.border = '';
+                            }
+                        });
+                        var
+                            domDescriptionProduct = document.querySelector('#DescriptionProduct')
+                        domDescriptionProduct.addEventListener('blur', function () {
+                            if (domDescriptionProduct.value.trim() === "") {
+                                domDescriptionProduct.style.border = '2px solid red';
+                            } else {
+                                check = true;
+                                domDescriptionProduct.style.border = '';
+                            }
+                        });
+
+
+                        var domImageProduct = document.querySelector('#ImageProduct')
+                        var formAdd = document.querySelector('#formAdd')
+                        domImageProduct.addEventListener('blur', function () {
+                            if (domImageProduct.value.trim() === "") {
+                                domImageProduct.style.border = '2px solid red';
+                            } else {
+                                check = true;
+                                domImageProduct.style.border = '';
+                                formAdd.setAttribute('enctype', 'multipart/form-data')
+
+                            }
+                        });
+
+
+
+                        function
+                        submitF() {
+                            if (domNameProduct.value.trim() === "") {
+                                check = false;
+                                domNameProduct.style.border = '2px solid red';
+                            }
+                            if (domPriceProduct.value.trim() === "" ||
+                                domPriceProduct.value <= 0) {
+                                check = false;
+                                domPriceProduct.style.border = '2px solid red';
+                            }
+                            if (domPriceSaleProduct.value.trim() === "" || domPriceSaleProduct.value <= 0) {
+                                check = false;
+                                domPriceSaleProduct.style.border = '2px solid red';
+                            }
+                            if (domDescriptionProduct.value.trim() === "") {
+                                check = false;
+                                domDescriptionProduct.style.border = '2px solid red';
+                            }
+
+                            if (domNameProduct.value.trim() != "" && domPriceProduct.value > 0 &&
+                                domPriceSaleProduct.value > 0 && domDescriptionProduct
+                                .value
+                                .trim() != "") {
+                                formAdd.submit()
+                            }
+                        }
+
+
+
+                        document.getElementById('ImageProduct').addEventListener('change', function () {
+                            var file = this.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                reader.onload = function (e) {
+                                    document.getElementById('preview-image').innerHTML = `
+    <div  onclick="deleteImg()" id="deleteImg"><span class="material-icons-outlined position-absolute me-3 translate-middle-y end-0 top-50 search-close">close</span>
+</div>
+    <img  height="400px"  id="preview-images" src="#" alt="Preview">
+`;
+                                    document.getElementById('preview-images').src = e.target
+                                        .result;
+                                };
+                                reader.readAsDataURL(file);
+                                document.getElementById('file-name').textContent =
+                                    'File selected: ' + file.name;
+                            } else {
+                                domImageProduct.style.border = '2px solid red';
+                            }
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+</main>
+<%- include('footer') -%>

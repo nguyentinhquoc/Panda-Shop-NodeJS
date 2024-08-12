@@ -1,0 +1,241 @@
+<%- include('header') -%>
+<!--== Bắt đầu Khu vực Tiêu đề Trang ==-->
+<div class="page-header-wrap bg-img" data-bg="assets/img/bg/page-header-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-header-content">
+                    <div class="page-header-content-inner">
+                        <h1>Giỏ hàng</h1>
+                        <ul class="breadcrumb">
+                            <li><a href="index.html">Trang chủ</a></li>
+                            <li><a href="shop.html">Cửa hàng</a></li>
+                            <li class="current"><a href="#">Giỏ hàng</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form action="create_payment_url" method="post" id="paymentForm" novalidate class="row g-3 needs-validation">
+
+    <!--== Bắt đầu Wrapper Nội dung Trang ==-->
+    <div class="page-content-wrapper sp-y">
+        <div class="cart-page-content-wrap">
+            <div class="container container-wide">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="shopping-cart-list-area">
+                            <div class="shopping-cart-table table-responsive">
+
+                                <table class="table table-bordered text-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>XÓA</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá</th>
+                                            <th>Số lượng</th>
+                                            <th>Tổng cộng</th>
+                                        </tr>
+                                    </thead>
+                                    <% allTotall = 0; %>
+                                    <tbody>
+                                        <% listCart.forEach(function(items) { %>
+                                        <input type="hidden" name="id" value="<%= items.id %>">
+                                        <tr>
+                                            <td>
+                                                <div class="remove-icon">
+
+                                                    <a href="#" onclick="confirmDelete('<%= items.id %>')">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                </div>
+
+                                                <script>
+                                                    function confirmDelete(id) {
+                                                        Swal.fire({
+                                                            title: 'Bạn có chắc chắn không?',
+                                                            text: "Bạn sẽ không thể hoàn tác hành động này!",
+                                                            icon: 'warning',
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: '#3085d6',
+                                                            cancelButtonColor: '#d33',
+                                                            confirmButtonText: 'Có, xóa nó!',
+                                                            cancelButtonText: 'Hủy'
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                window.location.href = "/destroy/cart/" + id;
+                                                                setTimeout(() => {
+                                                                    window.location.href = "/cart";
+
+                                                                }, 1000);
+                                                            }
+                                                        })
+                                                    }
+                                                </script>
+                                            </td>
+                                            <td class="product-list">
+                                                <div class="cart-product-item d-flex align-items-center">
+                                                    <a href="/detail-product/<%=items.Variant.id_product%>"
+                                                        class="product-thumb">
+                                                        <img src="/assets/img/product/<%= items.Variant.Product.image_product %>"
+                                                            alt="Sản phẩm" />
+                                                    </a>
+                                                    <div>
+                                                        <a style="font-size: 25px;"
+                                                            href="/detail-product/<%=items.Variant.id_product%>"
+                                                            class="product-name"><%= items.Variant.Product.name_product %>
+                                                        </a>
+                                                        <p
+                                                            style="font-size: 10px; opacity: 0.8; font-weight: bold; color: rgb(17, 28, 156);">
+                                                            Biến thể:
+                                                            Kích cỡ: <%= items.Variant.Size.name_size %>
+                                                            ,Màu sắc:<%= items.Variant.Color.name_color %></p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <b>
+                                                    <% price=(items.Variant.Product.price_product-(items.Variant.Product.price_product * (items.Variant.Product.price_sale / 100)))  %>
+                                                    <span class="price"><%= formatCurrency(price)  %></b></span>
+                                            </td>
+                                            <td>
+                                                <input style="width: 60px; padding: 5px;" type="number" min="0"
+                                                    max="<%= items.Variant.quantity_variant %>" class="quantity"
+                                                    title="Số lượng" value="<%= items.quantity %>" name="quantity" />
+                                            </td>
+                                            <td>
+                                                <b><span
+                                                        class="priceTotal"><%= formatCurrency(items.quantity * price) %></span>
+                                                    <% allTotall += items.quantity * price; %></b>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const quantityInputs = document.querySelectorAll('.quantity');
+                                        quantityInputs.forEach(input => {
+                                            input.addEventListener('input', function () {
+                                                const row = this.closest('tr');
+                                                const price = parseFloat(row.querySelector(
+                                                    '.price').textContent);
+                                                const quantity = parseFloat(this.value);
+                                                const priceTotal = row.querySelector(
+                                                    '.priceTotal');
+                                                priceTotal.textContent = formatCurrency(
+                                                    (price * quantity * 1000).toFixed(3));
+                                                let allTotall = 0;
+                                                document.querySelectorAll('.priceTotal')
+                                                    .forEach(price => {
+                                                        const value = parseFloat(price
+                                                            .textContent.replace(
+                                                                /[^0-9.-]/g, '')
+                                                        );
+                                                        if (!isNaN(value)) {
+                                                            allTotall += value;
+                                                        }
+                                                    });
+                                                var formattedTotal = formatCurrency(allTotall *
+                                                    1000
+                                                );
+                                                document.querySelector('.allTotall')
+                                                    .textContent = formattedTotal;
+                                                document.querySelector('.total')
+                                                    .value = parseInt(allTotall * 1000);
+                                            });
+                                        });
+                                    });
+
+                                    function formatCurrency(amount) {
+                                        return parseFloat(amount).toLocaleString('vi-VN', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        });
+                                    }
+                                </script>
+                            </div>
+                            <div class="cart-coupon-update-area d-sm-flex justify-content-between align-items-center">
+                                <div colspan="4" style="text-align: start;"> <b> TỔNG CỘNG: </b></div>
+                                <div style="font-size: 30px;"> <b class="allTotall">
+                                        <%= formatCurrency(allTotall)%></b></div>
+                                <%  function formatCurrency(amount) {
+                                            return amount.toLocaleString('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND'
+                                            });
+                                        } %>
+                                <input type="hidden" class="total" name="total" value="<%=allTotall%>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart-calculate-area mt-sm-40 mt-md-60">
+                            <h5 class="cal-title">Thông tin thanh toán</h5>
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Họ và tên</label>
+                                <input type="text" class="form-control" id="fullName" name="fullName"
+                                    placeholder="Nguyễn Văn A" required value="<%= account.full_name_account %>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
+                                    placeholder="xxx-xxx-xxx" required value="<%= account.tel_account %>">
+                            </div>
+                            <div class=" mb-3">
+                                <label for="address" class="form-label">Địa chỉ</label>
+                                <input type="text" class="form-control" id="address" name="address"
+                                    placeholder="Yên Lâm - Yên Mô - Ninh Bình" required
+                                    value="<%= account.address_account %>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="validationCustom04" class="form-label">Phương thức thanh toán</label>
+                                <select name="payments" class="form-select" id="validationCustom04" required>
+                                    <option value="1">Thanh toán khi nhận hàng</option>
+                                    <option value="2">Thanh toán trực tuyến</option>
+                                </select>
+                            </div>
+                            <div class="proceed-checkout-btn">
+                                <button type="submit" class="btn btn-brand d-block">Tiến hành thanh toán</button>
+                            </div>
+                        </div>
+</form>
+<style>
+    .invalid-input {
+        border: 2px solid red !important;
+    }
+</style>
+<script>
+    document.getElementById('paymentForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        let isValid = true;
+
+        const inputs = this.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('invalid-input');
+                isValid = false;
+            } else {
+                input.classList.remove('invalid-input');
+            }
+        });
+        const phoneInput = document.getElementById('phoneNumber');
+        if (!/^\d{10}$/.test(phoneInput.value)) {
+            phoneInput.classList.add('invalid-input');
+            isValid = false;
+        }
+
+        if (isValid) {
+            this.submit();
+        }
+    });
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<%- include('footer') -%>

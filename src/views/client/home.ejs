@@ -1,0 +1,381 @@
+<%- include('header') -%>
+<%  function formatCurrency(amount) {
+    return amount.toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    });
+} %>
+<div class="slider-area-wrapper">
+    <div class="slider-content-active">
+        <div class="slider-slide-item bg-img" data-bg="/assets/img/slider/slider-1.jpg">
+            <div class="container container-wide h-100">
+                <div class="row align-items-center h-100">
+                    <div class="col-lg-6">
+                        <div class="slide-content">
+                            <div class="slide-content-inner">
+                                <h3>NEW TECHNOLOGY & BUILD</h3>
+                                <h2>WHEELS &amp; TIRES COLLECTIONS</h2>
+                                <a class="btn btn-white" href="/shop">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-slide-item bg-img" data-bg="/assets/img/slider/slider-2.jpg">
+            <div class="container container-wide h-100">
+                <div class="row align-items-center h-100">
+                    <div class="col-12">
+                        <div class="slide-content">
+                            <div class="slide-content-inner">
+                                <h3>NEW TECHNOLOGY & BUILD</h3>
+                                <h2>WHEELS &amp; TIRES <br> COLLECTIONS</h2>
+                                <a class="btn btn-white" href="/shop">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Slider Area Wrapper ==-->
+
+<!--== Start Banner Area Wrapper ==-->
+<div class="banner-area-wrapper banner-mt">
+    <div class="container container-wide">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="banner-item">
+                    <div class="banner-item__img">
+                        <a href="/shop"><img src="/assets/img/banner/banner-1.jpg" alt="Banner" height="560" /></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="banner-item">
+                    <div class="banner-item__img">
+                        <a href="/shop"><img src="/assets/img/banner/banner-2.jpg" alt="Banner" height="560" /></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="banner-item">
+                    <div class="banner-item__img">
+                        <a href="/shop"><img src="/assets/img/banner/banner-3.jpg" alt="Banner" height="560" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Banner Area Wrapper ==-->
+
+<!--== Start Call to Action Area ==-->
+<div class="call-to-action-area sm-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-4">
+                <div class="call-to-action-item mt-0">
+                    <div class="call-to-action-item__icon">
+                        <img src="/assets/img/icons/icon-1.png" alt="fast delivery">
+                    </div>
+                    <div class="call-to-action-item__info">
+                        <h3>Giao hàng tận nhà miễn phí</h3>
+                        <p>Cung cấp giao hàng tận nhà miễn phí
+                            cho tất cả sản phẩm trên 1.000.000đ</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-4">
+                <div class="call-to-action-item">
+                    <div class="call-to-action-item__icon">
+                        <img src="/assets/img/icons/icon-2.png" alt="quality">
+                    </div>
+                    <div class="call-to-action-item__info">
+                        <h3>Chất lượng sản phẩm
+                        </h3>
+                        <p>Chúng tôi luôn đảm bảo chất lượng sản phẩm</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-4">
+                <div class="call-to-action-item">
+                    <div class="call-to-action-item__icon">
+                        <img src="/assets/img/icons/icon-3.png" alt="return">
+                    </div>
+                    <div class="call-to-action-item__info">
+                        <h3>Hỗ trợ trực tuyến
+                        </h3>
+                        <p>Để làm hài lòng khách hàng, chúng tôi cố gắng hỗ trợ trực tuyến</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Call to Action Area ==-->
+
+<!--== Start Best Seller Products Area ==-->
+<div class="best-seller-products-area sm-top">
+    <div class="container container-wide">
+        <div class="row">
+            <div class="col-lg-5 m-auto text-center">
+                <div class="section-title">
+                    <h2 class="h3">TOP 10 SẢN PHẨM MỚI NHẤT</h2>
+                    <p>
+                        Tất cả các sản phẩm mới nhất hiện đều có sẵn cho bạn và bạn có thể mua sản phẩm này từ
+                        đây bất cứ lúc nào, bất cứ nơi nào, vì vậy hãy mua ngay bây giờ</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="product-wrapper columns-5">
+                    <!-- Start Product Item -->
+                    <% top10New.forEach(function(items) { %>
+                    <div class="col">
+                        <div class="product-item">
+                            <div class="product-item__thumb">
+                                <a href="detail-product/<%= items.Product.id
+                                %>">
+                                    <img class="thumb-primary"
+                                        src="/assets/img/product/<%= items.Product.image_product %>" alt="Product"
+                                        height="250px" />
+                                    <img class="thumb-secondary" src="/assets/img/logo-light.png" alt="Product"
+                                        height="250px" />
+                                </a>
+                            </div>
+                            <div class="product-item__content">
+                                <div class="ratting">
+                                </div>
+                                <% function truncateString(str, maxLength) {
+                                if (str.length > maxLength) {
+                                return str.substring(0, maxLength - 3) + '...';
+                                }
+                                return str;
+                               }%>
+                                <h4 class="title"><a href="detail-product/<%= items.Product.id
+                                    %>"><a href="detail-product/<%= items.Product.id %>">
+                                            <%= truncateString(items.Product.name_product, 16) %>
+                                        </a></a>
+                                </h4>
+                                <span style="color: red; font-weight: bold;" class="price"><strong></strong> <%= formatCurrency(items.Product.price_product-(items.Product.price_product * (items.Product.price_sale / 100))
+                                    ) %>
+                                </span>
+                                <span class="price">
+                                    <del style="opacity: 0.5; font-size: small;">
+                                        <%= formatCurrency(items.Product.price_product) %></del>
+                                </span>
+                                <span class="price">
+                                    <p style="margin-left: 60px;opacity: 0.5;color: blueviolet; font-size: small;">
+                                        Đã bán:
+                                        <%= items.sales %>
+                                </span>
+                                <br>
+                                <span style="font-size: small;">
+                                </span>
+                            </div>
+
+                            <div class="product-item__sale"
+                                style="background-color: red; border-radius: 0px 10px; padding: 4px 10px;">
+                                <span class="sale-txt">-<%= items.Product.price_sale %>%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Best Seller Products Area ==-->
+
+
+<div class="flash-deals-area bg-img" data-bg="/assets/img/bg/deal-bg.jpg" style="margin-top: 50px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-11 m-auto">
+                <div class="row align-items-center">
+                    <div class="col-md-5 col-lg-6">
+                        <div class="flash-deals-thumb text-center text-md-start">
+                            <img src="/assets/img/extra/wheels.png" alt="Deals" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-7 col-lg-6 text-center">
+                        <div class="flash-deals-content">
+                            <h2>FLASH DEALS</h2>
+                            <h3>HURRY UP AND GET 25% DISCOUNT</h3>
+                            <a href="/cart" class="btn btn-brand">Add to cart</a>
+
+                            <div class="deals-countdown-area">
+                                <div class="ht-countdown" data-date="9/20/2024"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--== Start Call to action Wrapper ==-->
+
+<!--== End Call to action Wrapper ==-->
+
+<!--== Start Promotion Code Banner Area ==-->
+
+<!--== End Promotion Code Banner Area ==-->
+
+<!--== Start Products Area Wrapper ==-->
+<div class="products-area-wrapper sm-top">
+    <div class="container container-wide">
+        <div class="row">
+            <div class="col-lg-5 m-auto text-center">
+                <div class="section-title">
+                    <h2 class="h3">TOP 10 SẢN PHẨM BÁN CHẠY</h2>
+                    <p>Tất cả các sản phẩm bán chạy nhất hiện đều có sẵn cho bạn và bạn có thể mua sản phẩm này từ
+                        đây bất cứ lúc nào, bất cứ nơi nào, vì vậy hãy mua ngay bây giờ</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="product-wrapper columns-5">
+                    <!-- Start Product Item -->
+                    <% top10Sale.forEach(function(items) { %>
+                    <div class="col">
+                        <div class="product-item">
+                            <div class="product-item__thumb">
+                                <a href="detail-product/<%= items.Product.id
+                                %>">
+                                    <img class="thumb-primary"
+                                        src="/assets/img/product/<%= items.Product.image_product %>" alt="Product" />
+                                    <img class="thumb-secondary"
+                                        src="/assets/img/product/<%= items.Product.image_product %>" alt="Product" />
+                                </a>
+                            </div>
+                            <div class="product-item__content">
+                                <div class="ratting">
+                                    <span><i class="ion-android-star"></i></span>
+                                    <span><i class="ion-android-star"></i></span>
+                                    <span><i class="ion-android-star"></i></span>
+                                    <span><i class="ion-android-star"></i></span>
+                                    <span><i class="ion-android-star-half"></i></span>
+                                </div>
+                                <h4 class="title"><a href="detail-product/<%= items.Product.id
+                                    %>"><%= items.Product.name_product
+                                    %></a>
+                                </h4>
+                                <span style=" font-size: small; color: red; font-weight: bold;"
+                                    class="price"><strong>Price: </strong>$<%= items.Product.price_product
+                                    %>
+                                </span>
+                                <span class="price">
+                                    <del
+                                        style="opacity: 0.5; font-size: small;">$<%= items.Product.price_product %></del>
+                                </span>
+                                <span class="price">
+                                    <p style="opacity: 0.5; font-size: small;"> Sold: <%= items.sales %>
+                                </span>
+                                <br>
+                                <span style="font-size: small;">
+                                </span>
+                            </div>
+                            <div class="product-item__sale"
+                                style="background-color: red; border-radius: 0px 10px; padding: 4px 10px;">
+                                <span class="sale-txt">-25%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Products Area Wrapper ==-->
+
+<!--== Start Flash Deals Area ==-->
+
+<!--== End Flash Deals Area ==-->
+<div class="call-to-action-area">
+    <div class="call-to-action-content-area bg-img" data-bg="/assets/img/bg/bg-1.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="call-to-action-txt">
+                        <h2>TẤT CẢ SẢN PHẨM TẠI ĐÂY</h2>
+                        <a href="/shop/all-product/1/ /" class="btn btn-brand">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="call-to-action-image-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <img src="/assets/img/bg/bg-car.png" alt="Car" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Start Newsletter Area ==-->
+
+<!--== End Newsletter Area ==-->
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+    </symbol>
+    <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+    </symbol>
+    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </symbol>
+</svg>
+<div id="alertEr" style="opacity: 0; transition: opacity 1s ease;">
+    <div style="max-width: 500px; position: absolute; top: 30px; position: fixed; right: 30px;"
+        class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+            <use xlink:href="#check-circle-fill" /></svg>
+        <div>
+            <% if( flash.checklogin !== undefined && flash.checklogin == 'success' ){ %>
+            Đang nhập thành công !
+            <% }  %>
+            <% if( flash.checkLogOut !== undefined && flash.checkLogOut == 'success' ){ %>
+            Đang xuất thành công!
+            <% }  %>
+        </div>
+    </div>
+</div>
+<% if( flash.checklogin !== undefined && flash.checklogin == 'success' || flash.checkLogOut !== undefined && flash.checkLogOut =='success' ){ %>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var fadeInOutDiv = document.getElementById('alertEr');
+        fadeInOutDiv.style.opacity = 1;
+        setTimeout(function () {
+            fadeInOutDiv.style.opacity = 0;
+        }, 3000);
+    });
+</script>
+<% }  %>
+<!--== End Brand Logo Area Wrapper ==-->
+<%- include('footer') -%>

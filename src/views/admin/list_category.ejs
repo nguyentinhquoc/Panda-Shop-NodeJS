@@ -1,0 +1,221 @@
+<%- include('header') -%>
+
+<!--start main wrapper-->
+
+<main class="main-wrapper">
+    <div class="main-content">
+        <h2>Quản lý danh mục</h2>
+        <button class="btn add-btn"><i class="fas fa-plus"></i> Thêm danh mục</button>
+
+        <table class="category-table">
+            <thead>
+                <tr>
+                    <th class="text-center">#STT</th>
+                    <th class="text-center">Tên danh mục</th>
+                    <th class="text-center">Trạng thái</th>
+                    <th class="text-center">Hoạt động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% idnew = 0 %>
+                <% listCategories.forEach(function(items) { %>
+                <tr>
+                    <% idnew +=1 %>
+                    <form action="/admin/edit-name-category/<%= items.id %>" method="post">
+                        <td class="text-center"><%= idnew %></td>
+                        <td class="text-center category-name" onclick="toggleEdit(this)">
+                            <span class="text"><%= items.name_category %></span>
+                            <input type="text" class="edit-input" name="NameNew" value="<%= items.name_category %>"
+                                style="display: none;">
+                        </td>
+                        <% if(items.status_category==1){ %>
+                        <td class="text-center"><span class="status active">Hoạt động</span></td>
+                        <% } else { %>
+                        <td class="text-center"><span class="status inactive">Ngừng hoạt động</span></td>
+                        <% }  %>
+                        <td>
+                    </form>
+                    <form method="post" action="/admin/change-status-category/<%= items.id %>" class="text-center">
+                        <button class="btn btn-danger"><i class="fas fa-trash-alt"></i> Đổi trạng thái</button>
+                    </form>
+                    </td>
+                </tr>
+                <% }) %>
+                <tr class="tr-add" style="display: none;">
+                    <form action="/admin/add-new-category" method="post">
+                        <td class="text-center"> <%= idnew +1 %> </td>
+                        <td class="text-center"> <input required placeholder="Nhập tên danh mục mới" type="text"
+                                name="NameNewAdd" class="edit-input" style="display: inline-block; width:70%"></td>
+                        <td class="text-center">
+                            <select style="width: auto;" name="statusCategoryNew" class="form-select"
+                                aria-label="Default select example">
+                                <option value="1">Hoạt động</option>
+                                <option value="0">Ngừng hoạt động</option>
+                            </select>
+                        </td>
+                        <td class="text-center"><input type="submit" class="btn btn-success"
+                                value="Thêm mới danh mục"><i class="fas fa-check"></i></td>
+                    </form>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<script>
+    btnAdd = document.querySelector('.add-btn');
+    divAdd = document.querySelector('.tr-add');
+    btnAdd.addEventListener('click', function () {
+        divAdd.removeAttribute('style');
+    })
+
+    function toggleEdit(element) {
+        const textSpan = element.querySelector('.text');
+        const inputField = element.querySelector('.edit-input');
+
+        if (textSpan.style.display !== 'none') {
+            textSpan.style.display = 'none';
+            inputField.style.display = 'inline-block';
+            inputField.focus();
+        } else {
+            textSpan.style.display = 'inline-block';
+            inputField.style.display = 'none';
+            textSpan.textContent = inputField.value;
+        }
+    }
+</script>
+<style>
+    .category-name {
+        cursor: pointer;
+    }
+
+    .edit-input {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-bottom: 1px solid #fff;
+        color: #fff;
+        padding: 5px;
+        width: 200px;
+    }
+
+    .main-wrapper {
+        padding: 30px;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .main-content {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        color: #fff;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .category-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    .category-table th,
+    .category-table td {
+        padding: 15px;
+        text-align: left;
+        color: #fff;
+    }
+
+    .category-table th {
+        background-color: rgba(255, 255, 255, 0.1);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    .category-table tbody tr {
+        background-color: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .category-table tbody tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .edit-btn {
+        background-color: #4CAF50;
+        color: white;
+        margin-right: 5px;
+    }
+
+    .edit-btn:hover {
+        background-color: #45a049;
+    }
+
+    .delete-btn {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .delete-btn:hover {
+        background-color: #da190b;
+    }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .status.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .status.inactive {
+        background-color: #FFC107;
+        color: #000;
+    }
+
+    .header-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-btn {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .add-btn:hover {
+        background-color: #2980b9;
+    }
+</style>
+
+
+<%- include('footer') -%>
