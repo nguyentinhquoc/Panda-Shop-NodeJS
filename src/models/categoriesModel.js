@@ -21,6 +21,8 @@ async function categories() {
         console.error(error);
     }
 }
+
+
 async function categoriesAdmin() {
     try {
         const categories = await db.Category.findAll({});
@@ -101,5 +103,6 @@ module.exports = {
     changeStatus,
     editName,
     addCategories,
-    categoriesAdmin
+    categoriesAdmin,
+
 };

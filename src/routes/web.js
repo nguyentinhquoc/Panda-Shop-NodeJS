@@ -18,6 +18,7 @@ import reviewsController from '../controllers/client/ReviewsController';
 import CategoryAdmin from '../controllers/admin/CategoryAdmin';
 import AccountAdmin from '../controllers/admin/AccountAdmin';
 import VariantAdmin from '../controllers/admin/VariantAdmin';
+import HomeAdmin from '../controllers/admin/HomeAdmin';
 import errorPageController from '../controllers/errorPageController';
 
 const crypto = require('crypto');
@@ -37,7 +38,7 @@ const routerWeb = (app) => {
     } = require('../../middleware/roleMiddleware');
     /* ---------------------------------- ADMIN --------------------------------- */
 
-    app.get('/admin', isAdmin, ProductControllerAdmin.HomeAdmin)
+    app.get('/admin', isAdmin, HomeAdmin.HomeAdmin)
     app.get('/admin/add-product', isAdmin, ProductControllerAdmin.addProduct)
     app.post('/admin/add-product', isAdmin, ProductControllerAdmin.subAddProduct)
     app.get('/admin/list-product/:id', isAdmin, ProductControllerAdmin.listProducts)

@@ -100,9 +100,14 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><%= items.price_product  %>$</td>
-                                <td><%= items.price_sale  %>$</td>
-
+                                <td><%= formatCurrency(items.price_product)  %></td>
+                                <td><%= items.price_sale  %>%</td>
+                                <%  function formatCurrency(amount) {
+                                    return amount.toLocaleString('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND'
+                                    });
+                                } %>
                                 <td>
                                     <div class="product-rating">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="14" width="15.75"

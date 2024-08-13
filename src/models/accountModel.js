@@ -107,10 +107,28 @@ async function changeStatus(AccountId) {
         });
     }
 }
+async function accountTop7New() {
+    try {
+        const accountAll = await db.Account.findAll({
+            order: [
+                ['id', 'DESC']
+            ],
+            limit: 7
+        });
+        if (accountAll) {
+            return accountAll;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
 module.exports = {
     addACcount,
     accountAll,
     accountWId,
     changeStatus,
-    accountAllAdmin
+    accountAllAdmin,
+    accountTop7New
 };

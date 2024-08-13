@@ -4,10 +4,7 @@ import categoriesModel from '../../models/categoriesModel';
 import uploadImg from '../../configs/uploadImages';
 const multer = require('multer');
 var upload = uploadImg.uploadProduct;
-var HomeAdmin = (req, res) => {
 
-    res.render('admin/home')
-};
 var addProduct = (req, res) => {
     Promise.all([
             variantsModel.listColors(),
@@ -185,7 +182,6 @@ module.exports = {
     changeStatus,
     editProducts,
     subEditProducts,
-    HomeAdmin,
     addProduct,
     subAddProduct,
     listProducts

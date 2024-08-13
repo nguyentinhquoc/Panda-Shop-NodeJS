@@ -121,7 +121,6 @@ async function top10Sale() {
             attributes: [
                 [Sequelize.fn('SUM', Sequelize.col('sales')), 'sales'],
                 [Sequelize.col('Product.id'), 'id'],
-
             ],
             include: [{
                 model: db.Product,
@@ -320,6 +319,36 @@ async function detailProducts(id) {
         console.error(error);
     }
 }
+async function countProductDash() {
+    try {
+        const totalCountResult = await db.Product.count();
+        if (totalCountResult) {
+            return totalCountResult;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+async function countCategoryDash() {
+    try {
+        const result = await db.Product.findAll({
+            attributes: [
+                [Sequelize.fn('COUNT', Sequelize.col('Product.id')), 'count']
+            ],
+            include: [{
+                model: db.Category,
+                attributes: ['name_category']
+            }],
+            group: ['Category.id'],
+            raw: true
+        });
+        if (result) {
+            return result;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 module.exports = {
     changeStatus,
@@ -332,5 +361,7 @@ module.exports = {
     top10Sale,
     detailProducts,
     countProduct,
+    countProductDash,
+    countCategoryDash,
     listProductsAdmin
 };
