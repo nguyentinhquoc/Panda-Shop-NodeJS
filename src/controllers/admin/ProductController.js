@@ -62,6 +62,8 @@ var editProducts = (req, res) => {
 }
 
 var subAddProduct = (req, res) => {
+
+
     /* ------------------------------- upload ảnh ------------------------------- */
     Promise.all([
         variantsModel.listColors(),
@@ -86,6 +88,8 @@ var subAddProduct = (req, res) => {
                     error: err.message
                 });
             }
+            console.log(req.body);
+            console.log('00000000000000000000000');
             //     /* ----------------------------------- -- ----------------------------------- */
             //     /* ------------------------------ ĐẶT TÊN BIẾN ------------------------------ */
             var name_product = req.body.NameProduct

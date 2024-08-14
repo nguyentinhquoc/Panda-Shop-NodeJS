@@ -100,10 +100,24 @@
 
                                     </div>
                                     <div id="preview-image"></div>
-
                                     <div>
                                         <h5>Variant</h5>
-                                        <table class="table table-striped">
+                                        <p onclick="duBT()" class="btn btn-danger">Đẩy đủ biến thể</p>
+                                        <p onclick="thieuBT()" class="btn btn-danger">Thiếu biến thể</p>
+
+
+                                        <div class="hientThiForm">
+
+                                        </div>
+
+                                        <button id="addVariant" class="btn btn-primary">Add Variant</button>
+                                        <script>
+                                            var hientThiForm = document.querySelector('.hientThiForm')
+
+                                            function duBT() {
+                                                hientThiForm.innerHTML =
+                                                    `
+                                                   <table class="table table-striped">
                                             <tr>
                                                 <th style="color: aqua;">SIZE / MÀU</th>
                                                 <% listColors.forEach(function(items) { %>
@@ -128,17 +142,125 @@
                                             </tr>
                                             <% }); %>
                                         </table>
+                                                `
+                                            }
+
+                                            function thieuBT() {
+                                                hientThiForm.innerHTML =
+                                                    `
+                                                <div id="variantForms">
+                                                <div id="variantForms" class="mb-4">
+                                                    <div class="variant-form bg-light p-3 rounded mb-3">
+                                                        <div class="row g-3">
+                                                            <div class="col-md-3">
+                                                                <label for="color" class="form-label">Color</label>
+                                                                <select class="form-select" name="color[]" id="color"
+                                                                    required>
+                                                                    <option value="">Select Color</option>
+                                                                    <% listColors.forEach(function(item) { %>
+                                                                    <option value="<%= item.id %>">
+                                                                        <%= item.name_color.toUpperCase() %></option>
+                                                                    <% }); %>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label for="size" class="form-label">Size</label>
+                                                                <select class="form-select" name="size[]" id="size"
+                                                                    required>
+                                                                    <option value="">Select Size</option>
+                                                                    <% listSizes.forEach(function(item) { %>
+                                                                    <option value="<%= item.id %>">
+                                                                        <%= item.name_size.toUpperCase() %></option>
+                                                                    <% }); %>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label for="quantity"
+                                                                    class="form-label">Quantity</label>
+                                                                <input type="number" class="form-control"
+                                                                    name="quantity[]" id="quantity" min="0" required>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label for="image" class="form-label">Image</label>
+                                                                <input type="file" class="form-control" name="image[]"
+                                                                    id="image">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                `
+                                            }
+
+                                            let selectedOptions = new Set();
+
+                                            document.getElementById('addVariant').addEventListener('click', function (
+                                                e) {
+                                                e.preventDefault();
+                                                var variantForms = document.getElementById('variantForms');
+                                                var newForm = variantForms.firstElementChild.cloneNode(true);
+
+                                                // Reset form mới
+                                                newForm.querySelectorAll(
+                                                        'select, input[type="number"], input[type="file"]')
+                                                    .forEach(function (element) {
+                                                        element.value = '';
+                                                    });
+
+                                                variantForms.appendChild(newForm);
+                                                updateSelectEvents(newForm);
+                                                checkDuplicates();
+                                            });
+
+                                            function updateSelectEvents(form) {
+                                                form.querySelectorAll('select').forEach(function (select) {
+                                                    select.addEventListener('change', function () {
+                                                        selectedOptions.add(this.name + '-' + this
+                                                            .value);
+
+                                                        checkDuplicates();
+                                                    });
+                                                });
+                                            }
+
+                                            function checkDuplicates() {
+                                                let forms = document.querySelectorAll('.variant-form');
+                                                forms.forEach(form => form.style.border = '');
+                                                for (let i = 0; i < forms.length; i++) {
+                                                    for (let j = i + 1; j < forms.length; j++) {
+                                                        let color1 = forms[i].querySelector('select[name="color[]"]')
+                                                            .value;
+                                                        let size1 = forms[i].querySelector('select[name="size[]"]')
+                                                            .value;
+                                                        let color2 = forms[j].querySelector('select[name="color[]"]')
+                                                            .value;
+                                                        let size2 = forms[j].querySelector('select[name="size[]"]')
+                                                            .value;
+                                                        if (color1 === color2 && size1 === size2 && color1 && size1) {
+                                                            forms[i].style.border = '2px solid red';
+                                                            forms[j].style.border = '2px solid red';
+                                                            document.querySelector('.BTNSUBMIT').disabled = true;
+                                                        } else {
+                                                            document.querySelector('.BTNSUBMIT').disabled = false;
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            updateSelectEvents(document.querySelector('.variant-form'));
+                                        </script>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="d-md-flex d-grid align-items-center gap-3">
-                                        <button type="reset" class="col-6 btn btn-grd-info px-4">Reset</button>
-                                        <button type="submit" class=" col-6 btn btn-grd-primary px-4">Submit</button>
+                                    <div class="col-md-12">
+                                        <div class="d-md-flex d-grid align-items-center gap-3">
+                                            <button type="reset" class="col-6 btn btn-grd-info px-4">Reset</button>
+                                            <button type="submit"
+                                                class="BTNSUBMIT col-6 btn btn-grd-primary px-4">Submit</button>
+                                        </div>
                                     </div>
-                                </div>
                             </form>
                         </div>
                     </div>
+
                     <!-- <p onclick="submitF()" class="btn btn-outline-primary">Thêm sản phẩm</p> -->
                     <!-- Bootstrap JS và jQuery -->
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
