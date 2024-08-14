@@ -16,8 +16,32 @@ async function DetailOrderAdminDate() {
             createdAt: {
                 [Op.gte]: Sequelize.literal('DATE_SUB(CURDATE(), INTERVAL 12 MONTH)')
             },
+
+        },
+        group: [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%Y'), Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%m')],
+        order: [
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%Y'), 'DESC'],
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%m'), 'DESC']
+        ]
+    })
+    if (DetailOrderAdminDate) {
+        return DetailOrderAdminDate
+    }
+}
+
+async function DetailOrderAdminDateTc() {
+    var DetailOrderAdminDate = db.DetailOrder.findAll({
+        attributes: [
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%Y'), 'year'],
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%m'), 'month'],
+            [Sequelize.fn('COUNT', Sequelize.col('id')), 'orderCount']
+        ],
+        where: {
+            createdAt: {
+                [Op.gte]: Sequelize.literal('DATE_SUB(CURDATE(), INTERVAL 12 MONTH)')
+            },
             [Op.or]: [{
-                    code_status: 6
+                    code_status: 5
                 },
                 {
                     code_status: 7
@@ -34,7 +58,34 @@ async function DetailOrderAdminDate() {
         return DetailOrderAdminDate
     }
 }
+async function DetailOrderAdminDateTb() {
+    var DetailOrderAdminDate = db.DetailOrder.findAll({
+        attributes: [
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%Y'), 'year'],
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%m'), 'month'],
+            [Sequelize.fn('COUNT', Sequelize.col('id')), 'orderCount']
+        ],
+        where: {
+            createdAt: {
+                [Op.gte]: Sequelize.literal('DATE_SUB(CURDATE(), INTERVAL 12 MONTH)')
+            },
+            [Op.or]: [{
+                code_status: 6
+            }]
+        },
+        group: [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%Y'), Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%m')],
+        order: [
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%Y'), 'DESC'],
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('createdAt'), '%m'), 'DESC']
+        ]
+    })
+    if (DetailOrderAdminDate) {
+        return DetailOrderAdminDate
+    }
+}
 
 module.exports = {
     DetailOrderAdminDate,
+    DetailOrderAdminDateTc,
+    DetailOrderAdminDateTb
 };

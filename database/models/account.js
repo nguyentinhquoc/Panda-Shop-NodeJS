@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     role_account: DataTypes.INTEGER,
     avatar_account: DataTypes.STRING,
     status_account: DataTypes.INTEGER,
-    marketing_account: DataTypes.INTEGER
+    online: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Account',

@@ -333,7 +333,7 @@ async function countCategoryDash() {
     try {
         const result = await db.Product.findAll({
             attributes: [
-                [Sequelize.fn('COUNT', Sequelize.col('Product.id')), 'count']
+                [Sequelize.fn('COUNT', Sequelize.col('Product.id')), 'count'],
             ],
             include: [{
                 model: db.Category,

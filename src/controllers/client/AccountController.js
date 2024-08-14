@@ -48,6 +48,7 @@ var login = (req, res) => {
     res.render('client/login', )
 }
 var logout = (req, res) => {
+    accountModel.changeOnline(req.cookies.user, 0)
     res.clearCookie('user');
     req.flash('checkLogOut', 'success');
     res.redirect('/')
@@ -71,8 +72,17 @@ var loginSb = (req, res) => {
                     maxAge: 7200000,
                     httpOnly: true,
                 });
-                req.flash('checklogin', 'success');
-                res.redirect('/');
+                accountModel.changeOnline(idUser, 1)
+                accountModel.accountWId(idUser)
+                    .then((value) => {
+                        if (value.role_account == 1) {
+                            req.flash('checklogin', 'success');
+                            res.redirect('/');
+                        } else if (value.role_account == 2) {
+                            req.flash('checklogin', 'success');
+                            res.redirect('/admin');
+                        }
+                    })
             } else {
                 req.flash('checklogin', 'error');
                 res.redirect('/login');

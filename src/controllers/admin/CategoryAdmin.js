@@ -20,7 +20,6 @@ var changeStatus = (req, res) => {
     }, 100);
 }
 var addCategory = (req, res) => {
-
     Category.addCategories(req.body.NameNewAdd, req.body.statusCategoryNew)
     setTimeout(() => {
         res.redirect(req.headers.referer || '/fallback-route');

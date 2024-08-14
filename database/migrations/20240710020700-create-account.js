@@ -33,7 +33,7 @@ module.exports = {
       status_account: {
         type: Sequelize.INTEGER
       },
-      marketing_account: {
+      online: {
         type: Sequelize.INTEGER
       },
       createdAt: {

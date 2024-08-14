@@ -90,13 +90,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between mb-1">
                             <div class="">
-                                <h5 class="mb-0">42.5K</h5>
-                                <p class="mb-0">Active Users</p>
+                                <h6 class="mb-0"><%= CountAccountOnline %> Tài khoản online</h6>
                             </div>
                             <div class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
-                                    data-bs-toggle="dropdown">
-                                    <span class="material-icons-outlined fs-5">more_vert</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="javascript:;">Action</a></li>
@@ -109,7 +105,9 @@
                             <div id="chart1"></div>
                         </div>
                         <div class="text-center">
-                            <p class="mb-0 font-12">24K users increased from last month</p>
+                            <p class="mb-0 font-12"><%= CountAccountOnline %> / <%= CountAccountAll %> tổng số tài khoản
+                                đang online
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -177,6 +175,103 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xxl-4">
+                <div class="col-md-6 d-flex align-items-stretch" style="width: 100%;">
+                    <div class="card w-100 rounded-4">
+                        <div class="card rounded-4">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="">
+
+                                        <h3 class="mb-0"> Đơn hàng hủy</h3>
+                                    </div>
+                                    <div class="flex-grow-0">
+                                        <p
+                                            class="dash-lable d-flex align-items-center gap-1 rounded mb-0 bg-success text-success bg-opacity-10">
+                                            <%
+                                        orderCountNow=0
+                                        orderCountafter=0
+                                        DetailOrderAdminDateTb.forEach((item) => { %>
+                                            <%
+                                        if(item.dataValues.month == new Date().getMonth() + 1){
+                                        orderCountNow=  item.dataValues.orderCount
+                                        } 
+    
+                                        if(item.dataValues.month == new Date().getMonth() ){
+                                        orderCountafter= item.dataValues.orderCount
+                                        } }) %>
+                                            <%  tile = ((orderCountNow - orderCountafter)/orderCountafter) *100  
+                                        if(tile > 0){ %>
+                                            <i class="fa-solid fa-arrow-trend-up"></i>
+                                            <%=  Math.round(tile) %> %
+                                            <%
+                                        }
+                                       else if(tile < 0){ %>
+                                            <span style="color: red;">
+                                                <i class="fa-solid fa-arrow-trend-down"></i>
+
+                                                <%=  Math.round(tile) %> %
+                                            </span>
+                                            <%
+                                        } else { %>
+                                            <%= 0 %> %
+                                            <% }
+                                            %>
+
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="mb-0">Số lượng đang hàng bị hủy tháng này : <%= orderCountNow %></p>
+                                <div id="chart3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card rounded-4">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-2">
+                            <div class="">
+                                <h3 class="mb-0">Đơn hàng thành công</h3>
+                            </div>
+                            <div class="flex-grow-0">
+                                <p
+                                    class="dash-lable d-flex align-items-center gap-1 rounded mb-0 bg-success text-success bg-opacity-10">
+                                    <%
+                                    orderCountNow=0
+                                    orderCountafter=0
+                                    DetailOrderAdminDateTc.forEach((item) => { %>
+                                    <%
+                                    if(item.dataValues.month == new Date().getMonth() + 1){
+                                    orderCountNow=  item.dataValues.orderCount
+                                    } 
+
+                                    if(item.dataValues.month == new Date().getMonth() ){
+                                    orderCountafter= item.dataValues.orderCount
+                                    } }) %>
+                                    <%  tile = ((orderCountNow - orderCountafter)/orderCountafter) *100  
+                                    if(tile > 0){ %>
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                    <%=  Math.round(tile) %> %
+                                    <%
+                                    }
+                                    if(tile < 0){ %>
+                                    <span style="color: red;">
+                                        <i class="fa-solid fa-arrow-trend-down"></i>
+
+                                        <%=  Math.round(tile) %> %
+                                    </span>
+                                    <%
+                                    }
+                                    %>
+
+                                </p>
+                            </div>
+                        </div>
+                        <p class="mb-0">Số lượng đang hàng bị thành công tháng này : <%= orderCountNow %></p>
+                        <div id="chart7"></div>
+                    </div>
+                </div>
+            </div>
             <div class="col-xl-6 col-xxl-4 d-flex align-items-stretch">
                 <div class="card w-100 rounded-4">
                     <div class="card-body">
@@ -199,131 +294,35 @@
                             </div>
                             <div class="position-relative">
                                 <div class="piechart-legend">
-                                    <h2 class="mb-1">68%</h2>
-                                    <h6 class="mb-0">Total Views</h6>
+                                    <h6 class="mb-0">Tổng sản phẩm</h6>
+                                    <h2 class="mb-1"><%=countProductDash %></h2>
                                 </div>
                                 <div id="chart6"></div>
                             </div>
                             <div class="d-flex flex-column gap-3">
+                                <% countCategoryDash.forEach((item) => { %>
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <p class="mb-0 d-flex align-items-center gap-2 w-25"><span
-                                            class="material-icons-outlined fs-6 text-primary">desktop_windows</span>Desktop
+                                    <p class="mb-0 d-flex align-items-center gap-2 w-25">
+                                        <i class="fa-solid fa-socks"></i>
+                                        <%=item["Category.name_category"]%>
                                     </p>
                                     <div class="">
-                                        <p class="mb-0">95%</p>
+                                        <p class="mb-0"><%= Math.round((item.count/countProductDash)*100) %>%</p>
                                     </div>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="mb-0 d-flex align-items-center gap-2 w-25"><span
-                                            class="material-icons-outlined fs-6 text-danger">tablet_mac</span>Tablet</p>
-                                    <div class="">
-                                        <p class="mb-0">48%</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="mb-0 d-flex align-items-center gap-2 w-25"><span
-                                            class="material-icons-outlined fs-6 text-success">phone_android</span>Mobile
-                                    </p>
-                                    <div class="">
-                                        <p class="mb-0">27%</p>
-                                    </div>
-                                </div>
+                                <% }) %>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-4">
-                <div class="row">
-                    <div class="col-md-6 d-flex align-items-stretch">
-                        <div class="card w-100 rounded-4">
-                            <div class="card-body">
-                                <div class="d-flex align-items-start justify-content-between mb-1">
-                                    <div class="">
-                                        <h5 class="mb-0">82.7K</h5>
-                                        <p class="mb-0">Total Clicks</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <a href="javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
-                                            data-bs-toggle="dropdown">
-                                            <span class="material-icons-outlined fs-5">more_vert</span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="javascript:;">Action</a></li>
-                                            <li><a class="dropdown-item" href="javascript:;">Another action</a></li>
-                                            <li><a class="dropdown-item" href="javascript:;">Something else here</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="chart-container2">
-                                    <div id="chart3"></div>
-                                </div>
-                                <div class="text-center">
-                                    <p class="mb-0 font-12"><span class="text-success me-1">1.5%</span> from last month
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 d-flex align-items-stretch">
-                        <div class="card w-100 rounded-4">
-                            <div class="card-body">
-                                <div class="d-flex align-items-start justify-content-between mb-1">
-                                    <div class="">
-                                        <h5 class="mb-0">68.4K</h5>
-                                        <p class="mb-0">Total Visssews</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <a href="javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
-                                            data-bs-toggle="dropdown">
-                                            <span class="material-icons-outlined fs-5">more_vert</span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="javascript:;">Actiosssssssssn</a></li>
-                                            <li><a class="dropdown-item" href="javascript:;">Another action</a></li>
-                                            <li><a class="dropdown-item" href="javascript:;">Something else here</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="chart-container2">
-                                    <div id="chart4"></div>
-                                </div>
-                                <div class="text-center">
-                                    <p class="mb-0 font-12">35K users increased from last month</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card rounded-4">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center gap-3 mb-2">
-                            <div class="">
-                                <h3 class="mb-0">85,247</h3>
-                            </div>
-                            <div class="flex-grow-0">
-                                <p
-                                    class="dash-lable d-flex align-items-center gap-1 rounded mb-0 bg-success text-success bg-opacity-10">
-                                    <span class="material-icons-outlined fs-6">arrow_downward</span>23.7%
-                                </p>
-                            </div>
-                        </div>
-                        <p class="mb-0">Total Accounts</p>
-                        <div id="chart7"></div>
-                    </div>
-                </div>
-            </div>
-
-
 
             <div class="col-xl-6 col-xxl-4 d-flex align-items-stretch">
                 <div class="card w-100 rounded-4">
                     <div class="card-header border-0 p-3 border-bottom">
                         <div class="d-flex align-items-start justify-content-between">
                             <div class="">
-                                <h5 class="mb-0">New Users</h5>
+                                <h5 class="mb-0">Tài khoản nhiều đơn hàng nhất</h5>
                             </div>
                             <div class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
@@ -342,101 +341,103 @@
                         <div class="user-list p-3">
                             <div class="d-flex flex-column gap-3">
                                 <script>
-
                                 </script>
-
-                                <% accountTop7New.forEach((item)=>{ %>
+                                <% accountTop7.forEach((item)=>{ %>
                                 <div class="d-flex align-items-center gap-3">
-                                    <img src="/assets/img/user/<%= user.avatar_account %>" width="45" height="45"
-                                        class="rounded-circle" alt="">
+                                    <img src="/assets/img/user/<%= user.avatar_account %>" <%  if(item.online == 1){ %>
+                                        style="border: 2px solid greenyellow; padding: 2px;" <%}%>
+                                    width="45" height="45" class="rounded-circle" alt="">
                                     <div class="flex-grow-1">
-                                        <h6 class="mb-0"><%= item.full_name_account %></h6>
-                                        <p class="mb-0"><%= item.email_account %></p>
-                                    </div>
+                                        <h6 class="mb-0"><%= item.full_name_account %></h6> <p
+                                        class="mb-0"><%= item.email_account %></p>
                                 </div>
-                                <% }) %>
+                                <div>
+                                    <a href="/admin/orders/<%= item.id %>"
+                                        style="border-radius: 10px; border: 1px solid; padding: 5px;"><%= item.total_classificationorders  %></a>
+                                </div>
                             </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-12 col-xxl-8 d-flex align-items-stretch">
+            <div class="card w-100 rounded-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div class="">
+                            <h5 class="mb-0">Sản phẩm bán chạy nhất</h5>
+                        </div>
+                        <div class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
+                                data-bs-toggle="dropdown">
+                                <span class="material-icons-outlined fs-5">more_vert</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="javascript:;">Action</a></li>
+                                <li><a class="dropdown-item" href="javascript:;">Another action</a></li>
+                                <li><a class="dropdown-item" href="javascript:;">Something else here</a></li>
+                            </ul>
                         </div>
                     </div>
 
-                </div>
-            </div>
-            <div class="col-lg-12 col-xxl-8 d-flex align-items-stretch">
-                <div class="card w-100 rounded-4">
-                    <div class="card-body">
-                        <div class="d-flex align-items-start justify-content-between mb-3">
-                            <div class="">
-                                <h5 class="mb-0">Sản phẩm bán chạy nhất</h5>
-                            </div>
-                            <div class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
-                                    data-bs-toggle="dropdown">
-                                    <span class="material-icons-outlined fs-5">more_vert</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="javascript:;">Action</a></li>
-                                    <li><a class="dropdown-item" href="javascript:;">Another action</a></li>
-                                    <li><a class="dropdown-item" href="javascript:;">Something else here</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table align-middle">
-                                <thead>
-                                    <tr>
-                                        <th>Sản phẩm</th>
-                                        <th>Giá</th>
-                                        <th>Lượt xem</th>
-                                        <th>Lượt bán</th>
-                                        <th>Đánh giá</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% top10Sale.forEach((item)=>{ %>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-3">
-                                                <div class="">
-                                                    <img src="/assets/img/product/<%= item.Product.image_product  %>"
-                                                        class="rounded-circle" width="50" height="50" alt="">
-                                                </div>
-                                                <a style="cursor: pointer;"
-                                                    href="/admin/edit-product/<%=item.Product.id %>"
-                                                    class="mb-0"><%=item.Product.name_product %></a>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Lượt xem</th>
+                                    <th>Lượt bán</th>
+                                    <th>Đánh giá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% top10Sale.forEach((item)=>{ %>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="">
+                                                <img src="/assets/img/product/<%= item.Product.image_product  %>"
+                                                    class="rounded-circle" width="50" height="50" alt="">
                                             </div>
-                                        </td>
-                                        <td><%=
+                                            <a style="cursor: pointer;" href="/admin/edit-product/<%=item.Product.id %>"
+                                                class="mb-0"><%=item.Product.name_product %></a>
+                                        </div>
+                                    </td>
+                                    <td><%=
  formatCurrency(item.Product.price_product)
  %></td>
-                                        <td><%=item.Product.view_product%></td>
-                                        <td>
-                                            <%= item.sales %>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-1">
-                                                <p class="mb-0"><%=item.Product.rating_product	
+                                    <td><%=item.Product.view_product%></td>
+                                    <td>
+                                        <%= item.sales %>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <p class="mb-0"><%=item.Product.rating_product	
                                                     %></p>
-                                                <i class="material-icons-outlined text-warning fs-6">star</i>
-                                            </div>
-                                        </td>
-                                    </tr> <% }) %>
+                                            <i class="material-icons-outlined text-warning fs-6">star</i>
+                                        </div>
+                                    </td>
+                                </tr> <% }) %>
 
 
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
 
     </div>
 </main>
 <!--end main wrapper-->
-<script></script>
+
 <!--start overlay-->
 <div class="overlay btn-toggle"></div>
 <!--end overlay-->
@@ -446,5 +447,610 @@
         currency: 'VND'
     });
 } %>
-<script></script>
 <%- include('footer') -%>
+<script>
+    $(function () {
+        "use strict";
+        // chart 1
+        var options = {
+            series: ['<%= (CountAccountOnline/CountAccountAll) * 100 %>'],
+            chart: {
+                height: 180,
+                type: 'radialBar',
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -115,
+                    endAngle: 115,
+                    hollow: {
+                        margin: 0,
+                        size: '80%',
+                        background: 'transparent',
+                        image: undefined,
+                        imageOffsetX: 0,
+                        imageOffsetY: 0,
+                        position: 'front',
+                        dropShadow: {
+                            enabled: false,
+                            top: 3,
+                            left: 0,
+                            blur: 4,
+                            opacity: 0.24
+                        }
+                    },
+                    track: {
+                        background: 'rgba(0, 0, 0, 0.1)',
+                        strokeWidth: '67%',
+                        margin: 0, // margin is in pixels
+                        dropShadow: {
+                            enabled: false,
+                            top: -3,
+                            left: 0,
+                            blur: 4,
+                            opacity: 0.35
+                        }
+                    },
+
+                    dataLabels: {
+                        show: true,
+                        name: {
+                            offsetY: -10,
+                            show: false,
+                            color: '#888',
+                            fontSize: '17px'
+                        },
+                        value: {
+                            offsetY: 10,
+                            color: '#111',
+                            fontSize: '24px',
+                            show: true,
+                        }
+                    }
+                }
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    type: 'horizontal',
+                    shadeIntensity: 0.5,
+                    gradientToColors: ['#ffd200'],
+                    inverseColors: true,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 100]
+                }
+            },
+            colors: ["blue"],
+            stroke: {
+                lineCap: 'round'
+            },
+            labels: ['Total Orders'],
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart1"), options);
+        chart.render();
+
+
+
+
+        // chart 2
+
+        var options = {
+            series: [{
+                name: "Net Sales",
+                data: [14, 10, 25, 12, 25, 18, 40, 22, 7]
+            }],
+            chart: {
+                //width:150,
+                height: 105,
+                type: 'area',
+                sparkline: {
+                    enabled: !0
+                },
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 3,
+                curve: 'smooth'
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    gradientToColors: ['#0866ff'],
+                    shadeIntensity: 1,
+                    type: 'vertical',
+                    opacityFrom: 0.5,
+                    opacityTo: 0.0,
+                    //stops: [0, 100, 100, 100]
+                },
+            },
+
+            colors: ["#02c27a"],
+            tooltip: {
+                theme: "dark",
+                fixed: {
+                    enabled: !1
+                },
+                x: {
+                    show: !1
+                },
+                y: {
+                    title: {
+                        formatter: function (e) {
+                            return ""
+                        }
+                    }
+                },
+                marker: {
+                    show: !1
+                }
+            },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart2"), options);
+        chart.render();
+
+
+
+        // chart 3
+
+
+        let DnowTb = new Date();
+        var MothNow = DnowTb.getMonth() + 1
+        var month = []
+        var data = [];
+        for (let index = 12; index > 0; index--) {
+            MothNow = MothNow + 1;
+            var ValueMothNow = 0;
+            if (MothNow == 13) {
+                MothNow = 1
+            }
+            `<% DetailOrderAdminDateTb.forEach((item) => { %>`
+            if ('<%=item.dataValues.month%>' == MothNow) {
+                ValueMothNow = '<%=item.dataValues.orderCount%>';
+            }
+            ` <% }); %>`
+            month.push(`Tháng ${MothNow}`);
+            data.push(ValueMothNow)
+        }
+
+
+        var options = {
+            series: [{
+                name: "",
+                data: data
+            }],
+            chart: {
+                //width:150,
+                height: 105,
+                type: 'area',
+                sparkline: {
+                    enabled: !0
+                },
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 3,
+                curve: 'smooth'
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    gradientToColors: ['#fc185a'],
+                    shadeIntensity: 1,
+                    type: 'vertical',
+                    opacityFrom: 0.8,
+                    opacityTo: 0.2,
+                    stops: [0, 100, 100, 100]
+                },
+            },
+
+            colors: ["#ffc107"],
+            tooltip: {
+                theme: "dark",
+                fixed: {
+                    enabled: !1
+                },
+                x: {
+                    show: !1
+                },
+                y: {
+                    title: {
+                        formatter: function (e) {
+                            return ""
+                        }
+                    }
+                },
+                marker: {
+                    show: !1
+                }
+            },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            }
+        };
+        var chart = new ApexCharts(document.querySelector("#chart3"), options);
+        chart.render();
+        // chart 4
+        var options = {
+            series: [{
+                name: "Net Sales",
+                data: [4, 25, 14, 34, 10, 39]
+            }],
+            chart: {
+                //width:150,
+                height: 105,
+                type: 'line',
+                sparkline: {
+                    enabled: !0
+                },
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 3,
+                curve: 'straight'
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    gradientToColors: ['#00f2fe'],
+                    shadeIntensity: 1,
+                    type: 'vertical',
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 100, 100, 100]
+                },
+            },
+
+            colors: ["#ee0979"],
+            tooltip: {
+                theme: "dark",
+                fixed: {
+                    enabled: !1
+                },
+                x: {
+                    show: !1
+                },
+                y: {
+                    title: {
+                        formatter: function (e) {
+                            return ""
+                        }
+                    }
+                },
+                marker: {
+                    show: !1
+                }
+            },
+            markers: {
+                show: !1,
+                size: 5,
+            },
+            xaxis: {
+                categories: ['Tháng 1', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            }
+        };
+        var chart = new ApexCharts(document.querySelector("#chart4"), options);
+        chart.render();
+        // chart 5
+
+        let now = new Date();
+        var MothNow = now.getMonth() + 1
+        var month = []
+        var data = [];
+        for (let index = 12; index > 0; index--) {
+            MothNow = MothNow + 1;
+            var ValueMothNow = 0;
+            if (MothNow == 13) {
+                MothNow = 1
+            }
+            `<% DetailOrderAdminDate.forEach((item) => { %>`
+            if ('<%=item.dataValues.month%>' == MothNow) {
+                ValueMothNow = '<%=item.dataValues.orderCount%>';
+            }
+            ` <% }); %>`
+            month.push(`Tháng ${MothNow}`);
+            data.push(ValueMothNow)
+        }
+        var options = {
+            series: [{
+                name: "Desktops",
+                data: data
+            }],
+            chart: {
+                foreColor: "#9ba7b2",
+                height: 280,
+                type: 'bar',
+                toolbar: {
+                    show: !1
+                },
+                sparkline: {
+                    enabled: !1
+                },
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 1,
+                curve: 'smooth'
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    borderRadius: 4,
+                    borderRadiusApplication: 'around',
+                    borderRadiusWhenStacked: 'last',
+                    columnWidth: '45%',
+                }
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    gradientToColors: ['#009efd'],
+                    shadeIntensity: 1,
+                    type: 'vertical',
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 100, 100, 100]
+                },
+            },
+            colors: ["#2af598"],
+            grid: {
+                show: true,
+                borderColor: 'rgba(255, 255, 255, 0.1)',
+            },
+            xaxis: {
+                categories: month,
+            },
+            tooltip: {
+                theme: "dark",
+                marker: {
+                    show: !1
+                }
+            },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart5"), options);
+        chart.render();
+        var data = [];
+        var dataName = [];
+        `<% countCategoryDash.forEach((item) => { %>`
+        data.push(Number('<%=item.count%>'))
+        console.log(dataName);
+        ` <% }); %>`
+        var options = {
+            series: data,
+            chart: {
+                height: 290,
+                type: 'donut',
+            },
+            legend: {
+                position: 'bottom',
+                show: !1
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    gradientToColors: ['#ee0979', '#17ad37', '#ec6ead'],
+                    shadeIntensity: 1,
+                    type: 'vertical',
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 100, 100, 100]
+                },
+            },
+
+            dataLabels: {
+                enabled: !1
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: "80%"
+                    }
+                }
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        height: 270
+                    },
+                    legend: {
+                        position: 'bottom',
+                        show: !1
+                    }
+                }
+            }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart6"), options);
+        chart.render();
+
+        let Dnow = new Date();
+        var MothNow = Dnow.getMonth() + 1
+        var month = []
+        var data = [];
+        for (let index = 12; index > 0; index--) {
+            MothNow = MothNow + 1;
+            var ValueMothNow = 0;
+            if (MothNow == 13) {
+                MothNow = 1
+            }
+            `<% DetailOrderAdminDateTc.forEach((item) => { %>`
+            if ('<%=item.dataValues.month%>' == MothNow) {
+                ValueMothNow = '<%=item.dataValues.orderCount%>';
+            }
+            ` <% }); %>`
+            month.push(`Tháng ${MothNow}`);
+            data.push(ValueMothNow)
+        }
+
+
+        // chart 7
+        var options = {
+            series: [{
+                name: "Total Accounts",
+                data: data
+            }],
+            chart: {
+                //width:150,
+                height: 105,
+                type: 'area',
+                sparkline: {
+                    enabled: !0
+                },
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 3,
+                curve: 'smooth'
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    gradientToColors: ['#fc185a'],
+                    shadeIntensity: 1,
+                    type: 'vertical',
+                    opacityFrom: 0.8,
+                    opacityTo: 0.2,
+                    //stops: [0, 100, 100, 100]
+                },
+            },
+
+            colors: ["blue"],
+            tooltip: {
+                theme: "dark",
+                fixed: {
+                    enabled: !1
+                },
+                x: {
+                    show: !1
+                },
+                y: {
+                    title: {
+                        formatter: function (e) {
+                            return ""
+                        }
+                    }
+                },
+                marker: {
+                    show: !1
+                }
+            },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart7"), options);
+        chart.render();
+
+
+
+        // chart 8
+
+        var options = {
+            series: [{
+                name: "Total Sales",
+                data: [4, 10, 25, 12, 25, 18, 40, 22, 7]
+            }],
+            chart: {
+                //width:150,
+                height: 210,
+                type: 'area',
+                sparkline: {
+                    enabled: !0
+                },
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 3,
+                curve: 'straight'
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    gradientToColors: ['#17ad37'],
+                    shadeIntensity: 1,
+                    type: 'vertical',
+                    opacityFrom: 0.7,
+                    opacityTo: 0.0,
+                },
+            },
+            colors: ["#98ec2d"],
+            tooltip: {
+                theme: "dark",
+                fixed: {
+                    enabled: !1
+                },
+                x: {
+                    show: !1
+                },
+                y: {
+                    title: {
+                        formatter: function (e) {
+                            return ""
+                        }
+                    }
+                },
+                marker: {
+                    show: !1
+                }
+            },
+            markers: {
+                show: !1,
+                size: 5,
+            },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart8"), options);
+        chart.render();
+    });
+</script>

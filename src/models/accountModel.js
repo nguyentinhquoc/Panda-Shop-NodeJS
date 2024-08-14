@@ -18,7 +18,7 @@ async function addACcount(avatar_account, address_account, full_name_account, pa
         tel_account: tel_account,
         role_account: 1,
         status_account: 1,
-        marketing_account: 0,
+        online: 0,
     });
 }
 async function accountAll() {
@@ -60,6 +60,9 @@ async function accountAllAdmin() {
                 'Account.role_account',
                 'Account.status_account'
             ],
+            order: [
+                ['status_account', 'DESC']
+            ],
             raw: true
         });
 
@@ -82,6 +85,15 @@ async function accountWId(id) {
     } catch (error) {
         console.error(error);
     }
+}
+async function changeOnline(AccountId, onine) {
+    await db.Account.update({
+        online: onine
+    }, {
+        where: {
+            id: AccountId
+        }
+    });
 }
 async function changeStatus(AccountId) {
     const statusNow = await db.Account.findOne({
@@ -107,21 +119,67 @@ async function changeStatus(AccountId) {
         });
     }
 }
-async function accountTop7New() {
+async function accountTop7() {
     try {
         const accountAll = await db.Account.findAll({
-            order: [
-                ['id', 'DESC']
+            attributes: [
+                'id',
+                'full_name_account',
+                'email_account',
+                'address_account',
+                'tel_account',
+                'online',
+                'role_account',
+                'status_account',
+                [Sequelize.fn('COUNT', Sequelize.col('ClassificationOrders.id')), 'total_classificationorders']
             ],
-            limit: 7
+            include: [{
+                model: db.ClassificationOrder,
+                attributes: [],
+                required: false
+            }],
+            group: [
+                'Account.id',
+                'Account.full_name_account',
+                'Account.email_account',
+                'Account.address_account',
+                'Account.tel_account',
+                'Account.online',
+                'Account.role_account',
+                'Account.status_account'
+            ],
+            order: [
+                [Sequelize.literal('total_classificationorders'), 'DESC']
+            ],
+            raw: true
         });
-        if (accountAll) {
-            return accountAll;
-        } else {
-            return null;
-        }
+
+        return accountAll;
     } catch (error) {
         console.error(error);
+        return null;
+    }
+}
+async function CountAccountAll() {
+    try {
+        const accountCount = await db.Account.count();
+        return accountCount;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+async function CountAccountOnline() {
+    try {
+        const accountCount = await db.Account.count({
+            where: {
+                online: 1
+            }
+        });
+        return accountCount;
+    } catch (error) {
+        console.error(error);
+        return null;
     }
 }
 module.exports = {
@@ -130,5 +188,8 @@ module.exports = {
     accountWId,
     changeStatus,
     accountAllAdmin,
-    accountTop7New
+    accountTop7,
+    changeOnline,
+    CountAccountOnline,
+    CountAccountAll
 };

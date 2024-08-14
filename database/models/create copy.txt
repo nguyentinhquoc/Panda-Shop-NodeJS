@@ -1,4 +1,4 @@
-npx sequelize-cli model:generate --name Account --attributes full_name_account:string,pass_account:string,email_account:string,address_account:string,tel_account:string,role_account:integer,avatar_account:string,status_account:integer,marketing_account:integer
+npx sequelize-cli model:generate --name Account --attributes full_name_account:string,pass_account:string,email_account:string,address_account:string,tel_account:string,role_account:integer,avatar_account:string,status_account:integer,online:integer
 
 npx sequelize-cli model:generate --name Category --attributes name_category:string,status_category:integer,image_category:string,description_category:string
 

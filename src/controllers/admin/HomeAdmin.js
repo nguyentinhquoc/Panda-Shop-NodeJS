@@ -8,19 +8,27 @@ import uploadImg from '../../configs/uploadImages';
 
 var HomeAdmin = (req, res) => {
     Promise.all([
+            detaiOrderModel.DetailOrderAdminDateTc(),
+            detaiOrderModel.DetailOrderAdminDateTb(),
             productsModel.countProductDash(),
             productsModel.countCategoryDash(),
-            accountModel.accountTop7New(),
+            accountModel.accountTop7(),
             productsModel.top10Sale(),
-            detaiOrderModel.DetailOrderAdminDate()
+            detaiOrderModel.DetailOrderAdminDate(),
+            accountModel.CountAccountAll(),
+            accountModel.CountAccountOnline(),
         ])
-        .then(([countProductDash, countCategoryDash, accountTop7New, top10Sale, DetailOrderAdminDate]) => {
+        .then(([DetailOrderAdminDateTc, DetailOrderAdminDateTb, countProductDash, countCategoryDash, accountTop7, top10Sale, DetailOrderAdminDate, CountAccountAll, CountAccountOnline]) => {
             res.render('admin/home', {
+                DetailOrderAdminDateTc: DetailOrderAdminDateTc,
+                DetailOrderAdminDateTb: DetailOrderAdminDateTb,
                 countProductDash: countProductDash,
                 countCategoryDash: countCategoryDash,
-                accountTop7New: accountTop7New,
+                accountTop7: accountTop7,
                 top10Sale: top10Sale,
-                DetailOrderAdminDate: DetailOrderAdminDate
+                DetailOrderAdminDate: DetailOrderAdminDate,
+                CountAccountAll: CountAccountAll,
+                CountAccountOnline: CountAccountOnline,
             })
         })
         .catch((error) => {

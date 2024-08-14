@@ -37,7 +37,7 @@ CREATE TABLE `accounts` (
   `role_account` int DEFAULT NULL,
   `avatar_account` varchar(255) DEFAULT NULL,
   `status_account` int DEFAULT NULL,
-  `marketing_account` int DEFAULT NULL,
+  `online` int DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -46,7 +46,7 @@ CREATE TABLE `accounts` (
 -- Đang đổ dữ liệu cho bảng `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `full_name_account`, `pass_account`, `email_account`, `address_account`, `tel_account`, `role_account`, `avatar_account`, `status_account`, `marketing_account`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `accounts` (`id`, `full_name_account`, `pass_account`, `email_account`, `address_account`, `tel_account`, `role_account`, `avatar_account`, `status_account`, `online`, `createdAt`, `updatedAt`) VALUES
 (18, 'Quốc Tình Nguyễn', '$2a$10$YTl1nDnT3PL10.BBNFtx1ejxmGZXV9YgKqVFKaHDcGIc5hoqT.QJe', 'nguyentinh@gmail.com', 'XÃ yên Lâm huyện Yên Mô tỉnh Ninh Bình', '0862201004', 2, '1722831001670.jpg', 1, 0, '2024-07-22 08:35:28', '2024-08-12 03:35:37'),
 (29, 'Nguyễn Quốc Tình', '$2a$10$egLiVAsQyUzgsyBBs6StJemW1VlZqjdXCpUUTHZ1ijx9vaTRJbHhe', 'nguyentinh140321@gmail.com', 'YÊn Lâm yên mô Ninh Bình', '0862201004', 1, '1723427704071.jpg', 1, 0, '2024-08-12 01:55:04', '2024-08-12 01:55:04');
 
