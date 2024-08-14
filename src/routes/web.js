@@ -19,6 +19,7 @@ import CategoryAdmin from '../controllers/admin/CategoryAdmin';
 import AccountAdmin from '../controllers/admin/AccountAdmin';
 import VariantAdmin from '../controllers/admin/VariantAdmin';
 import HomeAdmin from '../controllers/admin/HomeAdmin';
+import ContactAdmin from '../controllers/admin/ContactAdmin';
 import errorPageController from '../controllers/errorPageController';
 
 const crypto = require('crypto');
@@ -57,6 +58,8 @@ const routerWeb = (app) => {
     app.get('/admin/list-variant', isAdmin, VariantAdmin.listVariant)
     app.post('/admin/add-new-size', isAdmin, VariantAdmin.addSize)
     app.post('/admin/add-new-color', isAdmin, VariantAdmin.addColor)
+    app.get('/admin/contact', ContactAdmin.listContact)
+    app.post('/admin/contact', ContactAdmin.contactDelte)
     /* ----------------------------------- --- ---------------------------------- */
     /* --------------------------------- CLIENT --------------------------------- */
     app.get('/', HomeController.home);

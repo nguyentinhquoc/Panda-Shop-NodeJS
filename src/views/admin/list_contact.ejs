@@ -1,0 +1,167 @@
+<%- include('header') -%>
+
+<!--start main wrapper-->
+
+<main class="main-wrapper">
+    <div class="main-content">
+        <h2>Quản lý tài khoản</h2>
+
+        <table class="category-table">
+            <thead>
+                <tr>
+                    <th>#STT</th>
+                    <th> Họ và tên</th>
+                    <th> Email</th>
+                    <th> Số điện thoại</th>
+                    <th> Lời nhắn từ người dùng</th>
+                    <th>Xác nhận </th>
+                </tr>
+            </thead>
+            <tbody>
+                <% stt=0 %>
+                <% listContact.forEach(function(items) { %>
+                <tr>
+                    <th><%= stt+=1 %></th>
+                    <th> <%= items.full_name_contact %></th>
+                    <th> <%= items.email_contact %></th>
+                    <th> <%= items.tel_contact %></th>
+                    <th style="max-width: 500px; word-wrap: break-word; white-space: normal;">
+                        <%= items.content_contact %></th>
+                    <th>
+                        <form method="post">
+                            <button name="id" value="<%= items.id %>" class="btn btn-primary"
+                                onclick="return confirm('Bạn chắc chắc với hành động này ?')">Xóa</button>
+                        </form>
+
+                    </th>
+                </tr>
+                <% }) %>
+
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<style>
+    .main-wrapper {
+        padding: 30px;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .main-content {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        color: #fff;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .category-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    .category-table th,
+    .category-table td {
+        padding: 15px;
+        text-align: left;
+        color: #fff;
+    }
+
+    .category-table th {
+        background-color: rgba(255, 255, 255, 0.1);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    .category-table tbody tr {
+        background-color: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .category-table tbody tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .edit-btn {
+        background-color: #4CAF50;
+        color: white;
+        margin-right: 5px;
+    }
+
+    .edit-btn:hover {
+        background-color: #45a049;
+    }
+
+    .delete-btn {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .delete-btn:hover {
+        background-color: #da190b;
+    }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .status.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .status.inactive {
+        background-color: #FFC107;
+        color: #000;
+    }
+
+    .header-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-btn {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .add-btn:hover {
+        background-color: #2980b9;
+    }
+</style>
+
+
+<%- include('footer') -%>
