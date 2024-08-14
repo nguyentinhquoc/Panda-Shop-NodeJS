@@ -102,19 +102,41 @@
                                     <div id="preview-image"></div>
                                     <div>
                                         <h5>Variant</h5>
-                                        <p onclick="duBT()" class="btn btn-danger">Đẩy đủ biến thể</p>
-                                        <p onclick="thieuBT()" class="btn btn-danger">Thiếu biến thể</p>
-
-
+                                        <div class="d-flex justify-content-between" style="margin-bottom: 50px;">
+                                            <input type="radio" class="btn-check" name="statusBT" id="duBT" value="du"
+                                                au4tocomplete="off">
+                                            <label style="padding: 5px 200px; font-size: 20px;" onclick="duBT()"
+                                                class="btn btn-outline-success pt-2 pb-2" for="duBT">Đủ
+                                                biến
+                                                thể</label>
+                                            <input type="radio" class="btn-check" name="statusBT" id="thieuBT"
+                                                value="thieu" au4tocomplete="off">
+                                            <label style="padding: 5px 200px; font-size: 20px;" onclick="thieuBT()"
+                                                class="btn btn-outline-success" for="thieuBT">Thiếu
+                                                biến thể</label>
+                                        </div>
                                         <div class="hientThiForm">
 
                                         </div>
-
-                                        <button id="addVariant" class="btn btn-primary">Add Variant</button>
+                                        <style>
+                                            .btnADDVariant {
+                                                margin-left: 1100px;
+                                                margin-bottom: 50px;
+                                                font-size: 20px;
+                                                width: auto;
+                                            }
+                                        </style>
+                                        <button style="display: none;" id="addVariant"
+                                            class="btnADDVariant btn btn-info">Add
+                                            Variant</button>
                                         <script>
                                             var hientThiForm = document.querySelector('.hientThiForm')
 
                                             function duBT() {
+                                                document.getElementById('addVariant').setAttribute(
+                                                    'style',
+                                                    'display: none;'
+                                                );
                                                 hientThiForm.innerHTML =
                                                     `
                                                    <table class="table table-striped">
@@ -146,6 +168,9 @@
                                             }
 
                                             function thieuBT() {
+                                                document.getElementById('addVariant').removeAttribute(
+                                                    'style',
+                                                );
                                                 hientThiForm.innerHTML =
                                                     `
                                                 <div id="variantForms">

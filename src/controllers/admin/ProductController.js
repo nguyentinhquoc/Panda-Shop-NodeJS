@@ -105,6 +105,7 @@ var subAddProduct = (req, res) => {
             var code_products = code_product;
             productsModel.addProduct(name_product, price_product, price_sale, image_product, description_product, id_category, code_products)
             setTimeout(() => {
+
                 productsModel.productWhereCode(code_products).then(productId => {
                     Promise.all([
                         variantsModel.listColors(),
