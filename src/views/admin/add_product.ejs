@@ -105,22 +105,21 @@
                                         <div class="d-flex justify-content-between" style="margin-bottom: 50px;">
                                             <input type="radio" class="btn-check" name="statusBT" id="duBT" value="du"
                                                 au4tocomplete="off">
-                                            <label style="padding: 5px 200px; font-size: 20px;" onclick="duBT()"
+                                            <label style="padding: 5px 150px; font-size: 20px;" onclick="duBT()"
                                                 class="btn btn-outline-success pt-2 pb-2" for="duBT">Đủ
                                                 biến
                                                 thể</label>
                                             <input type="radio" class="btn-check" name="statusBT" id="thieuBT"
                                                 value="thieu" au4tocomplete="off">
-                                            <label style="padding: 5px 200px; font-size: 20px;" onclick="thieuBT()"
+                                            <label style="padding: 5px 150px; font-size: 20px;" onclick="thieuBT()"
                                                 class="btn btn-outline-success" for="thieuBT">Thiếu
                                                 biến thể</label>
                                         </div>
                                         <div class="hientThiForm">
-
                                         </div>
                                         <style>
                                             .btnADDVariant {
-                                                margin-left: 1100px;
+                                                margin-left: 800px;
                                                 margin-bottom: 50px;
                                                 font-size: 20px;
                                                 width: auto;
@@ -133,6 +132,10 @@
                                             var hientThiForm = document.querySelector('.hientThiForm')
 
                                             function duBT() {
+                                                document.querySelector('.needs-validation').setAttribute(
+                                                    'action',
+                                                    '/admin/add-product?status=du'
+                                                );
                                                 document.getElementById('addVariant').setAttribute(
                                                     'style',
                                                     'display: none;'
@@ -168,6 +171,11 @@
                                             }
 
                                             function thieuBT() {
+
+                                                document.querySelector('.needs-validation').setAttribute(
+                                                    'action',
+                                                    '/admin/add-product?status=thieu'
+                                                );
                                                 document.getElementById('addVariant').removeAttribute(
                                                     'style',
                                                 );

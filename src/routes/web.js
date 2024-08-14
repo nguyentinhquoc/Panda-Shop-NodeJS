@@ -42,6 +42,7 @@ const routerWeb = (app) => {
     app.get('/admin', isAdmin, HomeAdmin.HomeAdmin)
     app.get('/admin/add-product', isAdmin, ProductControllerAdmin.addProduct)
     app.post('/admin/add-product', isAdmin, ProductControllerAdmin.subAddProduct)
+
     app.get('/admin/list-product/:id', isAdmin, ProductControllerAdmin.listProducts)
     app.get('/admin/edit-product/:id', isAdmin, ProductControllerAdmin.editProducts)
     app.post('/admin/edit-product/:id', isAdmin, ProductControllerAdmin.subEditProducts)
