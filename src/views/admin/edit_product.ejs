@@ -39,15 +39,14 @@
                     </div>
                     <div class="card-body p-4">
                         <form class="row g-3 needs-validation" novalidate
-                            action="/admin/edit-product/<%= valueProduct.id %>" method="POST" id="formAdd">
+                            action="/admin/edit-product/<%= valueProduct.id %>" method="POST" id="formAdd"
+                            enctype="multipart/form-data">
                             <input type="hidden" name="productId" value="<%= valueProduct.id %>">
-
                             <div class="card-body">
                                 <div class="mb-4">
                                     <label for="NameProduct" class="form-label">
                                         <h5 class="mb-3">Name Product</h5>
                                     </label>
-
                                     <input id="NameProduct" name="NameProduct" type="text" class="form-control"
                                         value="<%= valueProduct.name_product %>"
                                         placeholder="Write name product here...." required>
@@ -119,31 +118,47 @@
                                 <input type="hidden" name="ImageOld" value="<%= valueProduct.image_product %>">
                                 <div>
                                     <h5>Variant</h5>
-                                    <table class="table table-striped">
-                                        <tr>
-                                            <th style="color: aqua;">SIZE / MÀU</th>
-                                            <% listColors.forEach(function(items) { %>
-                                            <th> <%= items.name_color.toUpperCase() %>
-                                            </th>
-                                            <% }); %>
-                                        </tr>
-                                        <% listSizes.forEach(function(items1) { %>
-                                        <tr>
-                                            <th><%= items1.name_size %></th>
-                                            <% listColors.forEach(function(items2) { %>
-                                            <% variants.forEach(function(items3) { %>
-                                            <% if (items2.id == items3.id_color && items1.id == items3.id_size) { %>
-                                            <th>
-                                                <input type="number" class="form-control" min="0"
-                                                    name="<%=items2.id%>_<%=items1.id%>"
-                                                    value="<%=items3.quantity_variant %>" required>
-                                            </th>
-                                            <% } %>
-                                            <% }); %>
-                                            <% }); %>
-                                        </tr>
-                                        <% }); %>
-                                    </table>
+                                    <div id="variantForms">
+                                        <div id="variantForms" class="mb-4">
+                                            <% variants.forEach(function(item) { %>
+                                            <div class="variant-form bg-light p-3 rounded mb-3">
+                                                <div class="row g-3">
+                                                    <div class="col-md-3">
+                                                        <label for="color" class="form-label">Color</label>
+                                                        <select class="form-select" name="color[]" id="color" disabled>
+                                                            <% listColors.forEach(function(itemCl) { %>
+                                                            <option <%= itemCl.id == item.id_color ? 'selected' : '' %>
+                                                                value="<%= itemCl.id %>">
+                                                                <%= itemCl.name_color.toUpperCase() %></option>
+                                                            <% }); %>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="size" class="form-label">Size</label>
+                                                        <select class="form-select" name="size[]" id="size" disabled>
+                                                            <% listSizes.forEach(function(itemSz) { %>
+                                                            <option <%= itemSz.id == item.id_size ? 'selected' : '' %>
+                                                                value="<%= itemSz.id %>">
+                                                                <%= itemSz.name_size.toUpperCase() %></option>
+                                                            <% }); %>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="quantity" class="form-label">Quantity</label>
+                                                        <input type="hidden" name="idVariant" value="<%= item.id %>">
+                                                        <input type="number" class="form-control" name="quantity"
+                                                            id="quantity" min="0" value="<%=item.quantity_variant %>">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="image" class="form-label">Image</label>
+                                                        <input type="file" class="form-control" name="<%= item.id %>"
+                                                            id="image">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-grd-primary px-4">Submit</button>
@@ -209,16 +224,7 @@
 
                         var domImageProduct = document.querySelector('#ImageProduct')
                         var formAdd = document.querySelector('#formAdd')
-                        domImageProduct.addEventListener('blur', function () {
-                            if (domImageProduct.value.trim() === "") {
-                                domImageProduct.style.border = '2px solid red';
-                            } else {
-                                check = true;
-                                domImageProduct.style.border = '';
-                                formAdd.setAttribute('enctype', 'multipart/form-data')
 
-                            }
-                        });
 
 
 

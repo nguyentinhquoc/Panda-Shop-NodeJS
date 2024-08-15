@@ -24,15 +24,30 @@ async function listSizes() {
     }
 }
 
-function editVariants(id_product, id_Variant, quantity_variant) {
-    db.Variant.update({
-        quantity_variant: quantity_variant,
-    }, {
-        where: {
-            id_product: id_product,
-            code_variant: id_Variant,
-        }
-    });
+function editVariants(id_Variant, quantity_variant, image_variant) {
+    console.log('-----');
+    console.log(id_Variant);
+    console.log(quantity_variant);
+    console.log(image_variant);
+    console.log('-----');
+    if (image_variant) {
+        db.Variant.update({
+            quantity_variant: quantity_variant,
+            image_variant: image_variant,
+        }, {
+            where: {
+                id: id_Variant,
+            }
+        });
+    } else {
+        db.Variant.update({
+            quantity_variant: quantity_variant,
+        }, {
+            where: {
+                id: id_Variant,
+            }
+        });
+    }
 }
 
 function addVariants(id_product, id_color, id_size, quantity_variant, code_variant, image_variant_value) {

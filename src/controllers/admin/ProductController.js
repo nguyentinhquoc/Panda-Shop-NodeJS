@@ -190,44 +190,68 @@ var subAddProduct = async (req, res) => {
         })
     }
 }
-
-
 var subEditProducts = (req, res) => {
-    upload.single('ImageProduct')(req, res, function (err) {
-        if (req.file) {
-            var image_product = req.file.filename;
-        } else {
-            var image_product = req.body.ImageOld;
-        }
-        var productId = req.body.productId;
-        var name_product = req.body.NameProduct;
-        var price_product = req.body.PriceProduct;
-        var price_sale = req.body.PriceSaleProduct;
-        var description_product = req.body.DescriptionProduct;
-        var id_category = req.body.CategoryProduct;
-        productsModel.editProducts(productId, name_product, price_product, price_sale, image_product, description_product, id_category);
-        Promise.all([
+    Promise.all([
+            variantsModel.VariantsWIdProduct(req.params.id),
+            productsModel.productWhereId(req.params.id),
             variantsModel.listColors(),
-            variantsModel.listSizes()
-        ]).then(([colors, sizes]) => {
-            sizes.forEach(value1 => {
-                colors.forEach(value2 => {
-                    var code_variant = value2.id + '_' + value1.id;
-                    var quantity_variant = req.body[code_variant];
-                    var code_variant = value2.id + '_' + value1.id;
-                    variantsModel.editVariants(productId, code_variant, quantity_variant)
-                });
-            });
-        }).catch(err => {
-            console.error('Error:', err);
+            variantsModel.listSizes(),
+            categoriesModel.categories(),
+        ])
+        .then(([variants, valueProduct, listColors, listSizes, categories]) => {
+            var mang = [{
+                name: 'ImageProduct',
+                maxCount: 1
+            }]
+            variants.forEach(value => {
+                mang.push({
+                    name: value.id,
+                    maxCount: 1
+                })
+            })
+            upload.fields(mang)(req, res, function (err) {
+
+                if (req.files['ImageProduct']) {
+                    console.log(req.files['ImageProduct'].filename + '1111');
+                    var image_product = req.files['ImageProduct'][0].filename;
+                } else {
+                    var image_product = req.body.ImageOld;
+                }
+                var productId = req.body.productId;
+                var name_product = req.body.NameProduct;
+                var price_product = req.body.PriceProduct;
+                var price_sale = req.body.PriceSaleProduct;
+                var description_product = req.body.DescriptionProduct;
+                var id_category = req.body.CategoryProduct;
+                productsModel.editProducts(productId, name_product, price_product, price_sale, image_product, description_product, id_category);
+                for (let index = 0; index < req.body.idVariant.length; index++) {
+                    setTimeout(() => {
+                        var id_Variant = req.body.idVariant[index]
+                        var quantity_variant = req.body.quantity[index]
+                        if (req.files[id_Variant]) {
+                            var image_variant = req.files[id_Variant][0].filename;
+                        } else {
+                            var image_variant = false
+                        }
+                        variantsModel.editVariants(id_Variant, quantity_variant, image_variant)
+                    }, 100);
+                }
+                console.log(req.files['1185']);
+                console.log(req.files['ImageProduct']);
+                console.log('000');
+                console.log(req.file);
+            })
+            setTimeout(() => {
+                res.redirect('/admin/list-product/all-product');
+            }, 100);
+        })
+        .catch((error) => {
+            console.error('ERROR:', error);
         });
-    })
-    setTimeout(() => {
-        res.redirect('/admin/list-product/all-product');
-    }, 100);
+
 }
 var changeStatus = (req, res) => {
-    productsModel.changeStatus(req.query.id);
+    productsModel.changeStatus(req.params.id);
     setTimeout(() => {
         res.redirect('/admin/list-product/all-product');
     }, 100);
