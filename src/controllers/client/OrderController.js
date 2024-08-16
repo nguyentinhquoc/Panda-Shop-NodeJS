@@ -38,7 +38,7 @@ var addPaymentOnline = async (req, res) => {
 var addOrder = async (req, res) => {
     var full_name_user = req.body.fullName;
     var tel_user = req.body.phoneNumber;
-    var address_user = req.body.address;
+    var address_user = req.body.xa + '-' + req.body.huyen + '-' + req.body.tinh;
     var total = req.body.total;
     var payment_method = 1;
     var code_status = 3;

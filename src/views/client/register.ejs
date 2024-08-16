@@ -1,40 +1,25 @@
 <%- include('header') -%>
-<div class="page-header-wrap bg-img" data-bg="/assets/img/bg/page-header-bg.jpg">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <div class="page-header-content">
-                    <div class="page-header-content-inner">
-                        <h1>Đang ký</h1>
-                        <ul class="breadcrumb">
-                            <li><a href="/">Trang chủ</a></li>
-                            <li class="current"><a href="#">Đang ký</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="page-content-wrapper sp-y">
     <div class="login-page-content-wrap">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-12 ml-auto mr-auto">
                     <div class="register-form-style">
-                        <div class="container">
+                        <div class="container"
+                            style="background: linear-gradient(to right, #4ab5b5, #ff69b4); border-radius: 20px;">
                             <div class="row justify-content-center">
                                 <div class="col-md-12">
                                     <div class="card shadow-lg mt-5">
                                         <div class="card-body p-5">
-                                            <h2 class="text-center mb-4">Register</h2>
+                                            <h2 class="text-center mb-4">Đang ký</h2>
                                             <form id="registrationForm" onsubmit="return validateForm()" method="post"
                                                 enctype="multipart/form-data">
                                                 <div class="form-group mb-3">
                                                     <div style="width: 100%;">
                                                     </div>
                                                     <div class="avatar-input">
-                                                        <input onchange="previewAvatar(this);" type="file"
+                                                        <input required onchange="previewAvatar(this);" type="file"
                                                             name="avatar_account" id="avatar_account" accept="image/*"
                                                             style="display: none;">
                                                         <label id="avatarLabel" for="avatar_account"
@@ -74,24 +59,24 @@
                                                 </style>
 
                                                 <div class="form-group mb-3">
-                                                    <input type="text" class="form-control" name="full_name_account"
-                                                        id="full_name_account" placeholder="Full Name">
+                                                    <label for="full_name_account" class="form-label">Họ và tên</label>
+                                                    <input required type="text" class="form-control"
+                                                        name="full_name_account" id="full_name_account"
+                                                        placeholder="Họ và tên">
                                                     <div id="fullNameError" class="text-danger small mt-1"></div>
                                                 </div>
                                                 <div class="form-group mb-3">
-                                                    <input type="email" class="form-control" name="email_account"
-                                                        id="email_account" placeholder="Email">
+                                                    <label for="email_account" class="form-label">Email</label>
+                                                    <input required type="email" class="form-control"
+                                                        name="email_account" id="email_account" placeholder="Email">
                                                     <div id="emailError" class="text-danger small mt-1"></div>
                                                 </div>
                                                 <div class="form-group mb-3">
-                                                    <input type="tel" class="form-control" name="tel_account"
-                                                        id="tel_account" placeholder="Phone">
+                                                    <label for="tel_account" class="form-label">Số điện thoại</label>
+
+                                                    <input required type="tel" class="form-control" name="tel_account"
+                                                        id="tel_account" placeholder="Số điện thoại">
                                                     <div id="phoneError" class="text-danger small mt-1"></div>
-                                                </div>
-                                                <div class="form-group mb-3">
-                                                    <input type="text" class="form-control" name="address_account"
-                                                        id="address_account" placeholder="Address">
-                                                    <div id="addressError" class="text-danger small mt-1"></div>
                                                 </div>
 
                                                 <div class="form-group mb-3">
@@ -104,9 +89,26 @@
                                                         id="repass_account" placeholder="Confirm Password">
                                                     <div id="confirmPasswordError" class="text-danger small mt-1"></div>
                                                 </div>
+                                                <label for="tel_account" class="form-label">Địa chỉ</label>
+                                                <div class="mb-3">
+                                                    <select class="form-select" id="city" name="tinh" required>
+                                                        <option value="" selected>Chọn tỉnh thành</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <select class="form-select" id="district" name="huyen" required>
+                                                        <option value="" selected>Chọn quận huyện</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <select class="form-select" id="ward" name="xa" required>
+                                                        <option value="" selected>Chọn phường xã</option>
+                                                    </select>
+                                                </div>
+
                                                 <div class="d-grid">
-                                                    <button class="btn btn-primary btn-lg"
-                                                        type="submit">Register</button>
+                                                    <button class="btn btn-primary btn-lg" type="submit">Đang
+                                                        ký</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -120,6 +122,65 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js">
+</script>
+<script>
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            var opt = document.createElement('option');
+            opt.value = x.Name;
+            opt.text = x.Name;
+            opt.setAttribute('data-id', x.Id);
+            citis.options.add(opt);
+        }
+        citis.onchange = function () {
+            district.length = 1;
+            ward.length = 1;
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const result = data.filter(n => n.Id === this
+                    .options[this.selectedIndex].dataset.id);
+
+                for (const k of result[0].Districts) {
+                    var opt = document.createElement('option');
+                    opt.value = k.Name;
+                    opt.text = k.Name;
+                    opt.setAttribute('data-id', k.Id);
+                    district.options.add(opt);
+                }
+            }
+        };
+        district.onchange = function () {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis
+                .options[citis.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const dataWards = dataCity[0].Districts.filter(n =>
+                    n.Id === this.options[this.selectedIndex]
+                    .dataset.id)[0].Wards;
+                for (const w of dataWards) {
+                    var opt = document.createElement('option');
+                    opt.value = w.Name;
+                    opt.text = w.Name;
+                    opt.setAttribute('data-id', w.Id);
+                    wards.options.add(opt);
+                }
+            }
+        };
+    }
+</script>
 <% if( flash.checkregister !== undefined && flash.checkregister == 'error'){ %>
 <div id="alertEr" style="opacity: 0; transition: opacity 1s ease;">
     <div style="max-width: 500px; position: absolute; top: 30px; position: fixed; right: 30px;"
@@ -267,4 +328,3 @@
         }
     });
 </script>
-<%- include('footer') -%>

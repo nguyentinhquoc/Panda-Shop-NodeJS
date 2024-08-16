@@ -273,6 +273,7 @@ var subEditProducts = (req, res) => {
             console.error('ERROR:', error);
         });
 }
+
 var changeStatus = (req, res) => {
     productsModel.changeStatus(req.params.id);
     setTimeout(() => {

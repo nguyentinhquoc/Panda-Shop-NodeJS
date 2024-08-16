@@ -9,6 +9,9 @@ var register = (req, res) => {
     res.render('client/register')
 }
 var registerSb = (req, res) => {
+
+
+
     var check = true;
     Promise.all([
             accountModel.accountAll()
@@ -24,9 +27,10 @@ var registerSb = (req, res) => {
             });
             if (check) {
                 upload.single('avatar_account')(req, res, function (err) {
+                    console.log(req.body);
                     if (req.file) {
                         var image_product = req.file.filename;
-                        var address_account = req.body.address_account
+                        var address_account = req.body.xa + '-' + req.body.huyen + '-' + req.body.tinh;
                         if (accountModel.addACcount(image_product, address_account, req.body.full_name_account, req.body.pass_account, req.body.email_account, req.body.tel_account)) {
                             req.flash('checkregister', 'success');
                             res.redirect('/login');
