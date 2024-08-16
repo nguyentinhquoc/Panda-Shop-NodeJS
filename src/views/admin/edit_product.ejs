@@ -35,7 +35,7 @@
             <div class="col-12 col-lg-11">
                 <div class="card">
                     <div class="card-header px-4 py-3">
-                        <h5 class="mb-0">Edit Product</h5>
+                        <h5 class="mb-0">Sửa sản phẩm</h5>
                     </div>
                     <div class="card-body p-4">
                         <form class="row g-3 needs-validation" novalidate
@@ -45,7 +45,7 @@
                             <div class="card-body">
                                 <div class="mb-4">
                                     <label for="NameProduct" class="form-label">
-                                        <h5 class="mb-3">Name Product</h5>
+                                        <h5 class="mb-3">Tên sản phẩm</h5>
                                     </label>
                                     <input id="NameProduct" name="NameProduct" type="text" class="form-control"
                                         value="<%= valueProduct.name_product %>"
@@ -55,7 +55,7 @@
                                 <div class="col-12 mb-3 d-flex justify-content-between">
                                     <div class="col-5">
                                         <label for="AddCategory" class="form-label">
-                                            <h5 class="mb-3">Category
+                                            <h5 class="mb-3">Danh mục
                                             </h5>
                                         </label>
                                         <select class="form-select" id="AddCategory" name="CategoryProduct">
@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="col-2">
                                         <label for="PriceProduct" class="form-label">
-                                            <h5 class="mb-3">Price </h5>
+                                            <h5 class="mb-3">Giá </h5>
                                         </label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">$</span>
@@ -79,10 +79,10 @@
                                     </div>
                                     <div class="col-2">
                                         <label for="PriceSaleProduct" class="form-label">
-                                            <h5 class="mb-3">Price Sale </h5>
+                                            <h5 class="mb-3">Giảm giá</h5>
                                         </label>
                                         <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">$</span>
+                                            <span class="input-group-text" id="basic-addon1">%</span>
                                             <input value="<%= valueProduct.price_sale %>" type="number"
                                                 id="PriceSaleProduct" class="form-control" min="0"
                                                 name="PriceSaleProduct" required>
@@ -91,14 +91,14 @@
 
                                 </div>
                                 <div class="mb-4">
-                                    <h5 class="mb-3">Product Description</h5>
+                                    <h5 class="mb-3">Mô tả</h5>
                                     <textarea required id="DescriptionProduct" class="form-control"
                                         name="DescriptionProduct" cols="4" rows="6"
-                                        placeholder="Write a description here...."><%= valueProduct.description_product %></textarea>
+                                        placeholder="Mô tả tại đây...."><%= valueProduct.description_product %></textarea>
                                 </div>
                                 <div class="mb-4">
                                     <label for="ImageProduct" class="form-label">
-                                        <h5>Images Product </h5>
+                                        <h5>Ảnh sản phẩm </h5>
                                     </label>
                                     <input class="form-control form-control-lg" id="ImageProduct" type="file"
                                         name="ImageProduct">
@@ -117,7 +117,7 @@
                                 </div>
                                 <input type="hidden" name="ImageOld" value="<%= valueProduct.image_product %>">
                                 <div>
-                                    <h5>Variant</h5>
+                                    <h5 style="margin: 20px 10px;">Biến thể </h5>
                                     <div id="variantForms">
                                         <div id="variantForms" class="mb-4">
                                             <% variants.forEach(function(item) { %>
@@ -144,13 +144,13 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="quantity" class="form-label">Quantity</label>
+                                                        <label for="quantity" class="form-label">Số lượng</label>
                                                         <input type="hidden" name="idVariant" value="<%= item.id %>">
                                                         <input type="number" class="form-control" name="quantity"
                                                             id="quantity" min="0" value="<%=item.quantity_variant %>">
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="image" class="form-label">Image</label>
+                                                        <label for="image" class="form-label">Ảnh</label>
                                                         <input type="file" class="form-control" name="<%= item.id %>"
                                                             id="image">
                                                     </div>
@@ -161,7 +161,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-grd-primary px-4">Submit</button>
+                            <button type="submit" class="btn btn-grd-primary px-4"
+                                onclick="return confirm('Bạn có chắc muốn sửa với các trường dữ liệu vừa thay đổi ?')">Sửa
+                                sản phẩm</button>
                         </form>
                     </div>
                     <!-- Bootstrap JS và jQuery -->

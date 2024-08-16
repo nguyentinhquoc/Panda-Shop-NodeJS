@@ -1,9 +1,61 @@
 import db from '../../database/models';
+
+const {
+    Sequelize,
+    Op,
+    where
+} = require('sequelize');
 async function listColors() {
     try {
         const listColors = await db.Color.findAll({});
         if (listColors) {
             return listColors;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function listColorsDetail(id_product) {
+    try {
+        const colors = await db.Color.findAll({
+            where: {
+                id: {
+                    [Sequelize.Op.in]: Sequelize.literal(`(
+          SELECT DISTINCT variants.id_color
+          FROM variants 
+          WHERE variants.id_product = ${id_product}
+        )`)
+                }
+            }
+        });
+
+        if (colors) {
+            return colors;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function listSizesDetail(id_product) {
+    try {
+        const sizes = await db.Size.findAll({
+            where: {
+                id: {
+                    [Sequelize.Op.in]: Sequelize.literal(`(
+          SELECT DISTINCT variants.id_size
+          FROM variants 
+          WHERE variants.id_product = ${id_product}
+        )`)
+                }
+            }
+        });
+
+        if (sizes) {
+            return sizes;
         } else {
             return null;
         }
@@ -25,11 +77,6 @@ async function listSizes() {
 }
 
 function editVariants(id_Variant, quantity_variant, image_variant) {
-    console.log('-----');
-    console.log(id_Variant);
-    console.log(quantity_variant);
-    console.log(image_variant);
-    console.log('-----');
     if (image_variant) {
         db.Variant.update({
             quantity_variant: quantity_variant,
@@ -116,5 +163,7 @@ module.exports = {
     editVariants,
     VariantsWColorSize,
     addSize,
-    addColor
+    addColor,
+    listColorsDetail,
+    listSizesDetail
 };

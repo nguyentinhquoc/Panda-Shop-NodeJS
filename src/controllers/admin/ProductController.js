@@ -175,7 +175,7 @@ var subAddProduct = async (req, res) => {
                         var id_size = req.body.size[index]
                         var quantity_variant = req.body.quantity[index];
                         var code_variant = id_color + '_' + id_size;
-                        if (req.files['image[]'][index] != undefined) {
+                        if (req.files && req.files['image[]'] && Array.isArray(req.files['image[]']) && req.files['image[]'][index]) {
                             var image_variant_value = req.files['image[]'][index].filename;
                         } else {
                             var image_variant_value = null;
@@ -242,7 +242,7 @@ var subEditProducts = (req, res) => {
                 console.log(req.file);
             })
             setTimeout(() => {
-                res.redirect('/admin/list-product/all-product');
+                res.redirect(req.headers.referer || '/fallback-route');
             }, 100);
         })
         .catch((error) => {
@@ -253,7 +253,7 @@ var subEditProducts = (req, res) => {
 var changeStatus = (req, res) => {
     productsModel.changeStatus(req.params.id);
     setTimeout(() => {
-        res.redirect('/admin/list-product/all-product');
+        res.redirect(req.headers.referer || '/fallback-route');
     }, 100);
 }
 module.exports = {

@@ -79,7 +79,7 @@ async function Countcategories() {
         const Countcategories = await db.Category.findAll({
             attributes: [
                 'name_category',
-                [Sequelize.fn('COUNT', Sequelize.col('Category.id')), 'Category_Count']
+                [Sequelize.fn('COUNT', Sequelize.col('Products.id_category')), 'Category_Count']
             ],
             include: [{
                 model: db.Product,

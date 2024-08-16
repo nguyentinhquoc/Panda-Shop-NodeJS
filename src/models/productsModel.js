@@ -280,6 +280,21 @@ async function listProductsAdmin(name) {
             if (product) {
                 return product;
             }
+        } else if (name == 'product-remove') {
+            const product = await db.Product.findAll({
+                include: {
+                    model: db.Category,
+                    where: {
+                        status_category: 1
+                    }
+                },
+                where: {
+                    status_product: 0,
+                },
+            });
+            if (product) {
+                return product;
+            }
         } else {
             const product = await db.Product.findAll({
                 include: {
