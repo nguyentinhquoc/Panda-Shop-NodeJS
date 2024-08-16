@@ -220,6 +220,9 @@
                                                                         <img id="imagePreview" src="#" alt="Image preview" style="max-width: 100px; max-height: 100px; display: none; margin-top: 10px;">
 
                                                             </div>
+                                                            <div class="col-md-1">
+                            <button type="button" class="btn btn-danger delete-variant mt-4">Delete</button>
+                        </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -244,12 +247,23 @@
                                                 checkDuplicates();
                                             });
 
+                                            document.addEventListener('click', function (e) {
+                                                if (e.target && e.target.classList.contains('delete-variant')) {
+                                                    e.preventDefault();
+                                                    let variantForm = e.target.closest('.variant-form');
+                                                    if (variantForm && document.querySelectorAll(
+                                                            '.variant-form').length > 1) {
+                                                        variantForm.remove();
+                                                        checkDuplicates();
+                                                    }
+                                                }
+                                            });
+
                                             function updateSelectEvents(form) {
                                                 form.querySelectorAll('select').forEach(function (select) {
                                                     select.addEventListener('change', function () {
                                                         selectedOptions.add(this.name + '-' + this
                                                             .value);
-
                                                         checkDuplicates();
                                                     });
                                                 });
@@ -258,6 +272,7 @@
                                             function checkDuplicates() {
                                                 let forms = document.querySelectorAll('.variant-form');
                                                 forms.forEach(form => form.style.border = '');
+                                                let hasDuplicates = false;
                                                 for (let i = 0; i < forms.length; i++) {
                                                     for (let j = i + 1; j < forms.length; j++) {
                                                         let color1 = forms[i].querySelector('select[name="color[]"]')
@@ -271,15 +286,12 @@
                                                         if (color1 === color2 && size1 === size2 && color1 && size1) {
                                                             forms[i].style.border = '2px solid red';
                                                             forms[j].style.border = '2px solid red';
-                                                            document.querySelector('.BTNSUBMIT').disabled = true;
-                                                        } else {
-                                                            document.querySelector('.BTNSUBMIT').disabled = false;
+                                                            hasDuplicates = true;
                                                         }
                                                     }
                                                 }
+                                                document.querySelector('.BTNSUBMIT').disabled = hasDuplicates;
                                             }
-
-                                            updateSelectEvents(document.querySelector('.variant-form'));
                                         </script>
                                     </div>
                                     <div class="col-md-12">

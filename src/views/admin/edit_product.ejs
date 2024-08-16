@@ -122,8 +122,8 @@
                                 <input type="hidden" name="ImageOld" value="<%= valueProduct.image_product %>">
                                 <div>
                                     <h5 style="margin: 20px 10px;">Biến thể </h5>
-                                    <div id="variantForms">
-                                        <div id="variantForms" class="mb-4">
+                                    <div>
+                                        <div class="mb-4">
                                             <% variants.forEach(function(item) { %>
                                             <div class="variant-form bg-light p-3 rounded mb-3">
                                                 <div class="row g-3">
@@ -162,10 +162,156 @@
                                             </div>
                                             <% }) %>
                                         </div>
+
+                                        <div class="hientThiForm"></div>
+                                        <div>
+
+                                            <button id="addVariant" class="btnADDVariant btn btn-info">Add
+                                                Variant</button>
+                                        </div>
+
+                                        <style>
+                                            .btnADDVariant {
+                                                margin-left: 800px;
+                                                margin-bottom: 50px;
+                                                font-size: 20px;
+                                                width: auto;
+                                            }
+                                        </style>
+
+                                        <script>
+                                            var hientThiForm = document.querySelector('.hientThiForm')
+                                            let selectedOptions = new Set();
+                                            var hienThiCheck = 1;
+                                            document.getElementById('addVariant').addEventListener('click',
+                                                function (
+                                                    e) {
+                                                    e.preventDefault();
+                                                    hienThiCheck += 1
+                                                    if (hienThiCheck == 2) {
+                                                        hienThiCheck += 1
+                                                        hientThiForm.innerHTML =
+                                                            `
+                                                    <div id="variantForms" class="mb-4">
+                                                        <div class="variant-form bg-light p-3 rounded mb-3">
+                                                            <div class="row g-3">
+                                                                <div class="col-md-3">
+                                                                    <label for="color" class="form-label">Color</label>
+                                                                    <select class="form-select" name="color[]" id="color"
+                                                                        required>
+                                                                        <option value="">Select Color</option>
+                                                                        <% listColors.forEach(function(item) { %>
+                                                                        <option value="<%= item.id %>">
+                                                                            <%= item.name_color.toUpperCase() %></option>
+                                                                        <% }); %>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label for="size" class="form-label">Size</label>
+                                                                    <select class="form-select" name="size[]" id="size"
+                                                                        required>
+                                                                        <option value="">Select Size</option>
+                                                                        <% listSizes.forEach(function(item) { %>
+                                                                        <option value="<%= item.id %>">
+                                                                            <%= item.name_size.toUpperCase() %></option>
+                                                                        <% }); %>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label for="quantity"
+                                                                        class="form-label">Số lượng</label>
+                                                                    <input type="number" class="form-control"
+                                                                        name="quantity[]" id="quantity" min="0" required>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label for="image" class="form-label">Ảnh</label>
+                                                                    <input type="file" class="form-control" name="image[]"
+                                                                        id="image">
+                                                                            <img id="imagePreview" src="#" alt="Image preview" style="max-width: 100px; max-height: 100px; display: none; margin-top: 10px;">
+    
+                                                                </div>
+                                                                <div class="col-md-1">
+                                <button type="button" class="btn btn-danger delete-variant mt-4">Delete</button>
+                            </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                    `
+                                                    }
+                                                    if (hienThiCheck > 3) {
+                                                        var variantForms = document.getElementById('variantForms');
+                                                        var newForm = variantForms.firstElementChild.cloneNode(
+                                                            true);
+                                                        newForm.querySelectorAll(
+                                                                'select, input[type="number"], input[type="file"]')
+                                                            .forEach(function (element) {
+                                                                element.value = '';
+                                                            });
+                                                        variantForms.appendChild(newForm);
+                                                        updateSelectEvents(newForm);
+                                                        checkDuplicates();
+                                                    }
+                                                }
+                                            );
+
+                                            document.addEventListener('click', function (e) {
+                                                checkDuplicates();
+                                                if (e.target && e.target.classList.contains(
+                                                        'delete-variant')) {
+                                                    e.preventDefault();
+                                                    let variantForm = e.target.closest('.variant-form');
+                                                    if (variantForm && document.querySelectorAll(
+                                                            '.variant-form').length > 1) {
+                                                        variantForm.remove();
+                                                        checkDuplicates();
+                                                    }
+                                                }
+                                            });
+
+                                            function updateSelectEvents(form) {
+                                                form.querySelectorAll('select').forEach(function (select) {
+                                                    select.addEventListener('change', function () {
+                                                        selectedOptions.add(this.name + '-' +
+                                                            this
+                                                            .value);
+                                                        checkDuplicates();
+                                                    });
+                                                });
+                                            }
+
+                                            function checkDuplicates() {
+                                                let forms = document.querySelectorAll('.variant-form');
+                                                forms.forEach(form => form.style.border = '');
+                                                let hasDuplicates = false;
+                                                for (let i = 0; i < forms.length; i++) {
+                                                    for (let j = i + 1; j < forms.length; j++) {
+                                                        let color1 = forms[i].querySelector(
+                                                                'select[name="color[]"]')
+                                                            .value;
+                                                        let size1 = forms[i].querySelector(
+                                                                'select[name="size[]"]')
+                                                            .value;
+                                                        let color2 = forms[j].querySelector(
+                                                                'select[name="color[]"]')
+                                                            .value;
+                                                        let size2 = forms[j].querySelector(
+                                                                'select[name="size[]"]')
+                                                            .value;
+                                                        if (color1 === color2 && size1 === size2 && color1 &&
+                                                            size1) {
+                                                            forms[i].style.border = '2px solid red';
+                                                            forms[j].style.border = '2px solid red';
+                                                            hasDuplicates = true;
+                                                        }
+                                                    }
+                                                }
+                                                document.querySelector('.BTNSUBMIT').disabled = hasDuplicates;
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-grd-primary px-4"
+                            <button type="submit" class="btn btn-grd-primary px-4 BTNSUBMIT"
                                 onclick="return confirm('Bạn có chắc muốn sửa với các trường dữ liệu vừa thay đổi ?')">Sửa
                                 sản phẩm</button>
                         </form>

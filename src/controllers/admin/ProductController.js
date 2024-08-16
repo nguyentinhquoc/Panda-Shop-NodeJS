@@ -89,8 +89,6 @@ var subAddProduct = async (req, res) => {
                     });
                 }
                 console.log(req.body);
-                //     /* ----------------------------------- -- ----------------------------------- */
-                //     /* ------------------------------ ĐẶT TÊN BIẾN ------------------------------ */
                 var name_product = req.body.NameProduct
                 var price_product = req.body.PriceProduct
                 var price_sale = req.body.PriceSaleProduct
@@ -99,7 +97,6 @@ var subAddProduct = async (req, res) => {
                 delete image_variant.ImageProduct;
                 var description_product = req.body.DescriptionProduct
                 var id_category = req.body.CategoryProduct
-                //     /* ----------------------------------- --- ---------------------------------- */
                 var code_product = Date.now();
                 var code_products = code_product;
                 productsModel.addProduct(name_product, price_product, price_sale, image_product, description_product, id_category, code_products)
@@ -209,7 +206,14 @@ var subEditProducts = (req, res) => {
                     maxCount: 1
                 })
             })
+            mang.push({
+                name: 'image[]',
+                maxCount: 10
+            })
             upload.fields(mang)(req, res, function (err) {
+                console.log(req.body);
+                console.log('00000');
+                console.log(req.files);
 
                 if (req.files['ImageProduct']) {
                     console.log(req.files['ImageProduct'].filename + '1111');
@@ -236,10 +240,30 @@ var subEditProducts = (req, res) => {
                         variantsModel.editVariants(id_Variant, quantity_variant, image_variant)
                     }, 100);
                 }
-                console.log(req.files['1185']);
-                console.log(req.files['ImageProduct']);
-                console.log('000');
-                console.log(req.file);
+                var viTri = 0
+                for (let index = req.body.idVariant.length; index < req.body.quantity.length; index++) {
+                    var id_color = req.body.color[viTri];
+                    var id_size = req.body.size[viTri]
+                    var quantity_variant = req.body.quantity[index];
+                    var code_variant = id_color + '_' + id_size;
+                    if (req.files && req.files['image[]'] && Array.isArray(req.files['image[]']) && req.files['image[]'][viTri]) {
+                        var image_variant_value = req.files['image[]'][viTri].filename;
+                    } else {
+                        var image_variant_value = null;
+                    }
+                    console.log('code_variant');
+                    console.log(code_variant);
+                    console.log('id_color');
+                    console.log(id_color);
+                    console.log('id_size');
+                    console.log(id_size);
+                    console.log('image_variant_value');
+                    console.log(image_variant_value);
+                    console.log('quantity_variant');
+                    console.log(quantity_variant);
+                    variantsModel.addVariants(productId, id_color, id_size, quantity_variant, code_variant, image_variant_value);
+                    viTri++;
+                }
             })
             setTimeout(() => {
                 res.redirect(req.headers.referer || '/fallback-route');
@@ -248,7 +272,6 @@ var subEditProducts = (req, res) => {
         .catch((error) => {
             console.error('ERROR:', error);
         });
-
 }
 var changeStatus = (req, res) => {
     productsModel.changeStatus(req.params.id);
