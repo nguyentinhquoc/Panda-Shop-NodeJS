@@ -5,6 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
+      Product.hasMany(models.Gallery, {
+        foreignKey: 'product_id',
+      });
       Product.belongsTo(models.Category, {
         foreignKey: 'id_category',
       });

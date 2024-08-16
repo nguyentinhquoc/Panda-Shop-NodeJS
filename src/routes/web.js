@@ -18,6 +18,7 @@ import reviewsController from '../controllers/client/ReviewsController';
 import CategoryAdmin from '../controllers/admin/CategoryAdmin';
 import AccountAdmin from '../controllers/admin/AccountAdmin';
 import VariantAdmin from '../controllers/admin/VariantAdmin';
+import GalleryAdmin from '../controllers/admin/GalleryAdmin';
 import HomeAdmin from '../controllers/admin/HomeAdmin';
 import ContactAdmin from '../controllers/admin/ContactAdmin';
 import errorPageController from '../controllers/errorPageController';
@@ -42,6 +43,16 @@ const routerWeb = (app) => {
     app.get('/admin', isAdmin, HomeAdmin.HomeAdmin)
     app.get('/admin/add-product', isAdmin, ProductControllerAdmin.addProduct)
     app.post('/admin/add-product', isAdmin, ProductControllerAdmin.subAddProduct)
+
+    app.get('/admin/gallery', isAdmin, GalleryAdmin.listGallery)
+
+    app.get('/admin/add-gallery', isAdmin, GalleryAdmin.addGallery)
+    app.post('/admin/add-gallery', isAdmin, GalleryAdmin.addGalleryP)
+
+    app.get('/admin/edit-gallery', isAdmin, GalleryAdmin.editGallery)
+
+    app.post('/admin/delete-gallery', isAdmin, GalleryAdmin.deleteGallery)
+
 
     app.get('/admin/list-product/:id', isAdmin, ProductControllerAdmin.listProducts)
     app.get('/admin/edit-product/:id', isAdmin, ProductControllerAdmin.editProducts)
