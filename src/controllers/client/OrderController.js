@@ -115,6 +115,12 @@ var addOrder = async (req, res) => {
         }
     }
 }
+var cancelOrder = (req, res) => {
+    OrderModel.updateStatusOrder(req.params.code_order, 6)
+    setTimeout(() => {
+        return res.redirect(`/orders`);
+    }, 100);
+}
 var allOrders = (req, res) => {
     Promise.all([
             OrderModel.orderWStatus(0, req.cookies.user),
@@ -142,5 +148,6 @@ module.exports = {
     addOrder,
     orderDetail,
     addPaymentOnline,
-    allOrders
+    allOrders,
+    cancelOrder
 }

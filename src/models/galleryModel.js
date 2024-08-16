@@ -1,3 +1,6 @@
+import {
+    where
+} from 'sequelize';
 import db from '../../database/models';
 
 async function addGallery(Product, NameGallery, image) {
@@ -38,9 +41,52 @@ async function deleteGallery(id) {
         }
     });
 }
+async function editGallery(id) {
+    try {
+        const gallery = await db.Gallery.findOne({
+            where: {
+                id: id
+            }
+        });
+        if (gallery) {
+            return gallery;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+async function editGalleryP(Product, NameGallery, image, idGallery) {
+    if (image) {
+
+        await db.Gallery.update({
+            name: NameGallery,
+            image: image,
+            product_id: Product,
+        }, {
+            where: {
+                id: idGallery
+            }
+        });
+    } else {
+        await db.Gallery.update({
+            name: NameGallery,
+            product_id: Product,
+        }, {
+            where: {
+                id: idGallery
+            }
+        });
+    }
+}
+
 
 module.exports = {
     listGallery,
     addGallery,
-    deleteGallery
+    deleteGallery,
+    editGallery,
+    editGalleryP
 };

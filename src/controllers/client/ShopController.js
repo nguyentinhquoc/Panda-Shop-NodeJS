@@ -6,7 +6,7 @@ var listProducts = (req, res) => {
     var linkYesPage = req.originalUrl;
     console.log(linkYesPage);
     const parsedUrl = url.parse(linkYesPage, true);
-    var search = req.params.search
+    var search = ''
     if (req.body.searchProduct) {
         var search = req.body.searchProduct
     }

@@ -1,0 +1,140 @@
+<%- include('header') -%>
+
+<main class="main-wrapper">
+    <div class="main-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Components</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Starter Page</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="ms-auto">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary">Settings</button>
+                    <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
+                            href="javascript:;">Action</a>
+                        <a class="dropdown-item" href="javascript:;">Another action</a>
+                        <a class="dropdown-item" href="javascript:;">Something else here</a>
+                        <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+                            link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="row">
+            <div class="col-12 col-lg-11">
+                <div class="card">
+                    <div class="card">
+                        <div class="card-header px-4 py-3">
+                            <h5 class="mb-0">Tạo mới sản phẩm</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <form class="row g-3 needs-validation" novalidate method="post"
+                                enctype="multipart/form-data">
+                                <div class="card-body">
+                                    <div class="col-12 mb-3 d-flex justify-content-between">
+                                        <div class="col-6 mb-4">
+                                            <label for="NameGallery" class="form-label">
+                                                <h5 class="mb-3">Tên trưng bày</h5>
+                                            </label>
+                                            <input required id="NameGallery " name="NameGallery" type="text"
+                                                class="form-control" placeholder="Write name product here...."
+                                                value="<%= valueGallery.name %>">
+                                        </div>
+                                        <div class="col-5">
+                                            <label for="IdPRodcut" class="form-label">
+                                                <h5 class="mb-3">Sản phẩm tương ứng
+                                                </h5>
+                                            </label>
+                                            <select class="form-select" id="IdPRodcut" name="Product">
+                                                <option value="">123</option>
+                                                <% productList.forEach(function(items) { %>
+                                                <option <%= valueGallery.product_id == items.id ? 'selected' : '' %>
+                                                    value="<%= items.id %>">
+                                                    <%= items.name_product  %>
+                                                </option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="ImageGallery" class="form-label">
+                                            <h5>Ảnh trưng bày </h5>
+                                        </label>
+                                        <input class="form-control form-control-lg" id="ImageGallery" type="file"
+                                            name="ImageGallery">
+
+                                    </div>
+                                    <div class="d-flex" style="justify-content: space-evenly;">
+                                        <div>
+                                            <h2>Ảnh cũ</h2>
+                                            <img src="/assets/img/product/<%= valueGallery.image  %>" width="70"
+                                                height="70px" class="rouưnded-3" alt="">
+                                        </div>
+                                        <div>
+                                            <h2>Ảnh mới</h2>
+                                            <div id="preview-image">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-12">
+                                        <div class="d-md-flex d-grid align-items-center gap-3">
+                                            <button type="reset" class="col-6 btn btn-grd-info px-4">Reset</button>
+                                            <button type="submit"
+                                                class="BTNSUBMIT col-6 btn btn-grd-primary px-4">Submit</button>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- <p onclick="submitF()" class="btn btn-outline-primary">Thêm sản phẩm</p> -->
+                    <!-- Bootstrap JS và jQuery -->
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+                    </script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                    <!-- ---------------------------- VALIDATE FORM ---------------------------- -->
+                    <script>
+                        document.getElementById('ImageGallery').addEventListener('change', function () {
+                            var file = this.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                reader.onload = function (e) {
+                                    document.getElementById('preview-image').innerHTML = `
+    <div  onclick="deleteImg()" id="deleteImg"><span class="material-icons-outlined position-absolute me-3 translate-middle-y end-0 top-50 search-close">close</span>
+</div>
+    <img width="500px" id="preview-images" src="#" alt="Preview">
+`;
+                                    document.getElementById('preview-images').src = e.target
+                                        .result;
+                                };
+                                reader.readAsDataURL(file);
+                                document.getElementById('file-name').textContent =
+                                    'File selected: ' + file.name;
+                            } else {
+                                domImageProduct.style.border = '2px solid red';
+                            }
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+</main>
+<%- include('footer') -%>

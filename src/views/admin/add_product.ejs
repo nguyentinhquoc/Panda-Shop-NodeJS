@@ -44,7 +44,7 @@
                                 <div class="card-body">
                                     <div class="mb-4">
                                         <label for="NameProduct" class="form-label">
-                                            <h5 class="mb-3">Tên sản phẩmm/h5>
+                                            <h5 class="mb-3">Tên sản phẩm</h5>
                                         </label>
                                         <input required id="NameProduct " name="NameProduct" type="text"
                                             class="form-control" placeholder="Write name product here....">
@@ -319,7 +319,7 @@
                                     document.getElementById('preview-image').innerHTML = `
     <div  onclick="deleteImg()" id="deleteImg"><span class="material-icons-outlined position-absolute me-3 translate-middle-y end-0 top-50 search-close">close</span>
 </div>
-    <img width="500px" id="preview-images" src="#" alt="Preview">
+    <img style="max-width: 500px;" id="preview-images" src="#" alt="Preview">
 `;
                                     document.getElementById('preview-images').src = e.target
                                         .result;
@@ -338,5 +338,6 @@
         </div>
         <!--end row-->
     </div>
+    <div></div>
 </main>
 <%- include('footer') -%>

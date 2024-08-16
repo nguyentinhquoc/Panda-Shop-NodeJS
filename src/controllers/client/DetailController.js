@@ -3,14 +3,17 @@ import variantsModels from '../../models/variantsModel';
 import classificationorderModel from '../../models/classificationorderModel';
 import reviewModel from '../../models/reviewModel';
 var detailProduct = async (req, res) => {
-    Promise.all([
+    productsModel.changeView(req.params.id),
+        Promise.all([
             reviewModel.reviewsWIdProduct(req.params.id),
             productsModel.detailProducts(req.params.id),
             variantsModels.VariantsWIdProduct(req.params.id),
             variantsModels.listColorsDetail(req.params.id),
             variantsModels.listSizesDetail(req.params.id),
         ])
+
         .then(([reviewsWIdProduct, detailProduct, VariantsWIdProduct, listColors, listSizes]) => {
+
             res.render('client/detail', {
                 review: reviewsWIdProduct,
                 detailProduct: detailProduct,

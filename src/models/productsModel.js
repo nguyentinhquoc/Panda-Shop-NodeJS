@@ -30,7 +30,16 @@ async function changeStatus(productId) {
             }
         });
     }
+}
+async function changeView(productId) {
 
+    await db.Product.update({
+        view_product: Sequelize.literal('view_product + 1')
+    }, {
+        where: {
+            id: productId
+        }
+    });
 }
 
 function addProduct(name_product, price_product, price_sale, image_product, description_product, id_category, code_products) {
@@ -378,5 +387,6 @@ module.exports = {
     countProduct,
     countProductDash,
     countCategoryDash,
-    listProductsAdmin
+    listProductsAdmin,
+    changeView
 };

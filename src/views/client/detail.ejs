@@ -67,10 +67,11 @@ for (let i = 0; i < 5-number; i++) {  %>
                             <div class="product-thumb-area">
                                 <div class="product-details-thumbnail">
                                     <div class="product-thumbnail-slider" id="thumb-gallery">
-                                        <figure class="pro-thumb-item"
+
+                                        <figure class="pro-thumb-item imgChinh1"
                                             data-mfp-src="/assets/img/product/<%= detailProduct.image_product %>">
                                             <img src="/assets/img/product/<%= detailProduct.image_product %>"
-                                                alt="Chi tiết sản phẩm" />
+                                                class="imgChinh2" alt="Chi tiết sản phẩm" />
                                         </figure>
                                         <% VariantsWIdProduct.forEach(function(items) { %>
                                         <% if(items.image_variant){ %>
@@ -197,8 +198,40 @@ for (let i = 0; i < 5-number; i++) {  %>
                                                                                 input.addEventListener(
                                                                                     'click',
                                                                                     function () {
-                                                                                        '<% listSizes.forEach(function(itemsS) { %>'
 
+
+
+
+                                                                                        '<% VariantsWIdProduct.forEach(function(items) { %>'
+                                                                                        ''
+                                                                                        if ('<%=items.id_color %>' ==
+                                                                                            this.value
+                                                                                        ) {
+                                                                                            var linkImagess =
+                                                                                                '/assets/img/product/<%= items.image_variant %>'
+                                                                                        }
+                                                                                        ' <% }); %>'
+                                                                                        document
+                                                                                            .querySelector(
+                                                                                                '.imgChinh1'
+                                                                                            )
+                                                                                            .setAttribute(
+                                                                                                'data-mfp-src',
+                                                                                                `${linkImagess}`
+                                                                                            );
+
+
+                                                                                        document
+                                                                                            .querySelector(
+                                                                                                '.imgChinh2'
+                                                                                            )
+                                                                                            .setAttribute(
+                                                                                                'src',
+                                                                                                `${linkImagess}`
+                                                                                            );
+
+
+                                                                                        '<% listSizes.forEach(function(itemsS) { %>'
                                                                                         document
                                                                                             .querySelectorAll(
                                                                                                 '.lableSize<%=itemsS.id%>'
@@ -216,7 +249,6 @@ for (let i = 0; i < 5-number; i++) {  %>
                                                                                         ' <% }); %>'
                                                                                         '<% VariantsWIdProduct.forEach(function(itemsV) { %>'
                                                                                         '<% listSizes.forEach(function(itemsS) { %>'
-
                                                                                         if ('<%=itemsV.id_color %>' ==
                                                                                             this
                                                                                             .value &&
@@ -276,11 +308,26 @@ for (let i = 0; i < 5-number; i++) {  %>
                                                     <input type="text" id="quantity" title="Số lượng" value="1"
                                                         name="quantity" />
                                                 </div>
-                                                <button class="btn btn-bordered">Thêm vào giỏ hàng</button>
                                             </div>
                                         </div>
-                                    </form>
+                                        <style>
+                                            .btn-gradient {
+                                                background: linear-gradient(45deg, #4f4fff 0%, #f138c0 99%, #fad0c4 100%);
+                                                border: none;
+                                                color: #333;
+                                                font-weight: bold;
+                                                transition: all 0.3s ease;
+                                                width: 100%;
+                                            }
 
+                                            .btn-gradient:hover {
+                                                background: linear-gradient(45deg, #fad0c4 0%, #f138c0 99%, #4f4fff 100%);
+                                                transform: translateY(-2px);
+                                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                                            }
+                                        </style>
+                                        <button class="btn btn-gradient mt-5">Thêm vào giỏ</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

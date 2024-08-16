@@ -49,7 +49,8 @@ const routerWeb = (app) => {
     app.get('/admin/add-gallery', isAdmin, GalleryAdmin.addGallery)
     app.post('/admin/add-gallery', isAdmin, GalleryAdmin.addGalleryP)
 
-    app.get('/admin/edit-gallery', isAdmin, GalleryAdmin.editGallery)
+    app.get('/admin/edit-gallery/:id', isAdmin, GalleryAdmin.editGallery)
+    app.post('/admin/edit-gallery/:id', isAdmin, GalleryAdmin.editGalleryP)
 
     app.post('/admin/delete-gallery', isAdmin, GalleryAdmin.deleteGallery)
 
@@ -96,13 +97,12 @@ const routerWeb = (app) => {
     app.get('/logout', AccountController.logout);
     app.get('/reviews/:code_order', reviewsController.reviews);
     app.post('/reviews/:code_order', reviewsController.reviewsPost);
+    app.get('/cancel/:code_order', OrderController.cancelOrder);
     app.get('/contact', contactController.contact);
     app.post('/contact', contactController.contactP);
     app.get('/404', errorPageController.Er404);
-
-
     app.use((req, res, next) => {
-        res.status(404).redirect('/404'); // Hoặc bạn có thể render một trang lỗi ở đây
+        res.status(404).redirect('/404');
     });
 }
 export default routerWeb;

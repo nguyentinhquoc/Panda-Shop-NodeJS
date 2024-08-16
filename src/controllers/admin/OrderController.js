@@ -1,4 +1,5 @@
 import orderModel from '../../models/orderModel';
+import variantsModel from '../../models/variantsModel';
 import classificationorderModel from '../../models/classificationorderModel';
 
 var allOrdersad = (req, res) => {
@@ -41,9 +42,23 @@ var detailOrderAd = (req, res) => {
 }
 var updateStatus = (req, res) => {
     var code_status = parseInt(req.params.status) + 1;
+    if (code_status == 5) {
+        classificationorderModel.ClassificationOrderWCodeOrder(req.params.code_order)
+            .then((value) => {
+                value.forEach(element => {
+                    console.log('element.id_variants');
+                    console.log(element.id_variants);
+                    console.log('element.quantity_variant');
+                    console.log(element.quantity);
+                    variantsModel.changeSalesAndQuantity(element.id_variants, element.quantity)
+                });
+
+            })
+    }
     orderModel.updateStatusOrder(req.params.code_order, code_status);
     classificationorderModel.updateStatusCl(req.params.code_order, code_status);
     res.redirect(req.headers.referer || '/fallback-route');
+
 }
 module.exports = {
     allOrdersad,

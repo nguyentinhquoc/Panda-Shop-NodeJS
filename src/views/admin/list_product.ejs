@@ -89,8 +89,8 @@
                                 <td>
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="product-box">
-                                            <img src="/assets/img/product/<%= items.image_product  %>" width="70"
-                                                height="70px" class="rouưnded-3" alt="">
+                                            <img src="/assets/img/product/<%= items.image_product  %>" height="100px"
+                                                class="rouưnded-3" alt="">
                                         </div>
                                         <div class="product-info">
                                             <a href="javascript:;" class="product-title"><%= items.name_product  %></a>
@@ -119,11 +119,12 @@
                                     </div>
                                 </td>
                                 <td>
+                                    <%= items.view_product %>
                                 </td>
                                 <td>
                                     <%= formatDate(items.createdAt) %>
                                 </td>
-                                <td class="d-flex ">
+                                <td class="d-flex p-4">
                                     <a class="p-4" href="/admin/edit-product/<%= items.id %>"><svg
                                             xmlns="http://www.w3.org/2000/svg" height="24" width="24"
                                             viewBox="0 0 512 512">

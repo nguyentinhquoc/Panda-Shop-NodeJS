@@ -9,7 +9,6 @@ import session from 'express-session';
 import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
 import moment from 'moment';
-
 const product = multer({
     dest: 'src/views/assets/product'
 })
@@ -42,4 +41,9 @@ app.use(express.urlencoded({
 connect()
 configViewsEngine(app);
 webRoute(app);
-app.listen(port, () => {})
+app.listen(port, () => {
+    console.log('RUN SERVER SUCCESS');
+    console.log('http://localhost:3000/');
+
+
+})

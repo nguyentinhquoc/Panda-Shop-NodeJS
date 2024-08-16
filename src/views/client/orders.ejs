@@ -177,9 +177,30 @@
                         <h2 class="order-number">Đơn Hàng #<%= order.code_oders %></h2>
                         <span class="order-date"><%= formatDate(order.createdAt) %></span>
                     </div>
-                    <div class="order-details">
-                        <p><strong>Trạng Thái:</strong> Đang Xử Lý</p>
-                        <p><strong>Tổng Giá:</strong> <%= formatCurrency(order.price_total) %></p>
+                    <div class="d-flex justify-content-between">
+                        <div class="order-details">
+                            <p><strong>Trạng Thái:</strong> Đang Xử Lý</p>
+                            <p><strong>Tổng Giá:</strong> <%= formatCurrency(order.price_total) %></p>
+                        </div>
+
+                        <a onclick="huydh('<%= order.code_oders %>')" class="btn cancel-order btn-warning">Hủy
+                            đơn
+                            hàng</a>
+                        <script>
+                            function huydh(code_oders) {
+                                Swal.fire({
+                                    title: 'Bạn có chắc muốn hủy đơn hàng này?',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Hủy',
+                                    cancelButtonText: 'Hủy bỏ'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = '/cancel/' + code_oders;
+                                    }
+                                });
+                            };
+                        </script>
                     </div>
                 </div>
             </a>
@@ -196,24 +217,25 @@
                             <p><strong>Trạng Thái:</strong> Đã Giao</p>
                             <p><strong>Tổng Giá:</strong> <%= formatCurrency(order.price_total) %></p>
                         </div>
-                        <a href="/reviews/<%= order.code_oders %>" class=" btn btn-danger"">Đánh giá</a>
+                        <a href="/reviews/<%= order.code_oders %>" class=" btn btn-info">Đánh giá</a>
                     </div>
                 </div>
             </a>
             <% }) %>
             <% order7.forEach(function(order) { %>
-            <a href="/order/<%= order.code_oders  %>"> <div class="order-item delivered">
-                            <div class="order-header">
-                                <h2 class="order-number">Đơn Hàng #<%= order.code_oders %></h2>
-                                <span class="order-date"><%= formatDate(order.createdAt) %></span>
-                            </div>
-                            <div class="order-details d-flex justify-content-between">
-                                <div>
-                                    <p><strong>Trạng Thái:</strong> Đã Giao</p>
-                                    <p><strong>Tổng Giá:</strong> <%= formatCurrency(order.price_total) %></p>
-                                </div>
-                            </div>
+            <a href="/order/<%= order.code_oders  %>">
+                <div class="order-item delivered">
+                    <div class="order-header">
+                        <h2 class="order-number">Đơn Hàng #<%= order.code_oders %></h2>
+                        <span class="order-date"><%= formatDate(order.createdAt) %></span>
                     </div>
+                    <div class="order-details d-flex justify-content-between">
+                        <div>
+                            <p><strong>Trạng Thái:</strong> Đã Giao</p>
+                            <p><strong>Tổng Giá:</strong> <%= formatCurrency(order.price_total) %></p>
+                        </div>
+                    </div>
+                </div>
             </a>
             <% }) %>
             <% order6.forEach(function(order) { %>

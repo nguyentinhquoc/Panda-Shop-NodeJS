@@ -1,7 +1,7 @@
 const {
     Sequelize
 } = require('sequelize');
-const sequelize = new Sequelize('duannode', 'root', null, {
+const sequelize = new Sequelize('pandashop_nodejs', 'root', null, {
     host: 'localhost',
     dialect: 'mysql'
 });

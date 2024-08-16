@@ -20,121 +20,40 @@
     </div>
 </div>
 <!--== Kết thúc Khu vực Tiêu đề Trang ==-->
+<style>
+    .rainbow-btn {
+        padding: 10px 20px;
+        background-image: linear-gradient(to right, red, violet);
+        color: white;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
 
+    .rainbow-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+</style>
 <!--== Bắt đầu Wrapper Nội dung Trang ==-->
 <div class="page-content-wrapper sp-y">
     <div class="gallery-page-content">
         <div class="container container-wide">
             <div class="row mtn-30 image-gallery">
+                <% listGallery.forEach(function(item) { %>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (1).png">
-                        <img src="/assets/img/product/product (1).png" alt="thư viện ảnh" />
+                    <div class="gallery-item" style="border-radius: 20px; margin-bottom: 20px;"
+                        data-mfp-src="/assets/img/product/<%= item.image %>">
+                        <img height="150px" style="border-radius: 10px;" width="300px"
+                            src="/assets/img/product/<%= item.image %>" alt="thư viện ảnh" />
                         <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
+                            <h3><%= item.name %></h3>
                         </div>
                     </div>
+                    <a href="/detail-product/<%= item.product_id %>" style="border-radius: 10px; padding: 10px 100px;"
+                        class="rainbow-btn">Mua
+                        ngay</a>
                 </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (2).png">
-                        <img src="/assets/img/product/product (2).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (3).png">
-                        <img src="/assets/img/product/product (3).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (4).png">
-                        <img src="/assets/img/product/product (4).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (5).png">
-                        <img src="/assets/img/product/product (5).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <a href="">
-                                <h3>PandaShop</h3>
-                            </a>
-                        </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (6).png">
-                        <img src="/assets/img/product/product (6).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (7).png">
-                        <img src="/assets/img/product/product (7).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (8).png">
-                        <img src="/assets/img/product/product (8).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (9).png">
-                        <img src="/assets/img/product/product (9).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (10).png">
-                        <img src="/assets/img/product/product (10).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (11).png">
-                        <img src="/assets/img/product/product (11).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3">
-                    <div class="gallery-item" data-mfp-src="/assets/img/product/product (12).png">
-                        <img src="/assets/img/product/product (12).png" alt="thư viện ảnh" />
-                        <div class="gallery-item__text">
-                            <h3>PandaShop</h3>
-                        </div>
-                    </div>
-                </div>
+                <% }) %>
             </div>
         </div>
     </div>

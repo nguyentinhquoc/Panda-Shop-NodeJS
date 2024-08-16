@@ -26,6 +26,8 @@
                         Đang giao hàng
                         <% } else if(order.code_status == 5) { %>
                         Đã giao hàng
+                        <% } else if(order.code_status == 6) { %>
+                        Đã hủy
                         <% } else { %>
                         Không xác định
                         <% } %>
@@ -69,8 +71,12 @@ function formatDate(date) {
                 <% product.forEach(function(item) { %>
                 <tr>
                     <td><%= stt+=1 %></td>
-                    <td><%= item.Variant.Product.name_product %> (
-                        <%= item.Variant.Color.name_color + ','+ item.Variant.Size.name_size  %> )</td>
+                    <td>
+                        <a href="/detail-product/<%= item.Variant.Product.id%>">
+                            <%= item.Variant.Product.name_product %> (
+                            <%= item.Variant.Color.name_color + ','+ item.Variant.Size.name_size  %> )
+                        </a>
+                    </td>
                     <td><%= formatCurrency( price = item.Variant.Product.price_product-(item.Variant.Product.price_product * (item.Variant.Product.price_sale / 100)))  %>
                     <td><%= item.quantity %> </td>
                     </td>

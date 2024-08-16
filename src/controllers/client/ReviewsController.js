@@ -4,7 +4,6 @@ import reviewModel from '../../models/reviewModel';
 
 
 var reviews = (req, res) => {
-
     Promise.all([
             classificationorderModel.orderWCode(req.params.code_order),
             classificationorderModel.checkStatus(req.params.code_order),

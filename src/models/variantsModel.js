@@ -154,6 +154,22 @@ async function VariantsWColorSize(id_product, id_color, id_size) {
         console.error(error);
     }
 }
+async function changeSalesAndQuantity(id_variant, quantity) {
+    try {
+        await db.Variant.update({
+            quantity_variant: Sequelize.literal(`quantity_variant - ${quantity}`),
+            sales: Sequelize.literal(`sales + ${quantity}`),
+        }, {
+            where: {
+                id: id_variant,
+            }
+        });
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
 
 module.exports = {
     listColors,
@@ -165,5 +181,6 @@ module.exports = {
     addSize,
     addColor,
     listColorsDetail,
-    listSizesDetail
+    listSizesDetail,
+    changeSalesAndQuantity
 };

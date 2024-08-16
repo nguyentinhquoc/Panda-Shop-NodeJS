@@ -41,17 +41,42 @@ var addGallery = (req, res) => {
         }).catch((err) => {});
 }
 
+var editGalleryP = (req, res) => {
+    upload.single('ImageGallery')(req, res, function (err) {
+        var Product = req.body.Product
+        var NameGallery = req.body.NameGallery
+        if (req.file) {
+            var image = req.file.filename
+        } else {
+            var image = false
+
+        }
+        var idGallery = req.params.id
+        galleryModel.editGalleryP(Product, NameGallery, image, idGallery)
+        setTimeout(() => {
+            res.redirect('/admin/gallery');
+        }, 100);
+    })
+}
 var editGallery = (req, res) => {
-    galleryModel.listGallery()
-        .then((listGallery) => {
+
+    Promise.all([
+            galleryModel.editGallery(req.params.id),
+            productsModel.listProductsAdmin('all-product')
+        ])
+        .then(([valueGallery, productList]) => {
             res.render('admin/edit_gallery', {
-                listGallery
+                valueGallery,
+                productList,
             });
-        }).catch((err) => {});
+        }).catch((err) => {
+            console.log(err);
+        });
 }
 module.exports = {
     listGallery,
     editGallery,
+    editGalleryP,
     deleteGallery,
     addGallery,
     addGalleryP
