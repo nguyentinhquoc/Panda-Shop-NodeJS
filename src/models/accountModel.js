@@ -7,7 +7,7 @@ const {
 
 var salt = bcrypt.genSaltSync(10);
 
-async function addACcount(avatar_account, address_account, full_name_account, pass_account, email_account, tel_account) {
+async function addAccount(avatar_account, address_account, full_name_account, pass_account, email_account, tel_account, status_account) {
     var hashPass = bcrypt.hashSync(pass_account, salt);
     db.Account.create({
         avatar_account: avatar_account,
@@ -17,7 +17,7 @@ async function addACcount(avatar_account, address_account, full_name_account, pa
         email_account: email_account,
         tel_account: tel_account,
         role_account: 1,
-        status_account: 1,
+        status_account: status_account,
         online: 0,
     });
 }
@@ -109,7 +109,7 @@ async function changeStatus(AccountId) {
                 id: AccountId
             }
         });
-    } else {
+    } else if (statusNow.status_account != 1) {
         await db.Account.update({
             status_account: 1
         }, {
@@ -169,6 +169,19 @@ async function CountAccountAll() {
         return null;
     }
 }
+async function changePass(id_user, password) {
+    console.log(password);
+
+    const hashPass = bcrypt.hashSync(password, salt);
+    return await db.Account.update({
+        pass_account: hashPass
+    }, {
+        where: {
+            id: id_user
+        }
+    });
+}
+
 async function CountAccountOnline() {
     try {
         const accountCount = await db.Account.count({
@@ -183,7 +196,7 @@ async function CountAccountOnline() {
     }
 }
 module.exports = {
-    addACcount,
+    addAccount,
     accountAll,
     accountWId,
     changeStatus,
@@ -191,5 +204,7 @@ module.exports = {
     accountTop7,
     changeOnline,
     CountAccountOnline,
-    CountAccountAll
+    CountAccountAll,
+    changePass
+
 };

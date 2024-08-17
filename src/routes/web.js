@@ -22,6 +22,9 @@ import GalleryAdmin from '../controllers/admin/GalleryAdmin';
 import HomeAdmin from '../controllers/admin/HomeAdmin';
 import ContactAdmin from '../controllers/admin/ContactAdmin';
 import errorPageController from '../controllers/errorPageController';
+import {
+    error
+} from 'console';
 
 const crypto = require('crypto');
 const qs = require('qs');
@@ -78,6 +81,12 @@ const routerWeb = (app) => {
     app.get('/', HomeController.home);
     app.get('/register', AccountController.register);
     app.post('/register', AccountController.registerSb);
+    app.get('/checkRegister', AccountController.checkRegister);
+    app.post('/checkRegister', AccountController.checkRegisterP);
+    app.get('/forgotPassword', AccountController.forgotPassword);
+    app.post('/forgotPassword', AccountController.forgotPasswordP);
+    app.get('/reset-password', AccountController.resetPassWord);
+    app.post('/reset-password', AccountController.resetPassWordP);
     app.get('/login', AccountController.login);
     app.post('/login', AccountController.loginSb);
     app.get('/shop/:name/:page/:search', ShopController.listProducts);

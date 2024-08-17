@@ -1,0 +1,87 @@
+<%- include('header') -%>
+<div class="page-content-wrapper sp-y">
+    <div class="login-page-content-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12 ml-auto mr-auto">
+                    <div class="register-form-style">
+                        <div class="container"
+                            style=" background: linear-gradient(to right, #4ab5b5, #ff69b4); border-radius: 20px;">
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 p-5">
+                                    <div class="card shadow-lg mt-5 p-5">
+                                        <div class="card-body p-5">
+                                            <form id="registrationForm" method="post">
+                                                <h5>Xác thực tài khoản
+                                                </h5>
+                                                <p>Xin vui lòng kiểm tra gmail và nhập một chuỗi kí tự gồm 5 chữ số</p>
+                                                <input type="text" name="inputUser" id="inputUser">
+                                                <span style="color: red;" id="err"></span>
+                                                <input type="hidden" name="check" id="IpCheck">
+                                                <input type="hidden" name="email_account"
+                                                    value="<%= flash.email_account %>">
+                                                <input type="hidden" name="status_account"
+                                                    value="<%= flash.codeCheck %>">
+
+                                                <button type="submit" id="countdownButton" class="btn"
+                                                    style="width: 100%; background: linear-gradient(to right, rgb(77, 77, 177), #ff69b4);">
+                                                    Xác nhận (<span id="countdown">60</span>s)
+                                                </button>
+
+                                            </form>
+                                            <script>
+                                                let countdown = 60;
+                                                const countdownDisplay = document.getElementById('countdown');
+                                                const countdownButton = document.getElementById('countdownButton');
+                                                const inputUser = document.getElementById('inputUser');
+                                                const errs = document.getElementById('err');
+                                                const IpCheck = document.getElementById('IpCheck');
+                                                var luot = 5
+
+                                                function updateCountdown() {
+                                                    countdownDisplay.textContent = countdown;
+                                                    if (countdown > 0) {
+                                                        countdown--;
+                                                        setTimeout(updateCountdown, 1000);
+                                                    } else {
+                                                        countdownButton.textContent = 'Gửi lại mã';
+                                                        IpCheck.value = 0;
+                                                        countdownButton.addEventListener('click', function (e) {
+                                                            document.querySelector('form').submit();
+                                                        })
+                                                    }
+                                                }
+                                                countdownButton.addEventListener('click', function (e) {
+                                                    e.preventDefault();
+                                                    if (inputUser.value != '<%= flash.codeCheck %>' &&
+                                                        countdown > 0) {
+                                                        luot -= 1
+                                                        if (luot >= 0) {
+                                                            errs.textContent =
+                                                                "Mã xác thực không chính xác bạn còn " +
+                                                                luot + " lần thử";
+                                                        } else {
+                                                            window.location = '/register'
+                                                        }
+                                                    }
+                                                    if (inputUser.value == '<%= flash.codeCheck %>' &&
+                                                        countdown > 0) {
+                                                        IpCheck.value = 1;
+                                                        document.querySelector('form').submit();
+                                                    }
+                                                });
+
+                                                updateCountdown();
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('footer') -%>
