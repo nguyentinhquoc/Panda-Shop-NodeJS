@@ -102,7 +102,6 @@
                                                         <option value="" selected>Chọn phường xã</option>
                                                     </select>
                                                 </div>
-
                                                 <div class="d-grid">
                                                     <button class="btn btn-primary btn-lg" type="submit">Đang
                                                         ký</button>
@@ -223,7 +222,6 @@
         document.getElementById('phoneError').innerText = '';
         document.getElementById('passwordError').innerText = '';
         document.getElementById('confirmPasswordError').innerText = '';
-
         var fullName = document.getElementById('full_name_account').value.trim();
         var email = document.getElementById('email_account').value.trim();
         var phone = document.getElementById('tel_account').value.trim();
@@ -242,48 +240,46 @@
         var isValid = true;
 
         if (fullName === '') {
-            document.getElementById('fullNameError').innerText = 'Please enter your full name.';
+            document.getElementById('fullNameError').innerText = 'Vui lòng nhập tên hợp lệ.';
             isValid = false;
         }
 
         if (email === '') {
-            document.getElementById('emailError').innerText = 'Please enter your email address.';
+            document.getElementById('emailError').innerText = 'Vui lòng nhập email hợp lệ.';
             isValid = false;
         } else if (!isValidEmail(email)) {
-            document.getElementById('emailError').innerText = 'Please enter a valid email address.';
+            document.getElementById('emailError').innerText = 'Vui lòng nhập địa chỉ email hợp lệ.';
             isValid = false;
         }
 
         if (phone === '' || !isValidPhone(phone)) {
-            document.getElementById('phoneError').innerText = 'Please enter a valid phone number.';
+            document.getElementById('phoneError').innerText = 'Vui lòng nhập số điện thoại hợp lệ.';
             isValid = false;
         }
 
         if (password === '') {
-            document.getElementById('passwordError').innerText = 'Please enter a password.';
+            document.getElementById('passwordError').innerText = 'Vui lòng nhập mật khẩu.';
             isValid = false;
         } else if (password.length < 8) {
-            document.getElementById('passwordError').innerText = 'Password must be at least 8 characters.';
+            document.getElementById('passwordError').innerText = 'Mật khẩu phải có ít nhất 8 ký tự.';
             isValid = false;
         }
 
         if (confirmPassword === '') {
-            document.getElementById('confirmPasswordError').innerText = 'Please confirm your password.';
+            document.getElementById('confirmPasswordError').innerText = 'Vui lòng xác nhận mật khẩu của bạn.';
             isValid = false;
         } else if (confirmPassword !== password) {
-            document.getElementById('confirmPasswordError').innerText = 'Passwords do not match.';
+            document.getElementById('confirmPasswordError').innerText = 'Mật khẩu không khớp.';
             isValid = false;
         }
-
         if (!isValid) {
             return false;
         }
-
         return true;
     }
     document.getElementById('full_name_account').addEventListener('blur', function () {
         if (this.value.trim() === '') {
-            document.getElementById('fullNameError').innerText = 'Please enter your full name.';
+            document.getElementById('fullNameError').innerText = 'Vui lòng nhập tên đầy đủ của bạn.';
         } else {
             document.getElementById('fullNameError').innerText = '';
         }
@@ -297,7 +293,7 @@
     document.getElementById('tel_account').addEventListener('blur', function () {
         var phone = this.value.trim();
         if (phone === '' && !isValidPhone(phone)) {
-            document.getElementById('phoneError').innerText = 'Please enter a valid phone number.';
+            document.getElementById('phoneError').innerText = 'Vui lòng nhập số điện thoại hợp lệ.';
         } else {
             document.getElementById('phoneError').innerText = '';
         }
@@ -305,9 +301,9 @@
 
     document.getElementById('pass_account').addEventListener('blur', function () {
         if (this.value.trim() === '') {
-            document.getElementById('passwordError').innerText = 'Please enter a password.';
+            document.getElementById('passwordError').innerText = 'Vui lòng nhập mật khẩu.';
         } else if (this.value.trim().length < 8) {
-            document.getElementById('passwordError').innerText = 'Password must be at least 8 characters.';
+            document.getElementById('passwordError').innerText = 'Mật khẩu phải có ít nhất 8 ký tự.';
         } else {
             document.getElementById('passwordError').innerText = '';
         }
@@ -317,9 +313,9 @@
         var confirmPassword = this.value.trim();
         var password = document.getElementById('pass_account').value.trim();
         if (confirmPassword === '') {
-            document.getElementById('confirmPasswordError').innerText = 'Please confirm your password.';
+            document.getElementById('confirmPasswordError').innerText = 'Vui lòng xác nhận mật khẩu của bạn.';
         } else if (confirmPassword !== password) {
-            document.getElementById('confirmPasswordError').innerText = 'Passwords do not match.';
+            document.getElementById('confirmPasswordError').innerText = 'Vui lòng xác nhận mật khẩu của bạn.';
         } else {
             document.getElementById('confirmPasswordError').innerText = '';
         }
