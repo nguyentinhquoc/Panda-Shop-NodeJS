@@ -170,8 +170,6 @@ async function CountAccountAll() {
     }
 }
 async function changePass(id_user, password) {
-    console.log(password);
-
     const hashPass = bcrypt.hashSync(password, salt);
     return await db.Account.update({
         pass_account: hashPass

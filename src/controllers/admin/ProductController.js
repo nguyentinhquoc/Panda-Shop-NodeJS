@@ -88,7 +88,6 @@ var subAddProduct = async (req, res) => {
                         error: err.message
                     });
                 }
-                console.log(req.body);
                 var name_product = req.body.NameProduct
                 var price_product = req.body.PriceProduct
                 var price_sale = req.body.PriceSaleProduct
@@ -211,12 +210,7 @@ var subEditProducts = (req, res) => {
                 maxCount: 10
             })
             upload.fields(mang)(req, res, function (err) {
-                console.log(req.body);
-                console.log('00000');
-                console.log(req.files);
-
                 if (req.files['ImageProduct']) {
-                    console.log(req.files['ImageProduct'].filename + '1111');
                     var image_product = req.files['ImageProduct'][0].filename;
                 } else {
                     var image_product = req.body.ImageOld;
@@ -251,16 +245,7 @@ var subEditProducts = (req, res) => {
                     } else {
                         var image_variant_value = null;
                     }
-                    console.log('code_variant');
-                    console.log(code_variant);
-                    console.log('id_color');
-                    console.log(id_color);
-                    console.log('id_size');
-                    console.log(id_size);
-                    console.log('image_variant_value');
-                    console.log(image_variant_value);
-                    console.log('quantity_variant');
-                    console.log(quantity_variant);
+
                     variantsModel.addVariants(productId, id_color, id_size, quantity_variant, code_variant, image_variant_value);
                     viTri++;
                 }

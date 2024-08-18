@@ -42,22 +42,15 @@ const routerWeb = (app) => {
         isUser
     } = require('../../middleware/roleMiddleware');
     /* ---------------------------------- ADMIN --------------------------------- */
-
     app.get('/admin', isAdmin, HomeAdmin.HomeAdmin)
     app.get('/admin/add-product', isAdmin, ProductControllerAdmin.addProduct)
     app.post('/admin/add-product', isAdmin, ProductControllerAdmin.subAddProduct)
-
     app.get('/admin/gallery', isAdmin, GalleryAdmin.listGallery)
-
     app.get('/admin/add-gallery', isAdmin, GalleryAdmin.addGallery)
     app.post('/admin/add-gallery', isAdmin, GalleryAdmin.addGalleryP)
-
     app.get('/admin/edit-gallery/:id', isAdmin, GalleryAdmin.editGallery)
     app.post('/admin/edit-gallery/:id', isAdmin, GalleryAdmin.editGalleryP)
-
     app.post('/admin/delete-gallery', isAdmin, GalleryAdmin.deleteGallery)
-
-
     app.get('/admin/list-product/:id', isAdmin, ProductControllerAdmin.listProducts)
     app.get('/admin/edit-product/:id', isAdmin, ProductControllerAdmin.editProducts)
     app.post('/admin/edit-product/:id', isAdmin, ProductControllerAdmin.subEditProducts)

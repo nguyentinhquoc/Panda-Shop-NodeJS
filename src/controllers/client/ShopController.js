@@ -4,7 +4,6 @@ import categoriesModel from '../../models/categoriesModel';
 const url = require('url');
 var listProducts = (req, res) => {
     var linkYesPage = req.originalUrl;
-    console.log(linkYesPage);
     const parsedUrl = url.parse(linkYesPage, true);
     var search = ''
     if (req.body.searchProduct) {

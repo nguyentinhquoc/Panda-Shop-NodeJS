@@ -46,10 +46,6 @@ var updateStatus = (req, res) => {
         classificationorderModel.ClassificationOrderWCodeOrder(req.params.code_order)
             .then((value) => {
                 value.forEach(element => {
-                    console.log('element.id_variants');
-                    console.log(element.id_variants);
-                    console.log('element.quantity_variant');
-                    console.log(element.quantity);
                     variantsModel.changeSalesAndQuantity(element.id_variants, element.quantity)
                 });
 

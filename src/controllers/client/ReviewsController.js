@@ -41,8 +41,6 @@ var reviewsPost = (req, res) => {
     }).catch(error => {
         console.log(error);
     })
-
-    console.log(req.body.content_review[446]);
 }
 module.exports = {
     reviews,

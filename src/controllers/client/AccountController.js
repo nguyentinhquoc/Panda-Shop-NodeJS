@@ -31,7 +31,6 @@ var resetPassWordP = (req, res) => {
                     check = true;
                 }
             });
-            console.log(check);
 
             if (check) {
                 accountModel.changePass(req.cookies.RPuser, req.body.password);
@@ -58,7 +57,6 @@ var forgotPasswordP = (req, res) => {
                     return check = true;
                 }
             });
-
             if (!check) {
                 req.flash('checklogin', 'error');
                 res.redirect('/login');
@@ -93,11 +91,11 @@ var checkRegisterP = (req, res) => {
                 accountAll[0].forEach(element => {
                     if (req.body.email_account == element.email_account) {
                         accountModel.changeStatus(element.id)
-                        console.log(element.id);
                         return check = true;
                     }
                 });
                 if (check == true) {
+                    req.flash('checklogin', 'error');
                     res.redirect('/login');
                 }
             } else {
@@ -143,7 +141,6 @@ var registerSb = (req, res) => {
                     }
                 });
                 if (check) {
-                    console.log(req.body);
                     if (req.file) {
                         var image_product = req.file.filename;
                         var address_account = req.body.xa + '-' + req.body.huyen + '-' + req.body.tinh;
@@ -242,11 +239,10 @@ async function sendMail(email, code) {
         let info = await transporter.sendMail({
             from: 'pandashop1403@gmail.com',
             to: `${email}`,
-            subject: "Mã xác nhận đang ký PandaShop",
+            subject: "PandaShop",
             text: code,
             html: `${code}`,
         });
-        console.log("Email sent: ", info.messageId);
     } catch (error) {
         console.log("Error sending email: ", error);
     }
